@@ -18,5 +18,7 @@
 
         <Button Command="{Binding RegisterCommand}"
                 Text="Register"/>
+
+        <Button Text="Go To Login Page" Clicked="Button_Clicked"/>
     </StackLayout>
 </ContentPage>
