@@ -334,6 +334,7 @@ namespace RestaurantApp.API.Controllers
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
             IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+            UserManager.AddToRole(user.Id, "User");
 
             if (!result.Succeeded)
             {

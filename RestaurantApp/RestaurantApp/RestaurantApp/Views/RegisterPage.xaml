@@ -7,18 +7,33 @@
         <vm:RegisterViewModel/>
     </ContentPage.BindingContext>
 
-    <StackLayout Orientation="Vertical" VerticalOptions="Center">
-        <Entry Text="{Binding Email}" Placeholder="email"/>
+    <StackLayout Orientation="Vertical" 
+                 VerticalOptions="Center" 
+                 Spacing="20"
+                 Padding="15">
+        <Entry Text="{Binding Email}" 
+               Placeholder="email"/>
+        
         <Entry Text="{Binding Password}" 
                Placeholder="password"
                IsPassword="True"/>
+        
         <Entry Text="{Binding ConfirmPassword}" 
                Placeholder="confirm password"
                IsPassword="True"/>
 
         <Button Command="{Binding RegisterCommand}"
-                Text="Register"/>
+                Text="Register"
+                BackgroundColor="#41bbf4"
+                TextColor="White"
+                CornerRadius="20"
+                WidthRequest="100"/>
 
-        <Button Text="Go To Login Page" Clicked="Button_Clicked"/>
+        <Button Text="Go To Login Page" 
+                Clicked="Button_Clicked"
+                BackgroundColor="#41bbf4"
+                TextColor="White"
+                CornerRadius="20"
+                WidthRequest="30"/>
     </StackLayout>
 </ContentPage>
