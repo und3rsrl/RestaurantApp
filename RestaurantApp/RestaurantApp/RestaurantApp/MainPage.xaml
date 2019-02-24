@@ -1,14 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:RestaurantApp"
-             x:Class="RestaurantApp.MainPage">
+            xmlns:local="clr-namespace:RestaurantApp.Views"
+            x:Class="RestaurantApp.MainPage">
 
-    <StackLayout >
-        <!-- Place new controls here -->
-        <Label Text="Te iubesc iubirea mea, te iubesc pentru tot ce faci pentru mine. Te iubesc pentru ca ai luat fiecare bucatica din sufletul meu sfaramat si ai pus-o cu grija la locul ei. Esti cel mai frumos om din viata mea, cel mai mununta, omul care mi-a schimbat viata si mi-a aratat ce inseamna cu adevarat iubirea. TE iubesc pentru fiecare sarut, fiecare inbratisare, fiecare moment minunat alaturi de tine. Te iubesc sufletul meu pereche!!!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
-    </StackLayout>
+    <local:LoginPage/>
+    <NavigationPage Title="RegisterPage">
+        <x:Arguments>
+            <local:RegisterPage/>
+        </x:Arguments>
+    </NavigationPage>
 
-</ContentPage>
+</TabbedPage>

@@ -12,7 +12,8 @@ namespace RestaurantApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new RegisterPage());
+            //MainPage = new NavigationPage(new RegisterPage());
+            MainPage = new WelcomePage();
         }
 
         protected override void OnStart()

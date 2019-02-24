@@ -7,13 +7,19 @@
     <ContentPage.BindingContext>
         <vm:LoginViewModel/>
     </ContentPage.BindingContext>
-    
-    
-    <StackLayout Orientation="Vertical">
+
+
+    <StackLayout Orientation="Vertical" 
+                 VerticalOptions="Center" 
+                 Spacing="20"
+                 Padding="15">
         <Entry Text="{Binding Username}"/>
         <Entry Text="{Binding Password}"
                IsPassword="True"/>
         <Button Command="{Binding LoginCommand}"
-                Text="Login"/>
+                Text="Login"
+                BackgroundColor="#41bbf4"
+                TextColor="White"
+                CornerRadius="20"/>
     </StackLayout>
 </ContentPage>

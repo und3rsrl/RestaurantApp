@@ -155,7 +155,10 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="3.3.0.967583" />
+    <PackageReference Include="Xamarin.Forms" Version="3.5.0.169047" />
+    <PackageReference Include="Xamarin.Forms.Maps">
+      <Version>3.5.0.169047</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -163,5 +166,14 @@
       <Project>{B654D933-6186-40B3-B8B0-5431BC6E474A}</Project>
       <Name>RestaurantApp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\password.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\note.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\route.png" />
   </ItemGroup>
 </Project>

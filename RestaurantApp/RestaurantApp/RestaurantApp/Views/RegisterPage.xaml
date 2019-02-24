@@ -26,14 +26,12 @@
                 Text="Register"
                 BackgroundColor="#41bbf4"
                 TextColor="White"
-                CornerRadius="20"
-                WidthRequest="100"/>
+                CornerRadius="20"/>
 
         <Button Text="Go To Login Page" 
                 Clicked="Button_Clicked"
                 BackgroundColor="#41bbf4"
                 TextColor="White"
-                CornerRadius="20"
-                WidthRequest="30"/>
+                CornerRadius="20"/>
     </StackLayout>
 </ContentPage>

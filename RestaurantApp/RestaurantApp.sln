@@ -7,9 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantApp.Android", "Re
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantApp.iOS", "RestaurantApp\RestaurantApp.iOS\RestaurantApp.iOS.csproj", "{441CE2D5-1873-4FA1-BA39-3E1AEFB2349C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantApp", "RestaurantApp\RestaurantApp\RestaurantApp.csproj", "{FB6C88AC-293D-47E5-8AD1-0FB47A169A49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RestaurantApp", "RestaurantApp\RestaurantApp\RestaurantApp.csproj", "{FB6C88AC-293D-47E5-8AD1-0FB47A169A49}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RestaurantApp.API", "RestaurantApp.API\RestaurantApp.API.csproj", "{8700D29F-CE40-4F78-8A62-7EA133DCF2BF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Mobile", "Mobile", "{2486094C-8913-4646-8A37-90F653C5725E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -162,6 +164,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{20A6C4E4-29BB-4D80-84F0-F7C592C0E76D} = {2486094C-8913-4646-8A37-90F653C5725E}
+		{441CE2D5-1873-4FA1-BA39-3E1AEFB2349C} = {2486094C-8913-4646-8A37-90F653C5725E}
+		{FB6C88AC-293D-47E5-8AD1-0FB47A169A49} = {2486094C-8913-4646-8A37-90F653C5725E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {47F28275-4F58-41E2-A527-7ACD8E25AC26}

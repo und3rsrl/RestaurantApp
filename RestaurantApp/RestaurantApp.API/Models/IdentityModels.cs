@@ -29,5 +29,7 @@ namespace RestaurantApp.API.Models
         {
             return new ApplicationDbContext();
         }
+
+        public System.Data.Entity.DbSet<RestaurantApp.API.Models.CategoriesModel> CategoriesModels { get; set; }
     }
 }
