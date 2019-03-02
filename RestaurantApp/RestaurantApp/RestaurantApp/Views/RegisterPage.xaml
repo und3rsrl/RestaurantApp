@@ -7,31 +7,48 @@
         <vm:RegisterViewModel/>
     </ContentPage.BindingContext>
 
-    <StackLayout Orientation="Vertical" 
-                 VerticalOptions="Center" 
+    <RelativeLayout>
+        <Image Source="background.jpg"
+               Aspect="Fill"
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
+
+        </Image>
+        <Grid  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
+
+            <Label VerticalOptions="Start"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White"
+                   Margin="0, 120, 0, 0"
+                   FontSize="38"
+                   Text="Register"
+                   FontAttributes="Bold"/>
+
+            <StackLayout Orientation="Vertical" 
+                 VerticalOptions="End" 
                  Spacing="20"
-                 Padding="15">
-        <Entry Text="{Binding Email}" 
+                 Padding="15, 0, 15, 50">
+             
+                <Entry Text="{Binding Email}" 
                Placeholder="email"/>
-        
-        <Entry Text="{Binding Password}" 
+
+                <Entry Text="{Binding Password}" 
                Placeholder="password"
                IsPassword="True"/>
-        
-        <Entry Text="{Binding ConfirmPassword}" 
+
+                <Entry Text="{Binding ConfirmPassword}" 
                Placeholder="confirm password"
                IsPassword="True"/>
 
-        <Button Command="{Binding RegisterCommand}"
+                <Button Command="{Binding RegisterCommand}"
                 Text="Register"
                 BackgroundColor="#41bbf4"
                 TextColor="White"
                 CornerRadius="20"/>
+            </StackLayout>
+        </Grid>
 
-        <Button Text="Go To Login Page" 
-                Clicked="Button_Clicked"
-                BackgroundColor="#41bbf4"
-                TextColor="White"
-                CornerRadius="20"/>
-    </StackLayout>
+    </RelativeLayout>
+
 </ContentPage>

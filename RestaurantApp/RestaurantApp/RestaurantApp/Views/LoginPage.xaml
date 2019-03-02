@@ -7,19 +7,43 @@
     <ContentPage.BindingContext>
         <vm:LoginViewModel/>
     </ContentPage.BindingContext>
+  
+    <RelativeLayout>
+        <Image Source="background.jpg"
+               Aspect="Fill"
+               RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
 
+        </Image>
+        <Grid  RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
+               RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
 
-    <StackLayout Orientation="Vertical" 
-                 VerticalOptions="Center" 
+            <Label VerticalOptions="Start"
+                   HorizontalTextAlignment="Center"
+                   TextColor="White"
+                   Margin="0, 120, 0, 0"
+                   FontSize="38"
+                   Text="Login"
+                   FontAttributes="Bold"/>
+
+            <StackLayout Orientation="Vertical" 
+                 VerticalOptions="End" 
                  Spacing="20"
-                 Padding="15">
-        <Entry Text="{Binding Username}"/>
-        <Entry Text="{Binding Password}"
-               IsPassword="True"/>
-        <Button Command="{Binding LoginCommand}"
+                 Padding="15, 0, 15, 50">
+                <Entry Text="{Binding Username}"
+               Placeholder="username"/>
+                
+                <Entry Text="{Binding Password}"
+               IsPassword="True"
+               Placeholder="password"/>
+                
+                <Button Command="{Binding LoginCommand}"
                 Text="Login"
+                WidthRequest="300"
                 BackgroundColor="#41bbf4"
                 TextColor="White"
                 CornerRadius="20"/>
-    </StackLayout>
+            </StackLayout>
+        </Grid>
+    </RelativeLayout>
 </ContentPage>

@@ -9,8 +9,7 @@
             <maps:Map
             x:Name="MyMap"
             IsShowingUser="true"
-            MapType="Street"
-        />
+            MapType="Street"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

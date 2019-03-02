@@ -4,7 +4,7 @@
             xmlns:local="clr-namespace:RestaurantApp.Views"
             x:Class="RestaurantApp.WelcomePage">
     <!--Pages can be added as references or inline-->
-    <local:LoginPage Title="Login" Icon="password.png" />
+    <local:LoginPage Title="Login" Icon="password.png"/>
     <local:RegisterPage Title="Register" Icon="note.png"/>
     <local:LocationPage Title="Location" Icon="route.png"/>
 </TabbedPage>
