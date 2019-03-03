@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,14 @@ namespace RestaurantApp.Views
         public LoginPage()
         {
             InitializeComponent();
+            Setup();
+            BindingContext = new LoginViewModel(Navigation, this);
+        }
+
+        private void Setup()
+        {
+            Entry_UserName.Completed += (s, e) => Entry_Password.Focus();
+            Entry_Password.Completed += (s, e) => Button_LogIn.Focus();
         }
     }
 }

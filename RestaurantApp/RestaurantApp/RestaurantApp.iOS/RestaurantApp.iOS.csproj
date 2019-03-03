@@ -177,6 +177,6 @@
     <BundleResource Include="Resources\route.png" />
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\background.jpg" />
+    <BundleResource Include="Resources\backgroundImage.jpg" />
   </ItemGroup>
 </Project>

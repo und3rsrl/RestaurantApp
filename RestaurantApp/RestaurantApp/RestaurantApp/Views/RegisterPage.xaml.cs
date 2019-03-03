@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace RestaurantApp.Views
         public RegisterPage()
         {
             InitializeComponent();
+            BindingContext = new RegisterViewModel(Navigation, this);
         }
 
         private async void Button_Clicked(object sender, EventArgs e)

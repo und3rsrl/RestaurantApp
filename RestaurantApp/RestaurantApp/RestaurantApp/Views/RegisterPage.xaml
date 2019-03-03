@@ -8,7 +8,7 @@
     </ContentPage.BindingContext>
 
     <RelativeLayout>
-        <Image Source="background.jpg"
+        <Image Source="backgroundImage.jpg"
                Aspect="Fill"
                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
@@ -29,23 +29,53 @@
                  VerticalOptions="End" 
                  Spacing="20"
                  Padding="15, 0, 15, 50">
-             
+
                 <Entry Text="{Binding Email}" 
-               Placeholder="email"/>
+               Placeholder="email">
+                    <Entry.PlaceholderColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.PlaceholderColor>
+                </Entry>
 
                 <Entry Text="{Binding Password}" 
                Placeholder="password"
-               IsPassword="True"/>
+               IsPassword="True">
+                    <Entry.PlaceholderColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.PlaceholderColor>
+                    <Entry.TextColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.TextColor>
+                </Entry>
 
                 <Entry Text="{Binding ConfirmPassword}" 
                Placeholder="confirm password"
-               IsPassword="True"/>
+               IsPassword="True">
+                    <Entry.PlaceholderColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.PlaceholderColor>
+                    <Entry.TextColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.TextColor>
+                </Entry>
 
                 <Button Command="{Binding RegisterCommand}"
-                Text="Register"
-                BackgroundColor="#41bbf4"
-                TextColor="White"
-                CornerRadius="20"/>
+                        Text="Register"
+                        BackgroundColor="#41bbf4"
+                        TextColor="White"
+                        CornerRadius="20"
+                        Scale="1"
+                        x:Name="Button_Register"/>
             </StackLayout>
         </Grid>
 

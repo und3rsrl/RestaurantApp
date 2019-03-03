@@ -16,7 +16,7 @@ namespace RestaurantApp.WebApi
 
         public static void SeedRoles(RoleManager<IdentityRole> roleManager)
         {
-            if (!roleManager.RoleExistsAsync("NormalUser").Result)
+            if (!roleManager.RoleExistsAsync("User").Result)
             {
                 IdentityRole role = new IdentityRole
                 {
@@ -47,11 +47,11 @@ namespace RestaurantApp.WebApi
 
         public static void SeedUsers(UserManager<IdentityUser> userManager)
         {
-            if (userManager.FindByNameAsync("Admin").Result == null)
+            if (userManager.FindByNameAsync("admin@restaurant.com").Result == null)
             {
                 IdentityUser user = new IdentityUser
                 {
-                    UserName = "Admin",
+                    UserName = "admin@restaurant.com",
                     Email = "admin@restaurant.com"
                 };
 

@@ -12,7 +12,7 @@ namespace RestaurantApp.Services
 {
     public class ApiServices
     {
-        public async Task<bool> RegisterAsync(string email, string password, string confirmPassword)
+        public async Task<string> RegisterAsync(string email, string password, string confirmPassword)
         {
             var client = new HttpClient();
 
@@ -29,28 +29,37 @@ namespace RestaurantApp.Services
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync("http://192.168.1.5:5000/api/Account/Register", content);
+            var response = await client.PostAsync("http://192.168.1.5:50915/api/Account/Register", content);
 
-            return response.IsSuccessStatusCode;
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return await response.Content.ReadAsStringAsync();
+            else
+                return "NotCreated";
         }
 
-        public async Task LoginAsync(string userName, string password)
+        public async Task<string> LoginAsync(string userName, string password)
         {
-            var keyValues = new List<KeyValuePair<string, string>>()
+            var client = new HttpClient();
+
+            var model = new LoginBindingModel()
             {
-                new KeyValuePair<string, string>("username", userName),
-                new KeyValuePair<string, string>("password", password),
-                new KeyValuePair<string, string>("grant_type", "password")
+                Email = userName,
+                Password = password,
             };
 
-            var request = new HttpRequestMessage(HttpMethod.Post, "http://192.168.1.5:5000/Token");
+            var json = JsonConvert.SerializeObject(model);
 
-            request.Content = new FormUrlEncodedContent(keyValues);
+            HttpContent content = new StringContent(json);
 
-            var client = new HttpClient();
-            var response = await client.SendAsync(request);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            Debug.WriteLine(await response.Content.ReadAsStringAsync());
+            var response = await client.PostAsync("http://192.168.1.5:50915/api/Account/Login", content);
+
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                return "Unauthorized";
+
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

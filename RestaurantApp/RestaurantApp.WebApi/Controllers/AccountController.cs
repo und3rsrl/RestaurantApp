@@ -40,11 +40,11 @@ namespace RestaurantApp.WebApi.Controllers
 
             if (result.Succeeded)
             {
-                var appUser = _userManager.Users.SingleOrDefault(r => r.UserName == model.Email);
+                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
                 return await GenerateJwtToken(model.Email, appUser);
             }
 
-            throw new ApplicationException("INVALID_LOGIN_ATTEMPT");
+            return Unauthorized();
         }
 
         [HttpPost]
@@ -55,15 +55,20 @@ namespace RestaurantApp.WebApi.Controllers
                 UserName = model.Email,
                 Email = model.Email
             };
+
             var result = await _userManager.CreateAsync(user, model.Password);
 
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
-                return await GenerateJwtToken(model.Email, user);
+                await _userManager.AddToRoleAsync(user, "User");
+
+                var token = await GenerateJwtToken(model.Email, user);
+
+                return Ok(token);
             }
 
-            throw new ApplicationException("UNKNOWN_ERROR");
+            return BadRequest();
         }
 
         private async Task<object> GenerateJwtToken(string email, IdentityUser user)
@@ -79,7 +84,7 @@ namespace RestaurantApp.WebApi.Controllers
 
             var roles = await _userManager.GetRolesAsync(user);
 
-            claims.AddRange(roles.Select(role => new Claim(ClaimsIdentity.DefaultRoleClaimType, role)));
+            claims.AddRange(roles.Select(role => new Claim("Role", role)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);

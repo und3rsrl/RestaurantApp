@@ -7,9 +7,9 @@
     <ContentPage.BindingContext>
         <vm:LoginViewModel/>
     </ContentPage.BindingContext>
-  
+
     <RelativeLayout>
-        <Image Source="background.jpg"
+        <Image Source="backgroundImage.jpg"
                Aspect="Fill"
                RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent, Property=Width}"
                RelativeLayout.HeightConstraint="{ConstraintExpression Type=RelativeToParent, Property=Height}">
@@ -30,19 +30,46 @@
                  VerticalOptions="End" 
                  Spacing="20"
                  Padding="15, 0, 15, 50">
+                
+                
                 <Entry Text="{Binding Username}"
-               Placeholder="username"/>
-                
+                       Placeholder="email"
+                       x:Name="Entry_UserName">
+                    <Entry.PlaceholderColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.PlaceholderColor>
+                    <Entry.TextColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.TextColor>
+                </Entry>
+
                 <Entry Text="{Binding Password}"
-               IsPassword="True"
-               Placeholder="password"/>
-                
+                       IsPassword="True"
+                       Placeholder="password"
+                       x:Name="Entry_Password">
+                    <Entry.PlaceholderColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.PlaceholderColor>
+                    <Entry.TextColor >
+                        <OnPlatform x:TypeArguments="Color" 
+                            Android="White" 
+                            iOS="Black"/>
+                    </Entry.TextColor>
+                </Entry>
+
                 <Button Command="{Binding LoginCommand}"
-                Text="Login"
-                WidthRequest="300"
-                BackgroundColor="#41bbf4"
-                TextColor="White"
-                CornerRadius="20"/>
+                        Text="Login"
+                        WidthRequest="300"
+                        BackgroundColor="#41bbf4"
+                        TextColor="White"
+                        CornerRadius="20"
+                        x:Name="Button_LogIn"/>
             </StackLayout>
         </Grid>
     </RelativeLayout>
