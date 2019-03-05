@@ -10,8 +10,8 @@
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
+		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -40,10 +40,8 @@
 	<true/>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Need location for geolocator plugin.</string>
- 
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Need location for geolocator plugin.</string>
- 
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Need location for geolocator plugin.</string>
 </dict>
