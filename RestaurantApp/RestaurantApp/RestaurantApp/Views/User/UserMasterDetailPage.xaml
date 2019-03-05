@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                  xmlns:helpers="clr-namespace:RestaurantApp.Views.User.Helpers"
+                  x:Class="RestaurantApp.Views.User.UserMasterDetailPage">
+    <MasterDetailPage.Master>
+        <helpers:UserMasterPage x:Name="masterView"></helpers:UserMasterPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <NavigationPage>
+            <x:Arguments>
+                <helpers:CoffeePage></helpers:CoffeePage>
+            </x:Arguments>
+        </NavigationPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>

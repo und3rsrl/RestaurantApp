@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace RestaurantApp.Views.User
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class UserMainPage : ContentPage
+	public partial class UserMasterDetailPage : MasterDetailPage
 	{
-		public UserMainPage ()
+		public UserMasterDetailPage ()
 		{
 			InitializeComponent ();
 		}

@@ -1,5 +1,6 @@
 ﻿using RestaurantApp.DTOs;
 using RestaurantApp.Handlers;
+using RestaurantApp.Helpers;
 using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,8 @@ namespace RestaurantApp.ViewModels
                         else
                         {
                             var payload = JWT.JsonWebToken.DecodeToObject<JWTPayloadDTO>(token, "alexandruGeorgianChiurtu");
+
+                            Settings.AccessToken = token;
 
                             var userWindow = UserWindowFactory.GenerateWindow(payload);
                             if (Device.RuntimePlatform == Device.Android)

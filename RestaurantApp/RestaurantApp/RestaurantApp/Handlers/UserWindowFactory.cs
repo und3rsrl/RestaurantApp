@@ -20,7 +20,7 @@ namespace RestaurantApp.Handlers
                     return new AdminMainPage();
 
                 case "User":
-                    return new UserMainPage();
+                    return new UserMasterDetailPage();
 
                 case "Waiter":
                     throw new NotImplementedException("This section is not completed.");
