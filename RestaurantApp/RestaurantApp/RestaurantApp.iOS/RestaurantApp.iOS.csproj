@@ -188,4 +188,16 @@
   <ItemGroup>
     <BundleResource Include="Resources\menu.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\basket.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\bill.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\food_menu.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\menu_background.jpg" />
+  </ItemGroup>
 </Project>

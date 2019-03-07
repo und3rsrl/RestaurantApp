@@ -2,17 +2,22 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:domain="clr-namespace:RestaurantApp.Domain"
-             x:Class="RestaurantApp.Views.User.Helpers.UserMasterPage"
+             xmlns:local="clr-namespace:RestaurantApp.Views.User.Views"
+             x:Class="RestaurantApp.Views.User.Views.UserMasterPage"
              Padding="0,40,0,0"
              Icon="menu.png"
-             Title="Restaurant">
-    <StackLayout>
-        <ListView x:Name="NavigationListView" x:FieldModifier="public" SeparatorVisibility="None">
+             Title="Restaurant"
+             BackgroundImage="menu_background.jpg">
+    <StackLayout >
+        <ListView x:Name="NavigationListView" 
+                  x:FieldModifier="public" 
+                  SeparatorVisibility="None"
+                  BackgroundColor="Transparent">
             <ListView.ItemsSource>
                 <x:Array Type="{x:Type domain:MasterNavigationUserItem}">
-                    <domain:MasterNavigationUserItem Title="Drinks" Icon="" Target="" />
-                    <domain:MasterNavigationUserItem Title="Meat" Icon="" Target="" />
-                    <domain:MasterNavigationUserItem Title="Pasta" Icon="" Target="" />
+                    <domain:MasterNavigationUserItem Title="Menu" Icon="food_menu.png" Target="{x:Type local:FoodMenuPage}" />
+                    <domain:MasterNavigationUserItem Title="Basket" Icon="basket.png" Target="{x:Type local:BasketPage}" />
+                    <domain:MasterNavigationUserItem Title="Orders" Icon="bill.png" Target="{x:Type local:OrdersPage}" />
                 </x:Array>
             </ListView.ItemsSource>
             <ListView.ItemTemplate>
@@ -23,19 +28,18 @@
                                 <ColumnDefinition Width="30"/>
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
-                            <Image Source="{Binding IconSource}" />
-                            <Label Grid.Column="1" Text="{Binding Title}" />
+                            <Image Source="{Binding Icon}" />
+                            <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold"/>
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button 
-                        Text="Logout"                     
-                        BackgroundColor="Red"
-                        TextColor="White"
-                        CornerRadius="0"
-                        Clicked="Button_Logout_Clicked"
-                        x:Name="Button_Logout"/>
+        <Button Text="Logout"
+                BackgroundColor="#e03838"
+                TextColor="White"
+                CornerRadius="0"
+                Clicked="Button_Logout_Clicked"
+                x:Name="Button_Logout"/>
     </StackLayout>
 </ContentPage>
