@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantApp.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,14 @@ namespace RestaurantApp.Views.User.Views
 		public FoodMenuPage ()
 		{
 			InitializeComponent ();
-		}
-	}
+        
+            FoodListView.SeparatorVisibility = SeparatorVisibility.None;
+        }    
+
+        private async void FoodListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var selectedPie = e.SelectedItem as FoodItem;
+            await Navigation.PushAsync(new FoodDetailPage(selectedPie));
+        }
+    }
 }

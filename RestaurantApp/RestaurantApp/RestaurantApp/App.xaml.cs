@@ -24,7 +24,10 @@ namespace RestaurantApp
             {
                 var payload = JWT.JsonWebToken.DecodeToObject<JWTPayloadDTO>(Settings.AccessToken, "alexandruGeorgianChiurtu");
 
-                MainPage = UserWindowFactory.GenerateWindow(payload);
+                if (DateTimeObject.ToDateTime(Double.Parse(payload.Exp)) < DateTime.UtcNow)
+                    MainPage = new WelcomePage();
+                else
+                    MainPage = UserWindowFactory.GenerateWindow(payload);
             }
             else
                 MainPage = new WelcomePage();
