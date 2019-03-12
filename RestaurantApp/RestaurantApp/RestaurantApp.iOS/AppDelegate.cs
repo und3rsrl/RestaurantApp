@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using Foundation;
+using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using UIKit;
 
 namespace RestaurantApp.iOS
@@ -24,6 +25,7 @@ namespace RestaurantApp.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             Xamarin.FormsMaps.Init();
+            KeyboardOverlapRenderer.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

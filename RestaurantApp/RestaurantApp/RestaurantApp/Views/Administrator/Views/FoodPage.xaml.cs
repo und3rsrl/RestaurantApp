@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace RestaurantApp.Views.Administrator
+namespace RestaurantApp.Views.Administrator.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AdminMainPage : ContentPage
+	public partial class FoodPage : ContentPage
 	{
-		public AdminMainPage ()
+		public FoodPage ()
 		{
 			InitializeComponent ();
 		}

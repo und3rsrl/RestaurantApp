@@ -23,7 +23,19 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="Views\Administrator\AdminMainPage.xaml">
+    <EmbeddedResource Update="Views\Administrator\AdminMasterDetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Administrator\Views\AdminMasterPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Administrator\Views\CategoriesPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Administrator\Views\FoodPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\Administrator\Views\WaitersPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\LocationPage.xaml">
@@ -66,5 +78,11 @@
 
   <ItemGroup>
     <Folder Include="Views\Waiter\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Views\Administrator\AdminMasterDetailPage.xaml.cs">
+      <DependentUpon>AdminMasterDetailPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
 </Project>

@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:domain="clr-namespace:RestaurantApp.Domain"
+             xmlns:local="clr-namespace:RestaurantApp.Views.Administrator.Views"
+             x:Class="RestaurantApp.Views.Administrator.Views.AdminMasterPage">
+    <ContentPage.Content>
+        <StackLayout >
+            <ListView x:Name="NavigationListView" 
+                  x:FieldModifier="public" 
+                  SeparatorVisibility="None"
+                  BackgroundColor="Transparent">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type domain:MasterNavigationUserItem}">
+                        <domain:MasterNavigationUserItem Title="Categories" Icon="categories.png" Target="{x:Type local:CategoriesPage}" />
+                        <domain:MasterNavigationUserItem Title="Food" Icon="food.png" Target="{x:Type local:FoodPage}" />
+                        <domain:MasterNavigationUserItem Title="Waiters" Icon="waiter.png" Target="{x:Type local:WaitersPage}" />
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Icon}" />
+                                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Logout"
+                BackgroundColor="#e03838"
+                TextColor="White"
+                CornerRadius="0"
+                Clicked="Button_Logout_Clicked"
+                x:Name="Button_Logout"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

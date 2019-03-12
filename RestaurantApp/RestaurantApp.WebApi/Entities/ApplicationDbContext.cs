@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RestaurantApp.WebApi.Models;
 
 namespace RestaurantApp.WebApi.Entities
 {
@@ -13,5 +14,6 @@ namespace RestaurantApp.WebApi.Entities
             : base(options)
         {         
         }
+        public DbSet<RestaurantApp.WebApi.Models.Categorie> Categories { get; set; }
     }
 }

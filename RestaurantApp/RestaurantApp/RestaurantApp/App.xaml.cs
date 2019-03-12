@@ -1,4 +1,5 @@
-﻿using RestaurantApp.DTOs;
+﻿using JWT.exceptions;
+using RestaurantApp.DTOs;
 using RestaurantApp.Handlers;
 using RestaurantApp.Helpers;
 using RestaurantApp.Views;
@@ -22,12 +23,23 @@ namespace RestaurantApp
         {
             if (!string.IsNullOrEmpty(Settings.AccessToken))
             {
-                var payload = JWT.JsonWebToken.DecodeToObject<JWTPayloadDTO>(Settings.AccessToken, "alexandruGeorgianChiurtu");
+                try
+                {
+                    var payload = JWT.JsonWebToken.DecodeToObject<JWTPayloadDTO>(Settings.AccessToken, "alexandruGeorgianChiurtu");
 
-                if (DateTimeObject.ToDateTime(Double.Parse(payload.Exp)) < DateTime.UtcNow)
-                    MainPage = new WelcomePage();
-                else
                     MainPage = UserWindowFactory.GenerateWindow(payload);
+                }
+                catch (SignatureVerificationException e)
+                {
+                    if (e.Message.Equals("Token has expired."))
+                    {
+                        MainPage = new WelcomePage();
+                    }
+                    else
+                        throw e;
+                }
+
+
             }
             else
                 MainPage = new WelcomePage();

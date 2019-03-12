@@ -17,7 +17,7 @@ namespace RestaurantApp.Handlers
             switch (userRole)
             {
                 case "Administrator":
-                    return new AdminMainPage();
+                    return new AdminMasterDetailPage();
 
                 case "User":
                     return new UserMasterDetailPage();
