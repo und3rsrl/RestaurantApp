@@ -10,12 +10,16 @@ using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
 {
-    public class ApiServices
+    public class AuthApiServices : ApiService
     {
+        public AuthApiServices()
+            : base()
+        {
+
+        }
+
         public async Task<string> RegisterAsync(string email, string password, string confirmPassword)
         {
-            var client = new HttpClient();
-
             var model = new RegisterBindingModel()
             {
                 Email = email,
@@ -29,7 +33,7 @@ namespace RestaurantApp.Services
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync("http://192.168.1.5:50915/api/Account/Register", content);
+            var response = await HttpClient.PostAsync("Account/Register", content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
                 return await response.Content.ReadAsStringAsync();
@@ -39,8 +43,6 @@ namespace RestaurantApp.Services
 
         public async Task<string> LoginAsync(string userName, string password)
         {
-            var client = new HttpClient();
-
             var model = new LoginBindingModel()
             {
                 Email = userName,
@@ -53,8 +55,8 @@ namespace RestaurantApp.Services
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-            var response = await client.PostAsync("http://192.168.1.5:50915/api/Account/Login", content);
 
+            var response = await HttpClient.PostAsync("Account/Login", content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
                 return "Unauthorized";

@@ -17,7 +17,6 @@ namespace RestaurantApp.Views.User
 		{
 			InitializeComponent ();
 
-
             masterView.NavigationListView.ItemSelected += NavigationListView_ItemSelected;
         }
 

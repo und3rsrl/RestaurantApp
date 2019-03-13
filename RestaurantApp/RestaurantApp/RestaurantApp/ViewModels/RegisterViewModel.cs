@@ -13,7 +13,7 @@ namespace RestaurantApp.ViewModels
 {
     public class RegisterViewModel
     {
-        ApiServices _apiServices = new ApiServices();
+        AuthApiServices _apiServices = new AuthApiServices();
 
         public RegisterViewModel()
         {

@@ -6,7 +6,7 @@
     <ContentPage.BindingContext>
         <vm:FoodItemsViewModel/>
     </ContentPage.BindingContext>
-    
+
     <ContentPage.Content>
         <StackLayout Padding="10, 10, 10, 0">
             <Picker x:Name="category_picker"
@@ -23,52 +23,52 @@
                   RowHeight="100"
                   ItemsSource="{Binding FilteredItems}">
                 <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Margin="5" BackgroundColor="White" RowSpacing="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="*"></RowDefinition>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="50"></ColumnDefinition>
-                                <ColumnDefinition Width="*"></ColumnDefinition>
-                                <ColumnDefinition Width="55"></ColumnDefinition>
-                                <ColumnDefinition Width="30"></ColumnDefinition>
-                                <ColumnDefinition Width="32"></ColumnDefinition>
-                            </Grid.ColumnDefinitions>
-                            <Image Grid.Row="0"
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Margin="5" BackgroundColor="White" RowSpacing="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*"></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"></ColumnDefinition>
+                                    <ColumnDefinition Width="*"></ColumnDefinition>
+                                    <ColumnDefinition Width="55"></ColumnDefinition>
+                                    <ColumnDefinition Width="30"></ColumnDefinition>
+                                    <ColumnDefinition Width="32"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <Image Grid.Row="0"
                                    HeightRequest="100"
                                    WidthRequest="100"
                                    VerticalOptions="CenterAndExpand"
                                    Margin="2,2,1,2"
                                    Source="{Binding ImageUrl}"></Image>
-                            <Label Grid.Row="0"
+                                <Label Grid.Row="0"
                                    Grid.Column="1"
                                    VerticalOptions="CenterAndExpand"
                                    Text="{Binding Name}"
                                    Margin="3" ></Label>
-                            <Label Grid.Row="0"
+                                <Label Grid.Row="0"
                                    Grid.Column="2"
                                    Margin="3"
                                    Text="{Binding Price}"
                                    FontAttributes="Bold"
                                    VerticalOptions="CenterAndExpand"
                                    TextColor="#41bbf4"></Label>
-                            <Label Grid.Row="0"
+                                <Label Grid.Row="0"
                                    Grid.Column="3"
                                    Margin="0, 7, 0, 0"
                                    Text="Lei"
                                    FontAttributes="Bold"
                                    VerticalOptions="CenterAndExpand"
                                    TextColor="#41bbf4"></Label>
-                            <ImageButton Grid.Row="0"
+                                <ImageButton Grid.Row="0"
                                    Grid.Column="4"
                                    Margin="3"
                                    Source="add.png"></ImageButton>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
             </ListView>
         </StackLayout>
     </ContentPage.Content>

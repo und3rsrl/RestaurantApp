@@ -1,4 +1,5 @@
-﻿using System;
+﻿using RestaurantApp.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,18 @@ namespace RestaurantApp.Views.Administrator
 		public AdminMasterDetailPage()
 		{
 			InitializeComponent ();
-		}
-	}
+
+            masterView.NavigationListView.ItemSelected += NavigationListView_ItemSelected;
+        }
+
+        private void NavigationListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            if (e.SelectedItem is MasterNavigationUserItem item)
+            {
+                Detail = new NavigationPage((Page)Activator.CreateInstance(item.Target));
+                masterView.NavigationListView.SelectedItem = null;
+                IsPresented = false;
+            }
+        }
+    }
 }

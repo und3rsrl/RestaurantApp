@@ -1,4 +1,5 @@
 ﻿using RestaurantApp.Models;
+using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -10,6 +11,7 @@ namespace RestaurantApp.ViewModels
     public class FoodItemsViewModel : INotifyPropertyChanged
     {
         private string _selectedCategorie;
+        private CategoriesApiService _categoriesApiService = new CategoriesApiService();
 
         public FoodItemsViewModel()
         {
@@ -75,19 +77,7 @@ namespace RestaurantApp.ViewModels
 
         public List<FoodItem> FilteredItems { get; set; }
 
-        public List<string> Categories
-        {
-            get => new List<string>()
-            {
-                "All",
-                "Breakfast",
-                "Soups",
-                "Salads",
-                "Pasta",
-                "Pizza",
-                "Burgers"
-            };
-        }
+        public List<string> Categories => _categoriesApiService.GetCategories().Result.Select(x => x.Name).ToList();
 
         public string SelectedCategory
         {

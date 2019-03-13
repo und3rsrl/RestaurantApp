@@ -12,7 +12,7 @@ namespace RestaurantApp.ViewModels
 {
     public class LoginViewModel
     {
-        private ApiServices _apiServices = new ApiServices();
+        private AuthApiServices _apiServices = new AuthApiServices();
 
         public LoginViewModel()
         {
