@@ -15,6 +15,8 @@ namespace RestaurantApp.Views.Administrator.Views
 		public CategoriesPage ()
 		{
 			InitializeComponent ();
-		}
+
+            CategoriesListView.SeparatorVisibility = SeparatorVisibility.None;
+        }
 	}
 }

@@ -5,12 +5,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace RestaurantApp.ViewModels
 {
     public class FoodItemsViewModel : INotifyPropertyChanged
     {
         private string _selectedCategorie;
+        private List<string> _categories;
         private CategoriesApiService _categoriesApiService = new CategoriesApiService();
 
         public FoodItemsViewModel()
@@ -70,14 +72,23 @@ namespace RestaurantApp.ViewModels
                 },
             };
 
+            //_categories = LoadCategories().Result;
             FilteredItems = AllItems;
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public List<FoodItem> AllItems { get; set; }
 
         public List<FoodItem> FilteredItems { get; set; }
 
-        public List<string> Categories => _categoriesApiService.GetCategories().Result.Select(x => x.Name).ToList();
+        public List<string> Categories
+        {
+            get
+            {
+                return LoadCategories().Result;
+            }
+        }
 
         public string SelectedCategory
         {
@@ -93,8 +104,6 @@ namespace RestaurantApp.ViewModels
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
         protected void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
@@ -106,6 +115,13 @@ namespace RestaurantApp.ViewModels
                 FilteredItems = AllItems;
             else
                 FilteredItems = AllItems.Where(x => x.Category.Equals(SelectedCategory, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+
+        private async Task<List<string>> LoadCategories()
+        {
+            var categoriesItems = await _categoriesApiService.GetCategories().ConfigureAwait(false);
+
+            return categoriesItems.Select(x => x.Name).ToList();
         }
     }
 }

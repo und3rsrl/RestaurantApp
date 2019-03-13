@@ -1,4 +1,5 @@
-﻿using RestaurantApp.Models;
+﻿using Newtonsoft.Json;
+using RestaurantApp.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -12,12 +13,25 @@ namespace RestaurantApp.Services
         public CategoriesApiService()
             : base()
         {
-            
+
         }
 
         public async Task<IEnumerable<CategorieItem>> GetCategories()
         {
-            var result = await HttpClient.GetAsync("Categories");
+            try
+            {
+                var response = await HttpClient.GetAsync("Categories").ConfigureAwait(false);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var content = await response.Content.ReadAsStringAsync();
+                    return JsonConvert.DeserializeObject<List<CategorieItem>>(content);
+                }
+            }
+            catch (Exception e)
+            {
+                
+            }
 
             return null;
         }

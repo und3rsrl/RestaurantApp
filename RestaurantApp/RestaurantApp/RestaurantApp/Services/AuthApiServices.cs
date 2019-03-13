@@ -55,7 +55,6 @@ namespace RestaurantApp.Services
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
-
             var response = await HttpClient.PostAsync("Account/Login", content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
