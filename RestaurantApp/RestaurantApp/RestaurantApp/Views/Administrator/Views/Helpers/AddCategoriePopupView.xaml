@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
+             x:Class="RestaurantApp.Views.Administrator.Views.Helpers.AddCategoriePopupView">
+
+    <ContentPage.BindingContext>
+        <vm:CategoriesViewModel/>
+    </ContentPage.BindingContext>
+
+    <StackLayout Margin="12"
+                 Padding="24"
+                 Spacing="24"
+                 BackgroundColor="White"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
+        <StackLayout Orientation="Horizontal">
+            <Label Text="Name"
+                   VerticalTextAlignment="Center"
+                   Margin="0, 0, 30, 0"></Label>
+            <Entry Text="{Binding Name}"
+                   FontSize="Medium"
+                   Placeholder="Category name"/>
+        </StackLayout>
+
+        <Button BackgroundColor="#41bbf4"
+                Command="{Binding AddCategorieCommand}"
+                FontSize="Medium"
+                Text="Add"
+                TextColor="White"
+                Clicked="Button_Clicked"/>
+    </StackLayout>
+</pages:PopupPage>

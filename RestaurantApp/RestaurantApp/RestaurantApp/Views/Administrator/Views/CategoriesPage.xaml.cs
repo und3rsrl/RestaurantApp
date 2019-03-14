@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RestaurantApp.Views.Administrator.Views.Helpers;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,5 +20,10 @@ namespace RestaurantApp.Views.Administrator.Views
 
             CategoriesListView.SeparatorVisibility = SeparatorVisibility.None;
         }
-	}
+
+        private void Button_AddCategorie_Clicked(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PushAsync(new AddCategoriePopupView());
+        }
+    }
 }

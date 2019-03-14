@@ -91,6 +91,9 @@ namespace RestaurantApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
+            if (_context.Categories.Where(x => x.Name.Equals(categorie.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault() != null)
+                return BadRequest("Categorie already exists.");
+
             _context.Categories.Add(categorie);
             await _context.SaveChangesAsync();
 

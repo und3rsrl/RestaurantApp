@@ -31,7 +31,8 @@
                 BackgroundColor="#41bbf4"
                 TextColor="White"
                 CornerRadius="0"
-                x:Name="Button_AddCategorie"/>
+                x:Name="Button_AddCategorie"
+                Clicked="Button_AddCategorie_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

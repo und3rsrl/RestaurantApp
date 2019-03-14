@@ -24,6 +24,7 @@ namespace RestaurantApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            Rg.Plugins.Popup.Popup.Init();
             Xamarin.FormsMaps.Init();
             KeyboardOverlapRenderer.Init();
             LoadApplication(new App());
