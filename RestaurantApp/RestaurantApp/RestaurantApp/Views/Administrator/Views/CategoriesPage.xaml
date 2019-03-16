@@ -12,16 +12,28 @@
             <ListView
                   x:Name="CategoriesListView" 
                   CachingStrategy="RecycleElement"
+                  ItemSelected="CategoriesListView_ItemSelected"
                   IsPullToRefreshEnabled="false" 
                   ItemsSource="{Binding Categories}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="30, 10, 0, 0">
+                            <Grid Padding="30, 10, 10, 0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="45"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Name}"></Label>
+                                <Label Text="{Binding Name}"
+                                       FontSize="Medium"></Label>
+                                <ImageButton Grid.Column="1" 
+                                             Source="delete.png"
+                                             Command="{Binding BindingContext.DeleteCategorieCommand, Source={x:Reference CategoriesListView}}"
+                                             CommandParameter="{Binding Id}">
+                                    <ImageButton.BackgroundColor>
+                                        <OnPlatform x:TypeArguments="Color" 
+                                                    Android="Transparent"/>
+                                    </ImageButton.BackgroundColor>
+                                </ImageButton>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

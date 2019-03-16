@@ -48,5 +48,34 @@ namespace RestaurantApp.Services
 
             return string.Empty;
         }
+
+        public async Task<string> EditCategorie(int id, string name)
+        {
+            var model = new CategorieItem()
+            {
+                Id = id,
+                Name = name
+            };
+
+            var json = JsonConvert.SerializeObject(model);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await HttpClient.PutAsync("Categories/" + id, content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return await response.Content.ReadAsStringAsync();
+
+            return string.Empty;
+        }
+
+        public async Task<string> DeleteCategorie(int id)
+        {
+            var response = await HttpClient.DeleteAsync("Categories/" + id);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return await response.Content.ReadAsStringAsync();
+
+            return string.Empty;
+        }
     }
 }

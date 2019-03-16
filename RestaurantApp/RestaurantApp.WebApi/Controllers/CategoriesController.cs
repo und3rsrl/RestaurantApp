@@ -58,7 +58,7 @@ namespace RestaurantApp.WebApi.Controllers
 
             if (id != categorie.Id)
             {
-                return BadRequest();
+                return BadRequest("Error occured");
             }
 
             _context.Entry(categorie).State = EntityState.Modified;

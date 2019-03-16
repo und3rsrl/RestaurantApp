@@ -1,4 +1,5 @@
-﻿using Rg.Plugins.Popup.Pages;
+﻿using RestaurantApp.ViewModels;
+using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
@@ -14,9 +15,17 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AddCategoriePopupView : PopupPage
     {
-        public AddCategoriePopupView()
+        public AddCategoriePopupView(EventHandler refreshCategories)
         {
             InitializeComponent();
+
+            BindData(refreshCategories);
+        }
+
+        private void BindData(EventHandler refreshCategories)
+        {
+            var viewModel = BindingContext as AddCategorieViewModel;
+            viewModel.RefreshCategories += refreshCategories;
         }
 
         private void Button_Clicked(object sender, EventArgs e)

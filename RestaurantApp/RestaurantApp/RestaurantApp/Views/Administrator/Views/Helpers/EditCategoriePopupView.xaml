@@ -1,13 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <pages:PopupPage
-             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
-             xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
-    x:Class="RestaurantApp.Views.Administrator.Views.Helpers.AddCategoriePopupView">
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
+             x:Class="RestaurantApp.Views.Administrator.Views.Helpers.EditCategoriePopupView">
 
     <ContentPage.BindingContext>
-        <vm:AddCategorieViewModel/>
+        <vm:EditCategorieViewModel/>
     </ContentPage.BindingContext>
 
     <StackLayout Margin="12"
@@ -21,14 +20,15 @@
                    VerticalTextAlignment="Center"
                    Margin="0, 0, 30, 0"></Label>
             <Entry Text="{Binding Name}"
+                   x:Name="Name_Entry"
                    FontSize="Medium"
                    Placeholder="Category name"/>
         </StackLayout>
 
         <Button BackgroundColor="#41bbf4"
-                Command="{Binding AddCategorieCommand}"
+                Command="{Binding EditCategorieCommand}"
                 FontSize="Medium"
-                Text="Add"
+                Text="Edit"
                 TextColor="White"
                 Clicked="Button_Clicked"/>
     </StackLayout>

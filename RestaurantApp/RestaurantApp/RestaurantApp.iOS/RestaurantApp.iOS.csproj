@@ -218,4 +218,7 @@
   <ItemGroup>
     <BundleResource Include="Resources\waiter.png" />
   </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\delete.png" />
+  </ItemGroup>
 </Project>
