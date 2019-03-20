@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RestaurantApp.Views.Administrator.Views.Helpers;
+using Rg.Plugins.Popup.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +18,12 @@ namespace RestaurantApp.Views.Administrator.Views
 		{
 			InitializeComponent ();
 		}
-	}
+
+        private void Button_AddFood_Clicked(object sender, EventArgs e)
+        {
+            //var viewModel = BindingContext as CategoriesViewModel;
+
+            PopupNavigation.Instance.PushAsync(new AddFoodPopupView());
+        }
+    }
 }

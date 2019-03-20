@@ -1,6 +1,7 @@
 ﻿using RestaurantApp.DTOs;
 using RestaurantApp.Views.Administrator;
 using RestaurantApp.Views.User;
+using RestaurantApp.Views.Waiter;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -23,7 +24,7 @@ namespace RestaurantApp.Handlers
                     return new UserMasterDetailPage();
 
                 case "Waiter":
-                    throw new NotImplementedException("This section is not completed.");
+                    return new WaiterMasterDetailPage();
 
                 default:
                     throw new InvalidOperationException("Unsupported role. Abort.");

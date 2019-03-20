@@ -4,9 +4,13 @@
              x:Class="RestaurantApp.Views.Administrator.Views.FoodPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Food!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            
+            <Button Text="Add Food"
+                BackgroundColor="#41bbf4"
+                TextColor="White"
+                CornerRadius="0"
+                x:Name="Button_AddFood"
+                Clicked="Button_AddFood_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

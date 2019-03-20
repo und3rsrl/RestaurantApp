@@ -1,12 +1,52 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              x:Class="RestaurantApp.Views.Administrator.Views.WaitersPage">
+
+    <ContentPage.BindingContext>
+        <vm:WaitersViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Waiters!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView
+                  x:Name="WaitersListView" 
+                  CachingStrategy="RecycleElement"
+                  ItemSelected="WaitersListView_ItemSelected"
+                  IsPullToRefreshEnabled="false" 
+                  ItemsSource="{Binding Waiters}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="30, 10, 10, 0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="45"/>
+                                </Grid.ColumnDefinitions>
+                                <Label Text="{Binding Email}"
+                                       FontSize="Small"
+                                       HorizontalTextAlignment="Center"/>
+                                <ImageButton Grid.Column="1" 
+                                             Source="delete.png"
+                                             Command="{Binding BindingContext.DeleteWaiterCommand, Source={x:Reference WaitersListView}}"
+                                             CommandParameter="{Binding UserId}">
+                                    <ImageButton.BackgroundColor>
+                                        <OnPlatform x:TypeArguments="Color" 
+                                                    Android="Transparent"/>
+                                    </ImageButton.BackgroundColor>
+                                </ImageButton>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Add Waiter"
+                BackgroundColor="#41bbf4"
+                TextColor="White"
+                CornerRadius="0"
+                x:Name="Button_AddWaiter"
+                Clicked="Button_AddWaiter_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

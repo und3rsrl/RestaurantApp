@@ -1,0 +1,44 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:domain="clr-namespace:RestaurantApp.Domain"
+             x:Class="RestaurantApp.Views.Waiter.Views.WaiterMasterPage"
+             Padding="0,40,0,0"
+             Icon="menu.png"
+             Title="Restaurant"
+             BackgroundImage="menu_background.jpg">
+    <ContentPage.Content>
+        <StackLayout >
+            <ListView x:Name="NavigationListView" 
+                  x:FieldModifier="public" 
+                  SeparatorVisibility="None"
+                  BackgroundColor="Transparent">
+                <ListView.ItemsSource>
+                    <x:Array Type="{x:Type domain:MasterNavigationUserItem}">
+                        <domain:MasterNavigationUserItem Title="Active Orders" Icon="categories.png" />
+                    </x:Array>
+                </ListView.ItemsSource>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="5,10">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Image Source="{Binding Icon}" />
+                                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button Text="Logout"
+                BackgroundColor="#e03838"
+                TextColor="White"
+                CornerRadius="0"
+                Clicked="Button_Logout_Clicked"
+                x:Name="Button_Logout"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

@@ -8,6 +8,7 @@ using Android.Widget;
 using Android.OS;
 using System.Threading.Tasks;
 using Android;
+using Plugin.CurrentActivity;
 
 namespace RestaurantApp.Droid
 {
@@ -22,6 +23,7 @@ namespace RestaurantApp.Droid
 
             base.OnCreate(savedInstanceState);
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
+            //CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.FormsMaps.Init(this, savedInstanceState);
             LoadApplication(new App());
@@ -106,6 +108,8 @@ namespace RestaurantApp.Droid
                     }
                     break;
             }
+
+            Plugin.Permissions.PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             //base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
