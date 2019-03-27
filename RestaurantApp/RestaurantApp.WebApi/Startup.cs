@@ -101,6 +101,8 @@ namespace RestaurantApp.WebApi
 
             IdentityInitializer.SeedData(userManager, roleManager);
 
+            app.UseStaticFiles();
+
             app.UseAuthentication();
 
             app.UseCors("CorsPolicy");

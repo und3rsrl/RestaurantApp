@@ -28,11 +28,11 @@ namespace RestaurantApp.Views.User.Views
 
             StringBuilder ingredients = new StringBuilder("Ingredients: ");
 
-            foreach (string ingredient in item.Ingredients)
-            {
-                ingredients.Append(ingredient);
-                ingredients.Append(", ");
-            }
+            //foreach (string ingredient in item.Ingredients)
+            //{
+            //    ingredients.Append(ingredient);
+            //    ingredients.Append(", ");
+            //}
 
             ingredients.Remove(ingredients.Length - 2, 2);
 

@@ -21,7 +21,6 @@ namespace RestaurantApp.Views.Administrator.Views
 			InitializeComponent ();
 
             CategoriesListView.SeparatorVisibility = SeparatorVisibility.None;
-
         }
 
         protected override void OnAppearing()

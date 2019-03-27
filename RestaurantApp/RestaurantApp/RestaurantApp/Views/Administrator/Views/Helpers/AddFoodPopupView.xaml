@@ -1,64 +1,97 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage
-    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
-    xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RestaurantApp.Views.Administrator.Views.Helpers.AddFoodPopupView">
+<pages:PopupPage xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+                 xmlns="http://xamarin.com/schemas/2014/forms"
+                 xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                 xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
+                 x:Class="RestaurantApp.Views.Administrator.Views.Helpers.AddFoodPopupView">
+
+    <ContentPage.BindingContext>
+        <vm:AddFoodViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
-        <StackLayout Margin="12"
-                 Padding="24"
-                 Spacing="24"
-                 BackgroundColor="White"
-                 HorizontalOptions="Center"
-                 VerticalOptions="Center">
-            
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Food Name"
-                   VerticalTextAlignment="Center"
-                   HorizontalOptions="Start"
-                   Margin="0, 0, 15, 0"
-                   FontSize="Medium"></Label>
-                <Entry Text="{Binding Name}"
-                   FontSize="Medium"
-                   Placeholder="food name"
-                   HorizontalOptions="FillAndExpand"/>
-            </StackLayout>
-           
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Ingredients"
-                   VerticalTextAlignment="Center"
-                   HorizontalOptions="Start"
-                   Margin="0, 0, 15, 0"
-                   FontSize="Medium"></Label>
-                <Entry Text="{Binding Name}"
-                   FontSize="Medium"
-                   HorizontalOptions="FillAndExpand"
-                   Placeholder="ingredients"/>
-            </StackLayout>
+        <ScrollView>
+            <StackLayout Margin="12"
+                         Padding="24"
+                         Spacing="24"
+                         BackgroundColor="White"
+                         HorizontalOptions="Center"
+                         VerticalOptions="Center">
 
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Pick Photo"
-                        BackgroundColor="#41bbf4"
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Food Name"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="Start"
+                           Margin="0, 0, 15, 0"
+                           FontSize="Medium"/>
+                    <Entry Text="{Binding Name}"
+                           FontSize="Medium"
+                           Placeholder="food name"
+                           HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Ingredients"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="Start"
+                           Margin="0, 0, 15, 0"
+                           FontSize="Medium"/>
+                    <Entry Text="{Binding Ingredients}"
+                           FontSize="Medium"
+                           HorizontalOptions="FillAndExpand"
+                           Placeholder="ingredients"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Price (Lei)"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="Start"
+                           Margin="0, 0, 15, 0"
+                           FontSize="Medium"/>
+                    <Entry Text="{Binding Price}"
+                           FontSize="Medium"
+                           HorizontalOptions="FillAndExpand"
+                           Placeholder="price"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Label Text="Categorie"
+                           VerticalTextAlignment="Center"
+                           HorizontalOptions="Start"
+                           Margin="0, 0, 15, 0"
+                           FontSize="Medium"/>
+                    <Picker x:Name="category_picker"
+                            TextColor="#41bbf4"
+                            ItemsSource="{Binding Categories}"
+                            SelectedItem="{Binding SelectedCategorie}"
+                            HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+                <StackLayout Orientation="Horizontal">
+                    <Button Text="Pick Photo"
+                            BackgroundColor="#41bbf4"
+                            TextColor="White"
+                            Clicked="PickPhoto_Clicked"
+                            HorizontalOptions="FillAndExpand"/>
+
+                    <Button Text="Take Photo"
+                            BackgroundColor="#41bbf4"
+                            TextColor="White"
+                            Clicked="TakePhoto_Clicked"
+                            HorizontalOptions="FillAndExpand"/>
+                </StackLayout>
+
+                <Image x:Name="FileImage"
+                       HorizontalOptions="FillAndExpand"
+                       HeightRequest="200"
+                       WidthRequest="300"/>
+
+                <Button BackgroundColor="#41bbf4"
+                        FontSize="Medium"
+                        Text="Add"
                         TextColor="White"
-                        Clicked="PickPhoto_Clicked"
-                        HorizontalOptions="FillAndExpand"/>
-
-                <Button Text="Take Photo"
-                        BackgroundColor="#41bbf4"
-                        TextColor="White"
-                        Clicked="TakePhoto_Clicked"
-                        HorizontalOptions="FillAndExpand"/>
+                        Command="{Binding AddFoodCommand}"/>
             </StackLayout>
-
-            <Image x:Name="FileImage"
-                   HorizontalOptions="FillAndExpand"
-                   HeightRequest="200"
-                   WidthRequest="300"/>
-
-            <Button BackgroundColor="#41bbf4"
-                FontSize="Medium"
-                Text="Add"
-                TextColor="White"/>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </pages:PopupPage>

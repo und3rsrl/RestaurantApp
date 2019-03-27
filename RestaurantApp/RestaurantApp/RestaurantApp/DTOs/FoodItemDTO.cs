@@ -2,20 +2,16 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace RestaurantApp.Models
+namespace RestaurantApp.DTOs
 {
-    public class FoodItem
+    public class FoodItemDTO
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public double Price { get; set; }
 
-        public string ImageUrl { get; set; }
-
-        public string Category { get; set; }
-
         public string Ingredients { get; set; }
+
+        public string Categorie { get; set; }
     }
 }

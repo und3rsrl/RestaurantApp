@@ -1,5 +1,6 @@
 ﻿using Plugin.Media;
 using Plugin.Media.Abstractions;
+using RestaurantApp.ViewModels;
 using Rg.Plugins.Popup.Pages;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,19 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
 			InitializeComponent ();
 		}
 
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var viewModel = BindingContext as AddFoodViewModel;
+
+            if (viewModel != null)
+            {
+                if (viewModel.LoadCategories.CanExecute(null))
+                    viewModel.LoadCategories.Execute(null);
+            }
+        }
+
         private async void PickPhoto_Clicked(object sender, EventArgs e)
         {
             await CrossMedia.Current.Initialize();
@@ -36,6 +50,10 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
 
             if (_mediaFile == null)
                 return;
+
+            var viewModel = BindingContext as AddFoodViewModel;
+
+            viewModel.Image = _mediaFile;
 
             FileImage.Source = ImageSource.FromStream(() =>
             {

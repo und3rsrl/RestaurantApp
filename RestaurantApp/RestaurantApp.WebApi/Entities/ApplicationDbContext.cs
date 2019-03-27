@@ -14,6 +14,7 @@ namespace RestaurantApp.WebApi.Entities
             : base(options)
         {         
         }
-        public DbSet<RestaurantApp.WebApi.Models.Categorie> Categories { get; set; }
+        public DbSet<Categorie> Categories { get; set; }
+        public DbSet<Food> Foods { get; set; }
     }
 }

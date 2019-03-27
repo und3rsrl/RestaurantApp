@@ -27,11 +27,11 @@ namespace RestaurantApp.ViewModels
                     Name = "Salata de rosii",
                     Price = 10.99,
                     Category = "Salads",
-                    Ingredients = new List<string>()
-                    {
-                        "Rosii",
-                        "Castraveti"
-                    },
+                    //Ingredients = new List<string>()
+                    //{
+                    //    "Rosii",
+                    //    "Castraveti"
+                    //},
                     ImageUrl = "https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
                 },
                 new FoodItem()
@@ -40,10 +40,10 @@ namespace RestaurantApp.ViewModels
                     Name = "Salata de castravet",
                     Price = 13.99,
                     Category = "Salads",
-                    Ingredients = new List<string>()
-                    {
-                        "Castraveti"
-                    },
+                    //Ingredients = new List<string>()
+                    //{
+                    //    "Castraveti"
+                    //},
                      ImageUrl = "https://images.pexels.com/photos/1435893/pexels-photo-1435893.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
                 },
                 new FoodItem()
@@ -52,10 +52,10 @@ namespace RestaurantApp.ViewModels
                     Name = "Pizza Quatro Stagioni",
                     Price = 21.99,
                     Category = "Pizza",
-                    Ingredients = new List<string>()
-                    {
-                        "Masline"
-                    },
+                    //Ingredients = new List<string>()
+                    //{
+                    //    "Masline"
+                    //},
                     ImageUrl = "https://images.pexels.com/photos/724216/pexels-photo-724216.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
                 },
                 new FoodItem()
@@ -64,10 +64,10 @@ namespace RestaurantApp.ViewModels
                     Name = "Pizza Diavola",
                     Price = 25.99,
                     Category = "Pizza",
-                    Ingredients = new List<string>()
-                    {
-                        "Picant"
-                    },
+                    //Ingredients = new List<string>()
+                    //{
+                    //    "Picant"
+                    //},
                     ImageUrl = "https://images.pexels.com/photos/532779/pexels-photo-532779.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
                 },
             };
