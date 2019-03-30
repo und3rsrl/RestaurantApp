@@ -28,23 +28,22 @@
                    FontAttributes="Bold"/>
 
             <StackLayout Orientation="Vertical" 
-                 VerticalOptions="End" 
-                 Spacing="20"
-                 Padding="15, 0, 15, 50">
-                
-                
+                         VerticalOptions="End" 
+                         Spacing="20"
+                         Padding="15, 0, 15, 50">
+
                 <Entry Text="{Binding Username}"
                        Placeholder="email"
                        x:Name="Entry_UserName">
                     <Entry.PlaceholderColor >
                         <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                                    Android="White" 
+                                    iOS="Black"/>
                     </Entry.PlaceholderColor>
                     <Entry.TextColor >
                         <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                                    Android="White" 
+                                    iOS="Black"/>
                     </Entry.TextColor>
                 </Entry>
 
@@ -53,14 +52,14 @@
                        Placeholder="password"
                        x:Name="Entry_Password">
                     <Entry.PlaceholderColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.PlaceholderColor>
                     <Entry.TextColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.TextColor>
                 </Entry>
 

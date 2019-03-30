@@ -1,92 +1,51 @@
-﻿using RestaurantApp.Models;
+﻿using MvvmHelpers;
+using RestaurantApp.Models;
 using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Xamarin.Forms;
 
 namespace RestaurantApp.ViewModels
 {
-    public class FoodItemsViewModel : INotifyPropertyChanged
+    public class FoodItemsViewModel : BaseViewModel
     {
         private string _selectedCategorie;
         private List<string> _categories;
         private CategoriesApiService _categoriesApiService = new CategoriesApiService();
+        private FoodApiService _foodsApiService = new FoodApiService();
 
         public FoodItemsViewModel()
         {
             _selectedCategorie = "All";
-
-            AllItems =  new List<FoodItem>()
-            {
-                new FoodItem()
-                {
-                    Id = 1,
-                    Name = "Salata de rosii",
-                    Price = 10.99,
-                    Category = "Salads",
-                    //Ingredients = new List<string>()
-                    //{
-                    //    "Rosii",
-                    //    "Castraveti"
-                    //},
-                    ImageUrl = "https://images.pexels.com/photos/1211887/pexels-photo-1211887.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                },
-                new FoodItem()
-                {
-                    Id = 1,
-                    Name = "Salata de castravet",
-                    Price = 13.99,
-                    Category = "Salads",
-                    //Ingredients = new List<string>()
-                    //{
-                    //    "Castraveti"
-                    //},
-                     ImageUrl = "https://images.pexels.com/photos/1435893/pexels-photo-1435893.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                },
-                new FoodItem()
-                {
-                    Id = 1,
-                    Name = "Pizza Quatro Stagioni",
-                    Price = 21.99,
-                    Category = "Pizza",
-                    //Ingredients = new List<string>()
-                    //{
-                    //    "Masline"
-                    //},
-                    ImageUrl = "https://images.pexels.com/photos/724216/pexels-photo-724216.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                },
-                new FoodItem()
-                {
-                    Id = 1,
-                    Name = "Pizza Diavola",
-                    Price = 25.99,
-                    Category = "Pizza",
-                    //Ingredients = new List<string>()
-                    //{
-                    //    "Picant"
-                    //},
-                    ImageUrl = "https://images.pexels.com/photos/532779/pexels-photo-532779.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260"
-                },
-            };
-
-            //_categories = LoadCategories().Result;
-            FilteredItems = AllItems;
+            FilteredItems = new ObservableRangeCollection<FoodItem>();
+            AllItems = new ObservableRangeCollection<FoodItem>();
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ObservableRangeCollection<FoodItem> AllItems { get; set; }
 
-        public List<FoodItem> AllItems { get; set; }
+        public ObservableRangeCollection<FoodItem> FilteredItems { get; set; }
 
-        public List<FoodItem> FilteredItems { get; set; }
-
-        public List<string> Categories
+        public ObservableRangeCollection<string> Categories
         {
             get
             {
-                return LoadCategories().Result;
+                var categories = new ObservableRangeCollection<string>();
+
+                categories.AddRange(LoadCategories().Result);
+
+                return categories;
+            }
+        }
+
+        public ICommand LoadFoods
+        {
+            get
+            {
+                return new Command(async () => await ExecuteLoadFoodsCommand());
             }
         }
 
@@ -95,26 +54,14 @@ namespace RestaurantApp.ViewModels
             get => _selectedCategorie;
             set
             {
-                if (_selectedCategorie != value)
-                {
-                    _selectedCategorie = value;
+                if (SetProperty(ref _selectedCategorie, value))
                     FilterItems();
-                    OnPropertyChanged("FilteredItems");
-                }                    
             }
-        }
-
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         private void FilterItems()
         {
-            if (_selectedCategorie.Equals("All", StringComparison.OrdinalIgnoreCase))
-                FilteredItems = AllItems;
-            else
-                FilteredItems = AllItems.Where(x => x.Category.Equals(SelectedCategory, StringComparison.OrdinalIgnoreCase)).ToList();
+            FilteredItems.ReplaceRange(AllItems.Where(x => x.Category == SelectedCategory || SelectedCategory == "All"));
         }
 
         private async Task<List<string>> LoadCategories()
@@ -122,6 +69,35 @@ namespace RestaurantApp.ViewModels
             var categoriesItems = await _categoriesApiService.GetCategories().ConfigureAwait(false);
 
             return categoriesItems.Select(x => x.Name).ToList();
+        }
+
+        private async Task ExecuteLoadFoodsCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                var items = await _foodsApiService.GetFoods();
+
+                foreach (var food in items)
+                {
+                    food.ImageUrl = ApiService.BASE_SERVER_URL + food.ImageUrl;
+                }
+
+                AllItems.ReplaceRange(items);
+                FilterItems();
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

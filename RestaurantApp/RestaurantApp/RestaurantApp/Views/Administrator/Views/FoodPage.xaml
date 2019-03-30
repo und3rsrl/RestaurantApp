@@ -1,16 +1,75 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              x:Class="RestaurantApp.Views.Administrator.Views.FoodPage">
+
+    <ContentPage.BindingContext>
+        <vm:FoodItemsViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
+            <Picker x:Name="category_picker"
+                    TextColor="#41bbf4"
+                    ItemsSource="{Binding Categories}"
+                    SelectedItem="{Binding SelectedCategory}">
+            </Picker>
             
+            <ListView x:Name="FoodListView" 
+                      CachingStrategy="RecycleElement"
+                      IsPullToRefreshEnabled="false"
+                      ItemsSource="{Binding FilteredItems}"
+                      RowHeight="300">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="10">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="200"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Image Grid.Row="0"
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Aspect="Fill"
+                                       Source="{Binding ImageUrl}" />
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="{Binding Name}"/>
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="1"
+                                       HorizontalTextAlignment="End"
+                                       Text="{Binding Price}"/>
+
+                                <Button Grid.Row="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Text="Delete"
+                                        BackgroundColor="#e03838"
+                                        TextColor="White"
+                                        FontSize="Small"
+                                        CornerRadius="20"
+                                        x:Name="Button_DeleteFood"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
             <Button Text="Add Food"
-                BackgroundColor="#41bbf4"
-                TextColor="White"
-                CornerRadius="0"
-                x:Name="Button_AddFood"
-                Clicked="Button_AddFood_Clicked"/>
+                    BackgroundColor="#41bbf4"
+                    TextColor="White"
+                    CornerRadius="0"
+                    x:Name="Button_AddFood"
+                    Clicked="Button_AddFood_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

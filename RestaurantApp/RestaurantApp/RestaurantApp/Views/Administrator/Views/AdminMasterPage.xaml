@@ -10,10 +10,10 @@
              BackgroundImage="menu_background.jpg">
     <ContentPage.Content>
         <StackLayout >
-            <ListView x:Name="NavigationListView" 
-                  x:FieldModifier="public" 
-                  SeparatorVisibility="None"
-                  BackgroundColor="Transparent">
+            <ListView x:Name="NavigationListView"
+                      x:FieldModifier="public"
+                      SeparatorVisibility="None"
+                      BackgroundColor="Transparent">
                 <ListView.ItemsSource>
                     <x:Array Type="{x:Type domain:MasterNavigationUserItem}">
                         <domain:MasterNavigationUserItem Title="Categories" Icon="categories.png" Target="{x:Type local:CategoriesPage}" />
@@ -27,21 +27,23 @@
                             <Grid Padding="5,10">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="30"/>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="{Binding Icon}" />
-                                <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold"/>
+                                <Image Source="{Binding Icon}"/>
+                                <Label Grid.Column="1"
+                                       Text="{Binding Title}"
+                                       FontAttributes="Bold"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
             <Button Text="Logout"
-                BackgroundColor="#e03838"
-                TextColor="White"
-                CornerRadius="0"
-                Clicked="Button_Logout_Clicked"
-                x:Name="Button_Logout"/>
+                    BackgroundColor="#e03838"
+                    TextColor="White"
+                    CornerRadius="0"
+                    Clicked="Button_Logout_Clicked"
+                    x:Name="Button_Logout"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

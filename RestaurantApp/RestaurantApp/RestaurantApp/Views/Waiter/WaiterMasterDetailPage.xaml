@@ -4,12 +4,12 @@
                   xmlns:helpers="clr-namespace:RestaurantApp.Views.Waiter.Views"
                   x:Class="RestaurantApp.Views.Waiter.WaiterMasterDetailPage">
     <MasterDetailPage.Master>
-        <helpers:WaiterMasterPage x:Name="masterView"></helpers:WaiterMasterPage>
+        <helpers:WaiterMasterPage x:Name="masterView"/>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <NavigationPage>
             <x:Arguments>
-                <helpers:ActiveOrders></helpers:ActiveOrders>
+                <helpers:ActiveOrders/>
             </x:Arguments>
         </NavigationPage>
     </MasterDetailPage.Detail>

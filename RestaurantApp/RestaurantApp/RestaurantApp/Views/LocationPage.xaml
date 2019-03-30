@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              x:Class="RestaurantApp.Views.LocationPage">
+    
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand"
                      HorizontalOptions="FillAndExpand">
-            <maps:Map
-            x:Name="MyMap"
-            IsShowingUser="true"
-            MapType="Street"/>
+            <maps:Map x:Name="MyMap"
+                      IsShowingUser="true"
+                      MapType="Street"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

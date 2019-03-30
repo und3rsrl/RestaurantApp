@@ -10,12 +10,11 @@
 
     <ContentPage.Content>
         <StackLayout>
-            <ListView
-                  x:Name="WaitersListView" 
-                  CachingStrategy="RecycleElement"
-                  ItemSelected="WaitersListView_ItemSelected"
-                  IsPullToRefreshEnabled="false" 
-                  ItemsSource="{Binding Waiters}">
+            <ListView x:Name="WaitersListView"
+                      CachingStrategy="RecycleElement"
+                      ItemSelected="WaitersListView_ItemSelected"
+                      IsPullToRefreshEnabled="false"
+                      ItemsSource="{Binding Waiters}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -42,11 +41,11 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Button Text="Add Waiter"
-                BackgroundColor="#41bbf4"
-                TextColor="White"
-                CornerRadius="0"
-                x:Name="Button_AddWaiter"
-                Clicked="Button_AddWaiter_Clicked"/>
+                    BackgroundColor="#41bbf4"
+                    TextColor="White"
+                    CornerRadius="0"
+                    x:Name="Button_AddWaiter"
+                    Clicked="Button_AddWaiter_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

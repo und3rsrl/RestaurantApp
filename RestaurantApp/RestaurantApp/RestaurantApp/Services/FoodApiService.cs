@@ -14,6 +14,25 @@ namespace RestaurantApp.Services
 {
     public class FoodApiService : ApiService
     {
+        public FoodApiService()
+            : base()
+        {
+
+        }
+
+        public async Task<IEnumerable<FoodItem>> GetFoods()
+        {
+            var response = await HttpClient.GetAsync("Foods");
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<FoodItem>>(content);
+            }
+
+            return null;
+        }
+
         public async Task<string> AddFood(string name, string ingredients, double price, string categorie, MediaFile image)
         {
             MultipartFormDataContent mutipartContent = new MultipartFormDataContent

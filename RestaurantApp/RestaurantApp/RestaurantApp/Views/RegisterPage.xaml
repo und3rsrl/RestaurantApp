@@ -25,47 +25,47 @@
                    Text="Register"
                    FontAttributes="Bold"/>
 
-            <StackLayout Orientation="Vertical" 
-                 VerticalOptions="End" 
-                 Spacing="20"
-                 Padding="15, 0, 15, 50">
+            <StackLayout Orientation="Vertical"
+                         VerticalOptions="End"
+                         Spacing="20"
+                         Padding="15, 0, 15, 50">
 
-                <Entry Text="{Binding Email}" 
-               Placeholder="email">
+                <Entry Text="{Binding Email}"
+                       Placeholder="Email">
                     <Entry.PlaceholderColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.PlaceholderColor>
                 </Entry>
 
-                <Entry Text="{Binding Password}" 
-               Placeholder="password"
-               IsPassword="True">
+                <Entry Text="{Binding Password}"
+                       Placeholder="password"
+                       IsPassword="True">
                     <Entry.PlaceholderColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.PlaceholderColor>
                     <Entry.TextColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.TextColor>
                 </Entry>
 
-                <Entry Text="{Binding ConfirmPassword}" 
-               Placeholder="confirm password"
-               IsPassword="True">
+                <Entry Text="{Binding ConfirmPassword}"
+                       Placeholder="confirm password"
+                       IsPassword="True">
                     <Entry.PlaceholderColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.PlaceholderColor>
                     <Entry.TextColor >
-                        <OnPlatform x:TypeArguments="Color" 
-                            Android="White" 
-                            iOS="Black"/>
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
                     </Entry.TextColor>
                 </Entry>
 
@@ -78,7 +78,5 @@
                         x:Name="Button_Register"/>
             </StackLayout>
         </Grid>
-
     </RelativeLayout>
-
 </ContentPage>

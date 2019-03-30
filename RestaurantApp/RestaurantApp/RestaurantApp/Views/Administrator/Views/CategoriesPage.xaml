@@ -3,28 +3,28 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              x:Class="RestaurantApp.Views.Administrator.Views.CategoriesPage">
+    
     <ContentPage.BindingContext>
         <vm:CategoriesViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
         <StackLayout>
-            <ListView
-                  x:Name="CategoriesListView" 
-                  CachingStrategy="RecycleElement"
-                  ItemSelected="CategoriesListView_ItemSelected"
-                  IsPullToRefreshEnabled="false" 
-                  ItemsSource="{Binding Categories}">
+            <ListView x:Name="CategoriesListView"
+                      CachingStrategy="RecycleElement"
+                      ItemSelected="CategoriesListView_ItemSelected"
+                      IsPullToRefreshEnabled="false"
+                      ItemsSource="{Binding Categories}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <Grid Padding="30, 10, 10, 0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="45"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Name}"
-                                       FontSize="Medium"></Label>
+                                       FontSize="Medium"/>
                                 <ImageButton Grid.Column="1" 
                                              Source="delete.png"
                                              Command="{Binding BindingContext.DeleteCategorieCommand, Source={x:Reference CategoriesListView}}"
@@ -40,11 +40,11 @@
                 </ListView.ItemTemplate>
             </ListView>
             <Button Text="Add Categorie"
-                BackgroundColor="#41bbf4"
-                TextColor="White"
-                CornerRadius="0"
-                x:Name="Button_AddCategorie"
-                Clicked="Button_AddCategorie_Clicked"/>
+                    BackgroundColor="#41bbf4"
+                    TextColor="White"
+                    CornerRadius="0"
+                    x:Name="Button_AddCategorie"
+                    Clicked="Button_AddCategorie_Clicked"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
