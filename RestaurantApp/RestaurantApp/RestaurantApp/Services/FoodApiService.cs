@@ -64,5 +64,15 @@ namespace RestaurantApp.Services
 
             return string.Empty;
         }
+
+        public async Task<string> DeleteFood(int id)
+        {
+            var response = await HttpClient.DeleteAsync("Foods/" + id);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return await response.Content.ReadAsStringAsync();
+
+            return string.Empty;
+        }
     }
 }

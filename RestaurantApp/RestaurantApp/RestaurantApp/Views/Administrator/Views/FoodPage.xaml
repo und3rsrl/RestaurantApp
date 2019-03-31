@@ -58,7 +58,9 @@
                                         TextColor="White"
                                         FontSize="Small"
                                         CornerRadius="20"
-                                        x:Name="Button_DeleteFood"/>
+                                        x:Name="Button_DeleteFood"
+                                        Command="{Binding BindingContext.DeleteFoodCommand, Source={x:Reference FoodListView}}"
+                                        CommandParameter="{Binding Id}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

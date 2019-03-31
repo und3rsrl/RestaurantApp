@@ -7,8 +7,8 @@ namespace RestaurantApp.Services
 {
     public abstract class ApiService
     {
-        public const string BASE_API_URL = "http://79.117.205.34:50915/api/";
-        public const string BASE_SERVER_URL = "http://79.117.205.34:50915/";
+        public const string BASE_API_URL = "http://79.117.143.196:50915/api/";
+        public const string BASE_SERVER_URL = "http://79.117.143.196:50915/";
 
         private HttpClient _httpClient;
 

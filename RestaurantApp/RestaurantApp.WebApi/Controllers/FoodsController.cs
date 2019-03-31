@@ -118,6 +118,12 @@ namespace RestaurantApp.WebApi.Controllers
                 return NotFound();
             }
 
+            string fullPath = _environment.WebRootPath + "\\" + food.ImageUrl.Replace('/', '\\');
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }
+
             _context.Foods.Remove(food);
             await _context.SaveChangesAsync();
 

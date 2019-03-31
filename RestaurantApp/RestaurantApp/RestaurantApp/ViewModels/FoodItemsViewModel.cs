@@ -49,6 +49,18 @@ namespace RestaurantApp.ViewModels
             }
         }
 
+        public ICommand DeleteFoodCommand
+        {
+            get
+            {
+                return new Command<int>(async (id) =>
+                {
+                    await _foodsApiService.DeleteFood(id);
+                    Refresh(this, EventArgs.Empty);
+                });
+            }
+        }
+
         public string SelectedCategory
         {
             get => _selectedCategorie;
@@ -57,6 +69,11 @@ namespace RestaurantApp.ViewModels
                 if (SetProperty(ref _selectedCategorie, value))
                     FilterItems();
             }
+        }
+
+        public async void Refresh(object sender, EventArgs e)
+        {
+            await ExecuteLoadFoodsCommand();
         }
 
         private void FilterItems()
