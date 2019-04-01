@@ -66,7 +66,25 @@ namespace RestaurantApp.WebApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(food).State = EntityState.Modified;
+            var imageUrlFromDatabase = _context.Foods.AsNoTracking().Where(s => s.Id == id).FirstOrDefault().ImageUrl;
+
+            if (!imageUrlFromDatabase.Equals(food.ImageUrl, StringComparison.OrdinalIgnoreCase))
+            {
+                string fullPath = _environment.WebRootPath + "\\FoodPhotos\\" + imageUrlFromDatabase;
+                if (System.IO.File.Exists(fullPath))
+                {
+                    System.IO.File.Delete(fullPath);
+                }
+            }
+
+            try
+            {
+                _context.Entry(food).State = EntityState.Modified;
+            }
+            catch (Exception e)
+            {
+
+            }
 
             try
             {
@@ -118,7 +136,7 @@ namespace RestaurantApp.WebApi.Controllers
                 return NotFound();
             }
 
-            string fullPath = _environment.WebRootPath + "\\" + food.ImageUrl.Replace('/', '\\');
+            string fullPath = _environment.WebRootPath + "\\FoodPhotos\\" + food.ImageUrl.Replace('/', '\\');
             if (System.IO.File.Exists(fullPath))
             {
                 System.IO.File.Delete(fullPath);

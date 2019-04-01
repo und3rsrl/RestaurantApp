@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
-             x:Class="RestaurantApp.Views.Administrator.Views.FoodPage">
+             x:Class="RestaurantApp.Views.Administrator.Views.FoodPage"
+             Title="Foods">
 
     <ContentPage.BindingContext>
         <vm:FoodItemsViewModel/>
@@ -13,12 +14,13 @@
             <Picker x:Name="category_picker"
                     TextColor="#41bbf4"
                     ItemsSource="{Binding Categories}"
-                    SelectedItem="{Binding SelectedCategory}">
+                    SelectedItem="{Binding SelectedCategory}"
+                    Margin="10, 10, 10, 0">
             </Picker>
             
             <ListView x:Name="FoodListView" 
-                      CachingStrategy="RecycleElement"
                       IsPullToRefreshEnabled="false"
+                      ItemSelected="FoodListView_ItemSelected"
                       ItemsSource="{Binding FilteredItems}"
                       RowHeight="300">
                 <ListView.ItemTemplate>
@@ -38,7 +40,7 @@
                                 <Image Grid.Row="0"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
-                                       Aspect="Fill"
+                                       Aspect="AspectFill"
                                        Source="{Binding ImageUrl}" />
 
                                 <Label Grid.Row="1"

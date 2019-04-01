@@ -38,16 +38,16 @@ namespace RestaurantApp.Views.Administrator.Views
 
         private void Button_AddFood_Clicked(object sender, EventArgs e)
         {
-            //var viewModel = BindingContext as CategoriesViewModel;
+            var viewModel = BindingContext as FoodItemsViewModel;
 
-            PopupNavigation.Instance.PushAsync(new AddFoodPopupView());
+            PopupNavigation.Instance.PushAsync(new AddFoodPopupView(viewModel.Refresh));
         }
 
         private async void FoodListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var viewModel = BindingContext as FoodItemsViewModel;
             var slectedFoodItem = e.SelectedItem as FoodItem;
-            //await PopupNavigation.Instance.PushAsync();
+            await PopupNavigation.Instance.PushAsync(new EditFoodPopupView(slectedFoodItem, viewModel.Refresh, viewModel.Categories.ToList()));
         }
     }
 }

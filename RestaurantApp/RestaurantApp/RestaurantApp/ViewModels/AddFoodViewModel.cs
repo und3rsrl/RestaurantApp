@@ -39,6 +39,8 @@ namespace RestaurantApp.ViewModels
 
         public MediaFile Image { get; set; }
 
+        public event EventHandler RefreshFoods;
+
         public ICommand LoadCategories
         {
             get
@@ -55,10 +57,10 @@ namespace RestaurantApp.ViewModels
                 {
                     var response = await _foodsApiService.AddFood(Name, Ingredients, Price, SelectedCategorie, Image);
 
-                    //if (!string.IsNullOrEmpty(response))
-                    //    await Application.Current.MainPage.DisplayAlert("Add Categorie", response, "Ok");
-                    //else
-                    //    RefreshCategories?.Invoke(this, EventArgs.Empty);
+                    if (!string.IsNullOrEmpty(response))
+                        await Application.Current.MainPage.DisplayAlert("Add Categorie", response, "Ok");
+                    else
+                        RefreshFoods?.Invoke(this, EventArgs.Empty);
                 });
             }
         }

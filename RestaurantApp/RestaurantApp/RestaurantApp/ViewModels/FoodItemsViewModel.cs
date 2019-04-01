@@ -101,7 +101,7 @@ namespace RestaurantApp.ViewModels
 
                 foreach (var food in items)
                 {
-                    food.ImageUrl = ApiService.BASE_SERVER_URL + food.ImageUrl;
+                    food.ImageUrl = ApiService.BASE_SERVER_IMAGE_URL + food.ImageUrl;
                 }
 
                 AllItems.ReplaceRange(items);

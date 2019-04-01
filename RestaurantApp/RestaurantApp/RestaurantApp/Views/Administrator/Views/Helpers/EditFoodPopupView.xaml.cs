@@ -1,5 +1,7 @@
 ﻿using Plugin.Media;
 using Plugin.Media.Abstractions;
+using RestaurantApp.Models;
+using RestaurantApp.Services;
 using RestaurantApp.ViewModels;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
@@ -14,32 +16,28 @@ using Xamarin.Forms.Xaml;
 
 namespace RestaurantApp.Views.Administrator.Views.Helpers
 {
-	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class AddFoodPopupView : PopupPage
-	{
+    [XamlCompilation(XamlCompilationOptions.Compile)]
+    public partial class EditFoodPopupView : PopupPage
+    {
         private MediaFile _mediaFile;
 
-		public AddFoodPopupView (EventHandler refreshFood)
-		{
-			InitializeComponent ();
-		}
-
-        protected override void OnAppearing()
+        public EditFoodPopupView(FoodItem foodItem, EventHandler refreshFoods, List<string> categories)
         {
-            base.OnAppearing();
-
-            var viewModel = BindingContext as AddFoodViewModel;
-
-            if (viewModel != null)
-            {
-                if (viewModel.LoadCategories.CanExecute(null))
-                    viewModel.LoadCategories.Execute(null);
-            }
+            InitializeComponent();
+            BindData(foodItem, refreshFoods, categories);
         }
 
-        private void BindData(EventHandler refreshFoods)
+        private void BindData(FoodItem item, EventHandler refreshFoods, List<string> categories)
         {
-            var viewModel = BindingContext as AddFoodViewModel;
+            Name_Entry.Text = item.Name;
+            Ingredients_Entry.Text = item.Ingredients;
+            Price_Entry.Text = item.Price.ToString();
+            category_picker.ItemsSource = categories;
+            category_picker.SelectedItem = item.Category;
+            FileImage.Source = item.ImageUrl;
+            var viewModel = BindingContext as EditFoodViewModel;
+            viewModel.Id = item.Id;
+            viewModel.ImageUrl = item.ImageUrl;
             viewModel.RefreshFoods += refreshFoods;
         }
 
@@ -58,8 +56,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             if (_mediaFile == null)
                 return;
 
-            var viewModel = BindingContext as AddFoodViewModel;
-
+            var viewModel = BindingContext as EditFoodViewModel;
             viewModel.Image = _mediaFile;
 
             FileImage.Source = ImageSource.FromStream(() =>
@@ -87,7 +84,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             if (_mediaFile == null)
                 return;
 
-            var viewModel = BindingContext as AddFoodViewModel;
+            var viewModel = BindingContext as EditFoodViewModel;
             viewModel.Image = _mediaFile;
 
             FileImage.Source = ImageSource.FromStream(() =>

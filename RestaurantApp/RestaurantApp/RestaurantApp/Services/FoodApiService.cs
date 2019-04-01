@@ -5,6 +5,7 @@ using RestaurantApp.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -50,7 +51,7 @@ namespace RestaurantApp.Services
                 Ingredients = ingredients,
                 Price = price,
                 Category = categorie,
-                ImageUrl = "FoodPhotos/" + imageName
+                ImageUrl = imageName
             };
 
             var jsonObject = JsonConvert.SerializeObject(model);
@@ -58,6 +59,48 @@ namespace RestaurantApp.Services
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var response = await HttpClient.PostAsync("Foods", httpContent);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
+                return await response.Content.ReadAsStringAsync();
+
+            return string.Empty;
+        }
+
+        public async Task<string> EditFood(int id, FoodItem item, MediaFile image)
+        {
+            HttpResponseMessage imageUploadResponse;
+            string imageName = string.Empty;
+
+            if (image != null)
+            {
+                MultipartFormDataContent mutipartContent = new MultipartFormDataContent
+                {
+                    { new StreamContent(image.GetStream()), "photo", $"\"{image.Path}\"" }
+                };
+
+                imageUploadResponse = await HttpClient.PostAsync("Foods/UploadPhoto", mutipartContent);
+
+                imageName = await imageUploadResponse.Content.ReadAsStringAsync();
+            }
+
+            var model = new FoodItem()
+            {
+                Id = id,
+                Name = item.Name,
+                Ingredients = item.Ingredients,
+                Price = item.Price,
+                Category = item.Category,
+                ImageUrl = item.ImageUrl
+            };
+
+            if (!string.IsNullOrEmpty(imageName))
+                model.ImageUrl = imageName;
+
+            var jsonObject = JsonConvert.SerializeObject(model);
+            HttpContent httpContent = new StringContent(jsonObject);
+            httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await HttpClient.PutAsync("Foods/" + id, httpContent);
 
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
                 return await response.Content.ReadAsStringAsync();

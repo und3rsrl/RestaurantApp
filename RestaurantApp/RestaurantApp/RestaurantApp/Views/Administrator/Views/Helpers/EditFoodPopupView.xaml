@@ -3,10 +3,10 @@
                  xmlns="http://xamarin.com/schemas/2014/forms"
                  xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                  xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
-                 x:Class="RestaurantApp.Views.Administrator.Views.Helpers.AddFoodPopupView">
+                 x:Class="RestaurantApp.Views.Administrator.Views.Helpers.EditFoodPopupView">
 
     <ContentPage.BindingContext>
-        <vm:AddFoodViewModel/>
+        <vm:EditFoodViewModel/>
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
@@ -25,6 +25,7 @@
                            Margin="0, 0, 15, 0"
                            FontSize="Medium"/>
                     <Entry Text="{Binding Name}"
+                           x:Name="Name_Entry"
                            FontSize="Medium"
                            Placeholder="food name"
                            HorizontalOptions="FillAndExpand"/>
@@ -37,6 +38,7 @@
                            Margin="0, 0, 15, 0"
                            FontSize="Medium"/>
                     <Entry Text="{Binding Ingredients}"
+                           x:Name="Ingredients_Entry"
                            FontSize="Medium"
                            HorizontalOptions="FillAndExpand"
                            Placeholder="ingredients"/>
@@ -49,6 +51,7 @@
                            Margin="0, 0, 15, 0"
                            FontSize="Medium"/>
                     <Entry Text="{Binding Price}"
+                           x:Name="Price_Entry"
                            FontSize="Medium"
                            HorizontalOptions="FillAndExpand"
                            Placeholder="price"/>
@@ -63,7 +66,7 @@
                     <Picker x:Name="category_picker"
                             TextColor="#41bbf4"
                             ItemsSource="{Binding Categories}"
-                            SelectedItem="{Binding SelectedCategorie}"
+                            SelectedItem="{Binding Category}"
                             HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
@@ -88,9 +91,9 @@
 
                 <Button BackgroundColor="#41bbf4"
                         FontSize="Medium"
-                        Text="Add"
+                        Text="Save"
                         TextColor="White"
-                        Command="{Binding AddFoodCommand}"
+                        Command="{Binding EditFoodCommand}"
                         Clicked="Button_Clicked"/>
             </StackLayout>
         </ScrollView>
