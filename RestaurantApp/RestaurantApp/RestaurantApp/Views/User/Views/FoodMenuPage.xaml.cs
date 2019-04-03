@@ -1,10 +1,5 @@
 ﻿using RestaurantApp.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using RestaurantApp.ViewModels;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -18,7 +13,22 @@ namespace RestaurantApp.Views.User.Views
 			InitializeComponent ();
         
             FoodListView.SeparatorVisibility = SeparatorVisibility.None;
-        }    
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var viewModel = BindingContext as FoodItemsViewModel;
+
+            if (viewModel != null)
+            {
+                if (viewModel.LoadFoods.CanExecute(null))
+                    viewModel.LoadFoods.Execute(null);
+            }
+
+            FoodListView.RefreshCommand = viewModel.LoadFoods;
+        }
 
         private async void FoodListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

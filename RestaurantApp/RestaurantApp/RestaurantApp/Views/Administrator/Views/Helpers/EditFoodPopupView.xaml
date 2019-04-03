@@ -95,6 +95,12 @@
                         TextColor="White"
                         Command="{Binding EditFoodCommand}"
                         Clicked="Button_Clicked"/>
+
+                <Button BackgroundColor="#e03838"
+                        FontSize="Medium"
+                        Text="Close"
+                        TextColor="White"
+                        Clicked="Button_Clicked"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

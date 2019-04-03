@@ -9,7 +9,7 @@
     </ContentPage.BindingContext>
 
     <ContentPage.Content>
-        <StackLayout Padding="10, 10, 10, 0">
+        <StackLayout Padding="12">
             <Picker x:Name="category_picker"
                     TextColor="#41bbf4"
                     ItemsSource="{Binding Categories}"
@@ -21,51 +21,46 @@
                   CachingStrategy="RecycleElement"
                   ItemSelected="FoodListView_OnItemSelected"
                   IsPullToRefreshEnabled="false" 
-                  RowHeight="100"
+                  RowHeight="300"
                   ItemsSource="{Binding FilteredItems}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Margin="5" BackgroundColor="White" RowSpacing="2">
+                            <Grid>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="*"></RowDefinition>
+                                    <RowDefinition Height="200"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="50"></ColumnDefinition>
-                                    <ColumnDefinition Width="*"></ColumnDefinition>
-                                    <ColumnDefinition Width="55"></ColumnDefinition>
-                                    <ColumnDefinition Width="30"></ColumnDefinition>
-                                    <ColumnDefinition Width="32"></ColumnDefinition>
+                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width=".5*"/>
                                 </Grid.ColumnDefinitions>
+
                                 <Image Grid.Row="0"
-                                   HeightRequest="100"
-                                   WidthRequest="100"
-                                   VerticalOptions="CenterAndExpand"
-                                   Margin="2,2,1,2"
-                                   Source="{Binding ImageUrl}"></Image>
-                                <Label Grid.Row="0"
-                                   Grid.Column="1"
-                                   VerticalOptions="CenterAndExpand"
-                                   Text="{Binding Name}"
-                                   Margin="3" ></Label>
-                                <Label Grid.Row="0"
-                                   Grid.Column="2"
-                                   Margin="3"
-                                   Text="{Binding Price}"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="CenterAndExpand"
-                                   TextColor="#41bbf4"></Label>
-                                <Label Grid.Row="0"
-                                   Grid.Column="3"
-                                   Margin="0, 7, 0, 0"
-                                   Text="Lei"
-                                   FontAttributes="Bold"
-                                   VerticalOptions="CenterAndExpand"
-                                   TextColor="#41bbf4"></Label>
-                                <ImageButton Grid.Row="0"
-                                   Grid.Column="4"
-                                   Margin="3"
-                                   Source="add.png"></ImageButton>
+                                       Grid.Column="0"
+                                       Grid.ColumnSpan="2"
+                                       Aspect="AspectFill"
+                                       Source="{Binding ImageUrl}" />
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="0"
+                                       Text="{Binding Name}"/>
+
+                                <Label Grid.Row="1"
+                                       Grid.Column="1"
+                                       HorizontalTextAlignment="End"
+                                       Text="{Binding Price, StringFormat='{}{0} lei'}"/>
+
+                                <Button Grid.Row="2"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        Text="Add to Basket"
+                                        BackgroundColor="#FF7417"
+                                        TextColor="White"
+                                        FontSize="Small"
+                                        CornerRadius="20"
+                                        x:Name="Button_AddToBasket"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

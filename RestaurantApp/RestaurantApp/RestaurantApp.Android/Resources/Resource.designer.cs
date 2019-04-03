@@ -6418,9 +6418,6 @@ namespace RestaurantApp.Droid
 			// aapt resource value: 0x7f0a0010
 			public const int common_signin_button_text_long = 2131361808;
 			
-			// aapt resource value: 0x7f0a004d
-			public const int library_name = 2131361869;
-			
 			// aapt resource value: 0x7f0a0011
 			public const int mr_button_content_description = 2131361809;
 			

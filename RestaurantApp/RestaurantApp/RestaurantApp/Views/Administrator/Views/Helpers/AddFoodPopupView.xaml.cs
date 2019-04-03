@@ -19,28 +19,19 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
 	{
         private MediaFile _mediaFile;
 
-		public AddFoodPopupView (EventHandler refreshFood)
+		public AddFoodPopupView (EventHandler refreshFood, string selectedCategorie, List<string> categories)
 		{
 			InitializeComponent ();
-		}
 
-        protected override void OnAppearing()
-        {
-            base.OnAppearing();
-
-            var viewModel = BindingContext as AddFoodViewModel;
-
-            if (viewModel != null)
-            {
-                if (viewModel.LoadCategories.CanExecute(null))
-                    viewModel.LoadCategories.Execute(null);
-            }
+            BindData(refreshFood, selectedCategorie, categories);
         }
 
-        private void BindData(EventHandler refreshFoods)
+        private void BindData(EventHandler refreshFoods, string selectedCategorie, List<string> categories)
         {
             var viewModel = BindingContext as AddFoodViewModel;
             viewModel.RefreshFoods += refreshFoods;
+            category_picker.ItemsSource = categories;
+            category_picker.SelectedItem = selectedCategorie;
         }
 
         private async void PickPhoto_Clicked(object sender, EventArgs e)

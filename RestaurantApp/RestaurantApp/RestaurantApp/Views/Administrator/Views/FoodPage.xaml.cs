@@ -40,7 +40,7 @@ namespace RestaurantApp.Views.Administrator.Views
         {
             var viewModel = BindingContext as FoodItemsViewModel;
 
-            PopupNavigation.Instance.PushAsync(new AddFoodPopupView(viewModel.Refresh));
+            PopupNavigation.Instance.PushAsync(new AddFoodPopupView(viewModel.Refresh, viewModel.SelectedCategory, viewModel.Categories.ToList()));
         }
 
         private async void FoodListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

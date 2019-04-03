@@ -18,6 +18,7 @@ namespace RestaurantApp.ViewModels
     {
         private CategoriesApiService _categoriesApiService = new CategoriesApiService();
         private FoodApiService _foodsApiService = new FoodApiService();
+        private string _selectedCategorie;
 
         public AddFoodViewModel()
         {
@@ -35,19 +36,18 @@ namespace RestaurantApp.ViewModels
 
         public double Price { get; set; }
 
-        public string SelectedCategorie { get; set; }
+        public string SelectedCategorie
+        {
+            get => _selectedCategorie;
+            set
+            {
+                SetProperty(ref _selectedCategorie, value);
+            }
+        }
 
         public MediaFile Image { get; set; }
 
         public event EventHandler RefreshFoods;
-
-        public ICommand LoadCategories
-        {
-            get
-            {
-                return new Command(async () => await ExecuteLoadCategoriesCommand());
-            }
-        }
 
         public ICommand AddFoodCommand
         {
@@ -62,28 +62,6 @@ namespace RestaurantApp.ViewModels
                     else
                         RefreshFoods?.Invoke(this, EventArgs.Empty);
                 });
-            }
-        }
-
-        private async Task ExecuteLoadCategoriesCommand()
-        {
-            if (IsBusy)
-                return;
-
-            IsBusy = true;
-
-            try
-            {
-                var items = await _categoriesApiService.GetCategories();
-                Categories.ReplaceRange(items.Select(x => x.Name).ToList());
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex);
-            }
-            finally
-            {
-                IsBusy = false;
             }
         }
     }

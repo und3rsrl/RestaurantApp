@@ -24,19 +24,18 @@ namespace RestaurantApp.Views.User.Views
         {
             FoodNameLabel.Text = item.Name;
             FoodImage.Source = item.ImageUrl;
-            PriceLabel.Text = item.Price.ToString("c");
+            PriceLabel.Text = item.Price.ToString() + "lei";
 
-            StringBuilder ingredients = new StringBuilder("Ingredients: ");
+            List<string> ingredients = item.Ingredients.Split(',').ToList();
 
-            //foreach (string ingredient in item.Ingredients)
-            //{
-            //    ingredients.Append(ingredient);
-            //    ingredients.Append(", ");
-            //}
+            StringBuilder ingredientsStringBuilder = new StringBuilder();
 
-            ingredients.Remove(ingredients.Length - 2, 2);
+            foreach (string ingredient in ingredients)
+            {
+                ingredientsStringBuilder.AppendLine(ingredient);
+            }
 
-            IngredientsLabel.Text = ingredients.ToString();
+            IngredientsLabel.Text = ingredientsStringBuilder.ToString();
         }
     }
 }
