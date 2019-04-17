@@ -18,7 +18,7 @@
                          HorizontalOptions="Center"
                          VerticalOptions="Center">
 
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Vertical">
                     <Label Text="Food Name"
                            VerticalTextAlignment="Center"
                            HorizontalOptions="Start"
@@ -31,16 +31,16 @@
                            HorizontalOptions="FillAndExpand"/>
                 </StackLayout>
 
-                <StackLayout Orientation="Horizontal">
+                <StackLayout Orientation="Vertical">
                     <Label Text="Ingredients"
                            VerticalTextAlignment="Center"
-                           HorizontalOptions="Start"
+                           HorizontalOptions="StartAndExpand"
                            Margin="0, 0, 15, 0"
                            FontSize="Medium"/>
                     <Entry Text="{Binding Ingredients}"
                            x:Name="Ingredients_Entry"
                            FontSize="Medium"
-                           HorizontalOptions="FillAndExpand"
+                           HorizontalOptions="Fill"
                            Placeholder="ingredients"/>
                 </StackLayout>
 

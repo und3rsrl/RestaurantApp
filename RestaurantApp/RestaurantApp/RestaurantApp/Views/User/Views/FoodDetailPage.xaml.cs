@@ -13,11 +13,19 @@ namespace RestaurantApp.Views.User.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class FoodDetailPage : ContentPage
 	{
+        private int _itemAmount;
+
 		public FoodDetailPage (FoodItem item)
 		{
 			InitializeComponent ();
-
+            _itemAmount = 0;
             BindData(item);
+        }
+
+        protected override void OnAppearing()
+        {
+            Item_Amount_Entry.Text = "0";
+            base.OnAppearing();
         }
 
         private void BindData(FoodItem item)
@@ -36,6 +44,21 @@ namespace RestaurantApp.Views.User.Views
             }
 
             IngredientsLabel.Text = ingredientsStringBuilder.ToString();
+        }
+
+        private void ImageButton_IncreaseAmount(object sender, EventArgs e)
+        {
+            _itemAmount++;
+            Item_Amount_Entry.Text = _itemAmount.ToString();
+        }
+
+        private void ImageButton_DecreaseAmount(object sender, EventArgs e)
+        {
+            if (_itemAmount > 0)
+            {
+                _itemAmount--;
+                Item_Amount_Entry.Text = _itemAmount.ToString();
+            }
         }
     }
 }

@@ -11,15 +11,17 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width=".4*"/>
-                    <ColumnDefinition Width=".6*"/>
+                    <ColumnDefinition Width=".2*"/>
+                    <ColumnDefinition Width=".4*"/>
                 </Grid.ColumnDefinitions>
                 <Label x:Name="FoodNameLabel"
                        Grid.Row="0"
                        Grid.Column="0"
-                       Grid.ColumnSpan="2"
+                       Grid.ColumnSpan="3"
                        FontSize="Large"
                        TextColor="Black"
                        HorizontalTextAlignment="Center"
@@ -27,11 +29,12 @@
                        FontAttributes="Bold"/>
                 <Image x:Name="FoodImage"
                        Grid.Row="1"
-                       Grid.ColumnSpan="2"
+                       Grid.ColumnSpan="3"
                        Aspect="AspectFill"/>
                 <Label Text="Price: "
                        Grid.Row="2"
                        Grid.Column="0"
+                       Grid.ColumnSpan="2"
                        FontSize="Large"
                        TextColor="Black"
                        FontAttributes="Bold"
@@ -39,6 +42,7 @@
                 <Label x:Name="PriceLabel"                   
                        Grid.Row="2"
                        Grid.Column="1"
+                       Grid.ColumnSpan="2"
                        TextColor="Black"
                        FontSize="20"
                        FontAttributes="Bold"
@@ -49,23 +53,41 @@
                        TextColor="Black"
                        Grid.Row="3"
                        Grid.Column="0"
+                       Grid.ColumnSpan="2"
                        Margin="0, 15, 0, 10"/>
                 <Label x:Name="IngredientsLabel"
                        FontSize="18"
                        TextColor="Black"
                        Grid.Row="3"
                        Grid.Column="1"
+                       Grid.ColumnSpan="2"
                        HorizontalTextAlignment="End"
                        Margin="0, 10, 0, 10"/>
-                <Button Grid.Row="4"
+                <ImageButton Grid.Row="4"
+                             Grid.Column="0"
+                             Source="minus.png"
+                             Clicked="ImageButton_DecreaseAmount"
+                             BackgroundColor="Transparent"/>
+                <Entry Grid.Row="4"
+                       Grid.Column="1"
+                       x:Name="Item_Amount_Entry"
+                       Margin="10, 0, 10, 0"
+                       FontSize="16"
+                       HorizontalTextAlignment="Center"/>
+                <ImageButton Grid.Row="4"
+                             Grid.Column="2"
+                             Source="plus.png"
+                             Clicked="ImageButton_IncreaseAmount"
+                             BackgroundColor="Transparent"/>
+                <Button Grid.Row="5"
                         Grid.Column="0"
-                        Grid.ColumnSpan="2"
+                        Grid.ColumnSpan="3"
                         Text="Add to Basket"
                         BackgroundColor="#FF7417"
                         TextColor="White"
                         FontSize="Small"
                         CornerRadius="20"
-                        Margin="20, 0, 20, 0"
+                        Margin="20, 10, 20, 0"
                         x:Name="Button_AddToBasket"/>            
             </Grid>
         </ScrollView>

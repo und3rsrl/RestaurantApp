@@ -41,16 +41,21 @@
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Aspect="AspectFill"
-                                       Source="{Binding ImageUrl}" />
+                                       Source="{Binding ImageUrl}"
+                                       Margin="0, 0, 0, 20"/>
 
                                 <Label Grid.Row="1"
                                        Grid.Column="0"
-                                       Text="{Binding Name}"/>
+                                       Text="{Binding Name}"
+                                       TextColor="Black"
+                                       FontSize="15"/>
 
                                 <Label Grid.Row="1"
                                        Grid.Column="1"
                                        HorizontalTextAlignment="End"
-                                       Text="{Binding Price, StringFormat='{}{0} lei'}"/>
+                                       Text="{Binding Price, StringFormat='{}{0} lei'}"
+                                       TextColor="Black"
+                                       FontSize="15"/>
 
                                 <Button Grid.Row="2"
                                         Grid.Column="0"

@@ -38,7 +38,7 @@
                            FontSize="Medium"/>
                     <Entry Text="{Binding Ingredients}"
                            FontSize="Medium"
-                           HorizontalOptions="FillAndExpand"
+                           HorizontalOptions="Fill"
                            Placeholder="ingredients"/>
                 </StackLayout>
 

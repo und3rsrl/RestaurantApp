@@ -181,6 +181,9 @@
     <Reference Include="Xamarin.iOS" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="LiveXAML">
+      <Version>2.1.70</Version>
+    </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>1.1.5.188</Version>
     </PackageReference>
@@ -246,5 +249,11 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\delete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <BundleResource Include="Resources\plus.png" />
   </ItemGroup>
 </Project>

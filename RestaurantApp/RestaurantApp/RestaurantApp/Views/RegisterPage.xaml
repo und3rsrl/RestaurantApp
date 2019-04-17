@@ -37,6 +37,11 @@
                                     Android="White"
                                     iOS="Black"/>
                     </Entry.PlaceholderColor>
+                    <Entry.TextColor >
+                        <OnPlatform x:TypeArguments="Color"
+                                    Android="White"
+                                    iOS="Black"/>
+                    </Entry.TextColor>
                 </Entry>
 
                 <Entry Text="{Binding Password}"
