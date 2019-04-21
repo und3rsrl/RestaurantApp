@@ -10,10 +10,12 @@ namespace RestaurantApp.Domain
     {
         private static Cart _instance;
         private List<OrderItem> _orderItems;
+        private int _idSequence;
 
         private Cart()
         {
             _orderItems = new List<OrderItem>();
+            _idSequence = 0;
         }
 
         public static Cart Instance
@@ -43,6 +45,8 @@ namespace RestaurantApp.Domain
             }
             else
             {
+                _idSequence++;
+                item.Id = _idSequence;
                 _orderItems.Add(item);
             }
         }     

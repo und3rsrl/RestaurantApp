@@ -9,6 +9,8 @@ using Android.OS;
 using System.Threading.Tasks;
 using Android;
 using Plugin.CurrentActivity;
+using Xamarin.Forms;
+using Plugin.Toasts;
 
 namespace RestaurantApp.Droid
 {
@@ -26,6 +28,9 @@ namespace RestaurantApp.Droid
             //CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.FormsMaps.Init(this, savedInstanceState);
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(false);
+            DependencyService.Register<ToastNotification>();
+            ToastNotification.Init(this);
             LoadApplication(new App());
         }
 

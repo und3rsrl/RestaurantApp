@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="RestaurantApp.Views.Administrator.Views.FoodPage"
              Title="Foods">
 
@@ -37,7 +38,7 @@
                                     <ColumnDefinition Width=".5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Row="0"
+                                <forms:CachedImage Grid.Row="0"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Aspect="AspectFill"

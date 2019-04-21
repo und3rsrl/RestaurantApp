@@ -1,5 +1,6 @@
 ﻿using Plugin.Settings;
 using Plugin.Settings.Abstractions;
+using RestaurantApp.Domain;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,6 +28,14 @@ namespace RestaurantApp.Helpers
             set
             {
                 AppSettings.AddOrUpdateValue("AccessToken", value);
+            }
+        }
+
+        public static Cart Bascket
+        {
+            get
+            {
+                return Cart.Instance;
             }
         }
     }

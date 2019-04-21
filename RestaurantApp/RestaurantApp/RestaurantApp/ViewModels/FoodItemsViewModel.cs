@@ -1,4 +1,6 @@
 ﻿using MvvmHelpers;
+using Plugin.LocalNotifications;
+using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
 using System;
@@ -8,6 +10,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
+using Plugin.Toasts;
 
 namespace RestaurantApp.ViewModels
 {
@@ -57,6 +60,37 @@ namespace RestaurantApp.ViewModels
                 {
                     await _foodsApiService.DeleteFood(id);
                     Refresh(this, EventArgs.Empty);
+                });
+            }
+        }
+
+        public ICommand AddToCart
+        {
+            get
+            {
+                return new Command<int>(async (productId) =>
+                {
+                    OrderItem orderItem = new OrderItem()
+                    {
+                        ProductId = productId,
+                        Name = AllItems.Where(x => x.Id == productId).FirstOrDefault().Name,
+                        Amount = 1,
+                        Price = AllItems.Where(x => x.Id == productId).FirstOrDefault().Price,
+                    };
+
+                    orderItem.Total = orderItem.Amount * orderItem.Price;
+                    var notificator = DependencyService.Get<IToastNotificator>();
+
+                    var options = new NotificationOptions()
+                    {
+                        Title = "Cart",
+                        Description = "You've added food to cart!",
+                        IsClickable = false // Set to true if you want the result Clicked to come back (if the user clicks it)
+                    };
+
+                    var result = await notificator.Notify(options);
+
+                    Settings.Bascket.AddOrderItem(orderItem);
                 });
             }
         }

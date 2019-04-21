@@ -4,7 +4,9 @@ using System.Linq;
 
 using Foundation;
 using KeyboardOverlap.Forms.Plugin.iOSUnified;
+using Plugin.Toasts;
 using UIKit;
+using Xamarin.Forms;
 
 namespace RestaurantApp.iOS
 {
@@ -27,6 +29,9 @@ namespace RestaurantApp.iOS
             Rg.Plugins.Popup.Popup.Init();
             Xamarin.FormsMaps.Init();
             KeyboardOverlapRenderer.Init();
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            DependencyService.Register<ToastNotification>();
+            ToastNotification.Init();
             LoadApplication(new App());
 
             return base.FinishedLaunching(app, options);

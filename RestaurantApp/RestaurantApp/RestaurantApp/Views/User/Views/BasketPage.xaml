@@ -1,13 +1,130 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              x:Class="RestaurantApp.Views.User.Views.BasketPage"
              Title="Basket">
+
+    <ContentPage.BindingContext>
+        <vm:BasketViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome Basket!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView VerticalOptions="FillAndExpand" 
+                      x:Name="BasketListView"
+                      CachingStrategy="RecycleElement"
+                      IsPullToRefreshEnabled="false" 
+                      RowHeight="50"
+                      ItemsSource="{Binding FoodItems}"
+                      Margin="10, 5, 10, 0"
+                      SeparatorVisibility="Default">
+                <ListView.Header>
+                    <Grid Margin="0, 0, 0, 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*"/>
+                            <ColumnDefinition Width=".5*"/>
+                            <ColumnDefinition Width=".5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Text="No." Grid.Column="0" Grid.Row="0"/>
+                        <Label Text="Name" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Price" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Amount" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="Subtotal" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width=".5*"/>
+                                    <ColumnDefinition Width=".5*"/>
+                                    <ColumnDefinition Width=".5*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       VerticalTextAlignment="Center"
+                                       Text="{Binding Id}"
+                                       TextColor="Black"
+                                       FontSize="12"/>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="1"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Name}"
+                                       TextColor="Black"
+                                       FontSize="12"/>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="2"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Price, StringFormat='{}{0} lei'}"
+                                       TextColor="Black"
+                                       FontSize="12"/>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="3"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Amount, StringFormat='{}{0}'}"
+                                       TextColor="Black"
+                                       FontSize="12"/>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="4"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Total, StringFormat='{}{0} lei'}"
+                                       TextColor="Black"
+                                       FontSize="12"/>
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="35" />
+                        </Grid.RowDefinitions>
+                        <Label x:Name="Total_Label"
+                               Grid.Column="0"
+                               Grid.Row="0"
+                               Grid.ColumnSpan="2"
+                               HorizontalTextAlignment="End"
+                               Margin="0, 15, 0, 0"/>
+
+                        <Button Grid.Row="1"
+                                Grid.Column="0"
+                                Text="Place order"
+                                BackgroundColor="#FF7417"
+                                TextColor="White"
+                                FontSize="10"
+                                CornerRadius="20"
+                                x:Name="Button_PlaceOrder"
+                                Margin="15, 0, 0, 0"/>
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

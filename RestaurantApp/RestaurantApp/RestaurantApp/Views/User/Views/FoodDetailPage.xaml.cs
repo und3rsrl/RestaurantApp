@@ -1,4 +1,5 @@
 ﻿using RestaurantApp.Models;
+using RestaurantApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,7 +20,8 @@ namespace RestaurantApp.Views.User.Views
 		{
 			InitializeComponent ();
             _itemAmount = 0;
-            BindData(item);
+            BindingContext = new FoodDetailViewModel(this);
+            BindData(item);      
         }
 
         protected override void OnAppearing()
@@ -30,6 +32,11 @@ namespace RestaurantApp.Views.User.Views
 
         private void BindData(FoodItem item)
         {
+            var viewModel = BindingContext as FoodDetailViewModel;
+            viewModel.ProductId = item.Id;
+            viewModel.Price = item.Price;
+            viewModel.Name = item.Name;
+
             FoodNameLabel.Text = item.Name;
             FoodImage.Source = item.ImageUrl;
             PriceLabel.Text = item.Price.ToString() + "lei";

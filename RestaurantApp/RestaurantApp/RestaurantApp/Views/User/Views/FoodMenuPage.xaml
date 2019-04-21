@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="RestaurantApp.Views.User.Views.FoodMenuPage"
              Title="Food Menu">
     <ContentPage.BindingContext>
@@ -18,7 +19,7 @@
 
             <ListView VerticalOptions="FillAndExpand" 
                   x:Name="FoodListView" 
-                  CachingStrategy="RecycleElement"
+                  CachingStrategy="RetainElement"
                   ItemSelected="FoodListView_OnItemSelected"
                   IsPullToRefreshEnabled="false" 
                   RowHeight="300"
@@ -37,11 +38,11 @@
                                     <ColumnDefinition Width=".5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <Image Grid.Row="0"
+                                <forms:CachedImage Grid.Row="0"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Aspect="AspectFill"
-                                       Source="{Binding ImageUrl}"
+                                       Source="{Binding ImageUrl}"                                       
                                        Margin="0, 0, 0, 20"/>
 
                                 <Label Grid.Row="1"
@@ -65,7 +66,9 @@
                                         TextColor="White"
                                         FontSize="Small"
                                         CornerRadius="20"
-                                        x:Name="Button_AddToBasket"/>
+                                        x:Name="Button_AddToBasket"
+                                        Command="{Binding BindingContext.AddToCart, Source={x:Reference FoodListView}}"
+                                        CommandParameter="{Binding Id}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

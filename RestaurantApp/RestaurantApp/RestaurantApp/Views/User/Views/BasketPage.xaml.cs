@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RestaurantApp.Models;
+using RestaurantApp.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,5 +18,21 @@ namespace RestaurantApp.Views.User.Views
 		{
 			InitializeComponent ();
 		}
-	}
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            var viewModel = BindingContext as BasketViewModel;
+
+            var total = 0d;
+
+            foreach (OrderItem item in viewModel.FoodItems)
+            {
+                total += item.Total;
+            }
+
+            Total_Label.Text = string.Format("Total: {0} lei", total);
+        }
+    }
 }
