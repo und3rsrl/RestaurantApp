@@ -17,7 +17,8 @@ namespace RestaurantApp.Views.User.Views
 		public BasketPage ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = new BasketViewModel(this);
+        }
 
         protected override void OnAppearing()
         {
@@ -31,6 +32,8 @@ namespace RestaurantApp.Views.User.Views
             {
                 total += item.Total;
             }
+
+            viewModel.Total = total;
 
             Total_Label.Text = string.Format("Total: {0} lei", total);
         }

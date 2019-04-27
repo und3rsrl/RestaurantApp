@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
+using RestaurantApp.WebApi.Entities;
+using RestaurantApp.WebApi.Models;
 
 namespace RestaurantApp.WebApi.Controllers
 {
@@ -21,16 +24,18 @@ namespace RestaurantApp.WebApi.Controllers
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
+        private readonly ApplicationDbContext _context;
 
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
-            IConfiguration configuration
-            )
+            IConfiguration configuration,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _configuration = configuration;
+            _context = context;
         }
 
         [HttpPost]
@@ -84,6 +89,9 @@ namespace RestaurantApp.WebApi.Controllers
 
             var roles = await _userManager.GetRolesAsync(user);
 
+            if (roles.Contains("Waiter"))
+               await SetWaiterStatus(email);
+
             claims.AddRange(roles.Select(role => new Claim("Role", role)));
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
@@ -108,7 +116,6 @@ namespace RestaurantApp.WebApi.Controllers
 
             [Required]
             public string Password { get; set; }
-
         }
 
         public class RegisterDto
@@ -119,6 +126,37 @@ namespace RestaurantApp.WebApi.Controllers
             [Required]
             [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 6)]
             public string Password { get; set; }
+        }
+
+        private async Task SetWaiterStatus(string email)
+        {
+            var result = await _context.WaitersStatus.FindAsync(email);
+
+            if (result == null)
+            {
+                WaiterStatus status = new WaiterStatus()
+                {
+                    Waiter = email,
+                    IsActive = true
+                };
+
+                await _context.WaitersStatus.AddAsync(status);
+                await _context.SaveChangesAsync();
+            }
+            else
+            {
+                result.IsActive = true;
+                _context.Entry(result).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+            }
         }
     }
 }

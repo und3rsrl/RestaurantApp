@@ -62,5 +62,21 @@ namespace RestaurantApp.Services
 
             return await response.Content.ReadAsStringAsync();
         }
+
+        public async Task<string> Logout(string email)
+        {
+            var json = JsonConvert.SerializeObject(email);
+
+            HttpContent content = new StringContent(json);
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await HttpClient.PostAsync("Waiters/setStatus", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                return "Unauthorized";
+
+            return await response.Content.ReadAsStringAsync();
+        }
     }
 }

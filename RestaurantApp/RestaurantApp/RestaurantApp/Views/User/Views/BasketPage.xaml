@@ -91,7 +91,6 @@
                                        Text="{Binding Total, StringFormat='{}{0} lei'}"
                                        TextColor="Black"
                                        FontSize="12"/>
-
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -112,7 +111,6 @@
                                Grid.ColumnSpan="2"
                                HorizontalTextAlignment="End"
                                Margin="0, 15, 0, 0"/>
-
                         <Button Grid.Row="1"
                                 Grid.Column="0"
                                 Text="Place order"
@@ -121,7 +119,25 @@
                                 FontSize="10"
                                 CornerRadius="20"
                                 x:Name="Button_PlaceOrder"
-                                Margin="15, 0, 0, 0"/>
+                                Margin="15, 0, 0, 0"
+                                Command="{Binding PlaceOrderCommand}"/>
+                        <Picker Grid.Row="1"
+                                Grid.Column="1"
+                                FontSize="12"
+                                Margin="15, 0, 15, 0"
+                                Title="Select table"
+                                x:Name="Table_Picker"
+                                SelectedItem="{Binding Table}">
+                            <Picker.ItemsSource>
+                                <x:Array Type="{x:Type x:String}">
+                                    <x:String>1</x:String>
+                                    <x:String>2</x:String>
+                                    <x:String>3</x:String>
+                                    <x:String>4</x:String>
+                                    <x:String>5</x:String>
+                                </x:Array>
+                            </Picker.ItemsSource>
+                        </Picker>
                     </Grid>
                 </ListView.Footer>
             </ListView>

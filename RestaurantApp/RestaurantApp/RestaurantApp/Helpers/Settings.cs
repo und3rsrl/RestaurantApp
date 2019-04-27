@@ -17,6 +17,18 @@ namespace RestaurantApp.Helpers
             }
         }
 
+        public static string UserName
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("UserName", "");
+            }
+
+            set
+            {
+                AppSettings.AddOrUpdateValue("UserName", value);
+            }
+        }
 
         public static string AccessToken
         {

@@ -1,4 +1,5 @@
 ﻿using RestaurantApp.Helpers;
+using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,8 @@ namespace RestaurantApp.Views.Waiter.Views
 	[XamlCompilation(XamlCompilationOptions.Compile)]
 	public partial class WaiterMasterPage : ContentPage
 	{
+        private AuthApiServices _authApiServices = new AuthApiServices();
+
 		public WaiterMasterPage ()
 		{
 			InitializeComponent ();
@@ -21,6 +24,8 @@ namespace RestaurantApp.Views.Waiter.Views
         private async void Button_Logout_Clicked(object sender, EventArgs e)
         {
             Settings.AccessToken = string.Empty;
+
+            //await _authApiServices.Logout(Settings.UserName);
 
             if (Device.RuntimePlatform == Device.Android)
             {

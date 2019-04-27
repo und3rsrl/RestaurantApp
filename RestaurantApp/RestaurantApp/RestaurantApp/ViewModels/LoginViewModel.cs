@@ -54,6 +54,7 @@ namespace RestaurantApp.ViewModels
                             var payload = JWT.JsonWebToken.DecodeToObject<JWTPayloadDTO>(token, "alexandruGeorgianChiurtu");
 
                             Settings.AccessToken = token;
+                            Settings.UserName = Username;
 
                             var userWindow = UserWindowFactory.GenerateWindow(payload);
                             if (Device.RuntimePlatform == Device.Android)

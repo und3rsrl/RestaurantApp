@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RestaurantApp.WebApi.DTOs;
+using RestaurantApp.WebApi.Entities;
 using static RestaurantApp.WebApi.Controllers.AccountController;
 
 namespace RestaurantApp.WebApi.Controllers
@@ -15,10 +17,13 @@ namespace RestaurantApp.WebApi.Controllers
     public class WaitersController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public WaitersController(UserManager<IdentityUser> userManager)
+        public WaitersController(UserManager<IdentityUser> userManager,
+            ApplicationDbContext context)
         {
             _userManager = userManager;
+            _context = context;
         }
 
         [HttpGet]
@@ -59,6 +64,32 @@ namespace RestaurantApp.WebApi.Controllers
             }
 
             return BadRequest("Account was not created.");
+        }
+
+        [HttpPost]
+        [Route("setStatus")]
+        public async Task<object> SetStatus([FromBody] string email)
+        {
+            var result = await _context.WaitersStatus.FindAsync(email);
+
+            if (result != null)
+            {
+                result.IsActive = false;
+                _context.Entry(result).State = EntityState.Modified;
+
+                try
+                {
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw;
+                }
+
+                return Ok();
+            }
+
+            return BadRequest("Status was not set.");
         }
 
         [HttpDelete("{id}")]

@@ -50,6 +50,11 @@ namespace RestaurantApp.WebApi
                 options.Password.RequiredUniqueChars = 0;
             });
 
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
+
             services.AddCors(options =>
             {
                 options.AddPolicy("CorsPolicy",

@@ -16,5 +16,8 @@ namespace RestaurantApp.WebApi.Entities
         }
         public DbSet<Categorie> Categories { get; set; }
         public DbSet<Food> Foods { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<WaiterStatus> WaitersStatus { get; set; }
     }
 }
