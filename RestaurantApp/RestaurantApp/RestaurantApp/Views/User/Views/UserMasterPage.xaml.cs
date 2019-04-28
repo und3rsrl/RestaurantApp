@@ -21,6 +21,7 @@ namespace RestaurantApp.Views.User.Views
         private async void Button_Logout_Clicked(object sender, EventArgs e)
         {
             Settings.AccessToken = string.Empty;
+            Settings.ActiveOrder = string.Empty;
 
             if (Device.RuntimePlatform == Device.Android)
             {

@@ -2,6 +2,7 @@
 using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
+using RestaurantApp.Views.User.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -24,15 +25,22 @@ namespace RestaurantApp.ViewModels
         public BasketViewModel(Page page)
         {
             Page = page;
+            FoodItems = new ObservableRangeCollection<OrderItem>();
+            FoodItems.AddRange(Settings.Bascket.AddedFoods);
         }
 
-        public IEnumerable<OrderItem> FoodItems => Settings.Bascket.AddedFoods;
+        public ObservableRangeCollection<OrderItem> FoodItems
+        {
+            get; private set;
+        }
 
         public int Table { get; set; }
 
         public double Total { get; set; }
 
         public Page Page { get; set; }
+
+        public event EventHandler ResetTotal;
 
         public ICommand PlaceOrderCommand
         {
@@ -59,8 +67,18 @@ namespace RestaurantApp.ViewModels
                             OrderItems = FoodItems.ToList()
                         };
 
-                        await _ordersApiService.PlaceOrders(order);
-                        Debug.WriteLine("Comanda plasata.");
+                        var response = await _ordersApiService.PlaceOrders(order);
+
+                        if (string.IsNullOrEmpty(response))
+                            await Page.DisplayAlert("Basket", "Something went wrong with your order. Please try again", "Ok");
+                        else
+                        {
+                            Settings.ActiveOrder = response;
+                            Settings.Bascket.Clear();
+                            FoodItems.ReplaceRange(Settings.Bascket.AddedFoods);
+                            ResetTotal?.Invoke(this, EventArgs.Empty);
+                            await Page.DisplayAlert("Basket", "Your order has been registered. Have a good meal", "Ok");
+                        }
                     }
                 });
             }

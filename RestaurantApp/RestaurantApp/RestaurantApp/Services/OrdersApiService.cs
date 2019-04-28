@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,26 @@ namespace RestaurantApp.Services
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
             var response = await HttpClient.PostAsync("Orders", content);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                return await response.Content.ReadAsStringAsync();
+            if (response.StatusCode == System.Net.HttpStatusCode.Created)
+                return response.Headers.Location.ToString();
 
             return string.Empty;
+        }
+
+        public async Task<Order> GetActiveOrder()
+        {
+            if (string.IsNullOrEmpty(Settings.ActiveOrder))
+                return null;
+
+            var response = await HttpClient.GetAsync(Settings.ActiveOrder);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<Order>(content);
+            }
+
+            return null;
         }
     }
 }

@@ -49,6 +49,11 @@ namespace RestaurantApp.Domain
                 item.Id = _idSequence;
                 _orderItems.Add(item);
             }
-        }     
+        }
+
+        public void Clear()
+        {
+            _orderItems.Clear();
+        }
     }
 }

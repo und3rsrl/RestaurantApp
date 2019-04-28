@@ -18,6 +18,7 @@ namespace RestaurantApp.Views.User.Views
 		{
 			InitializeComponent ();
             BindingContext = new BasketViewModel(this);
+            ((BasketViewModel)BindingContext).ResetTotal += ResetTotal;
         }
 
         protected override void OnAppearing()
@@ -36,6 +37,14 @@ namespace RestaurantApp.Views.User.Views
             viewModel.Total = total;
 
             Total_Label.Text = string.Format("Total: {0} lei", total);
+        }
+
+        private void ResetTotal(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as BasketViewModel;
+            viewModel.Total = 0;
+            Total_Label.Text = string.Format("Total: {0} lei", 0);
+            Table_Picker.SelectedItem = null;
         }
     }
 }

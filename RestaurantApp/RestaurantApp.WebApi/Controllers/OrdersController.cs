@@ -33,7 +33,7 @@ namespace RestaurantApp.WebApi.Controllers
         [HttpGet]
         public IEnumerable<Order> GetOrders([FromRoute] string email)
         {
-            return _context.Orders.Where(x => x.Submitter.Equals(email));
+            return _context.Orders.Where(x => x.Submitter.Equals(email) && x.IsPaid == true);
         }
 
         // GET: api/Orders/5
@@ -45,7 +45,7 @@ namespace RestaurantApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var order = await _context.Orders.FindAsync(id);
+            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.OrderId == id);
 
             if (order == null)
             {
@@ -99,7 +99,7 @@ namespace RestaurantApp.WebApi.Controllers
                 IsPaid = false,
                 SubmitDateTime = orderDetails.SubmiteDatetime,
                 Submitter = orderDetails.Submitter,
-                Total = (int)orderDetails.Total,
+                Total = orderDetails.Total,
                 Table = orderDetails.Table
             };
 

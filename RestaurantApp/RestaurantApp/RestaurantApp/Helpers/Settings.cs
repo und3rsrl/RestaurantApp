@@ -43,6 +43,19 @@ namespace RestaurantApp.Helpers
             }
         }
 
+        public static string ActiveOrder
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("ActiveOrder", "");
+            }
+
+            set
+            {
+                AppSettings.AddOrUpdateValue("ActiveOrder", value);
+            }
+        }
+
         public static Cart Bascket
         {
             get

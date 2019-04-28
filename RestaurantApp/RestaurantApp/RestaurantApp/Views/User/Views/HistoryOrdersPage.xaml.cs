@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace RestaurantApp.Views.User.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class OrdersPage : TabbedPage
+	public partial class HistoryOrdersPage : ContentPage
 	{
-		public OrdersPage ()
+		public HistoryOrdersPage ()
 		{
 			InitializeComponent ();
 		}
