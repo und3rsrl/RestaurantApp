@@ -38,7 +38,7 @@
                                     <ColumnDefinition Width=".5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <forms:CachedImage Grid.Row="0"
+                                <Image Grid.Row="0"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Aspect="AspectFill"
@@ -49,14 +49,16 @@
                                        Grid.Column="0"
                                        Text="{Binding Name}"
                                        TextColor="Black"
-                                       FontSize="15"/>
+                                       FontSize="13"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="1"
                                        Grid.Column="1"
                                        HorizontalTextAlignment="End"
                                        Text="{Binding Price, StringFormat='{}{0} lei'}"
                                        TextColor="Black"
-                                       FontSize="15"/>
+                                       FontSize="13"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Button Grid.Row="2"
                                         Grid.Column="0"
@@ -68,7 +70,8 @@
                                         CornerRadius="20"
                                         x:Name="Button_AddToBasket"
                                         Command="{Binding BindingContext.AddToCart, Source={x:Reference FoodListView}}"
-                                        CommandParameter="{Binding Id}"/>
+                                        CommandParameter="{Binding Id}"
+                                        FontFamily="{StaticResource Lobster}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

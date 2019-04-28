@@ -29,13 +29,14 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
                             <Image Source="{Binding Icon}" />
-                            <Label Grid.Column="1" Text="{Binding Title}" FontAttributes="Bold"/>
+                            <Label Grid.Column="1" Text="{Binding Title}" FontFamily="{StaticResource Lobster}" FontAttributes="Bold" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
         <Button Text="Logout"
+                FontFamily="{StaticResource Lobster}"
                 BackgroundColor="#e03838"
                 TextColor="White"
                 CornerRadius="0"

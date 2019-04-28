@@ -12,20 +12,24 @@
         <StackLayout Orientation="Horizontal">
             <Label Text="Email"
                    VerticalTextAlignment="Center"
-                   Margin="0, 0, 30, 0"></Label>
+                   Margin="0, 0, 30, 0"
+                   FontFamily="{StaticResource Lobster}"/>
             <Entry Text="{Binding Email}"
                    FontSize="Medium"
-                   Placeholder="Category name"/>
+                   Placeholder="Category name"
+                   FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
 
         <StackLayout Orientation="Horizontal">
             <Label Text="Password"
                    VerticalTextAlignment="Center"
-                   Margin="0, 0, 30, 0"></Label>
+                   Margin="0, 0, 30, 0"
+                   FontFamily="{StaticResource Lobster}"/>
             <Entry Text="{Binding Password}"
                    FontSize="Medium"
                    Placeholder="password"
-                   IsPassword="True"/>
+                   IsPassword="True"
+                   FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
 
         <Button BackgroundColor="#41bbf4"
@@ -33,6 +37,7 @@
                 FontSize="Medium"
                 Text="Add"
                 TextColor="White"
-                Clicked="Button_Clicked"/>
+                Clicked="Button_Clicked"
+                FontFamily="{StaticResource Lobster}"/>
     </StackLayout>
 </pages:PopupPage>

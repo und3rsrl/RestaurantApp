@@ -25,7 +25,8 @@
                                     <ColumnDefinition Width="45"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Name}"
-                                       FontSize="Medium"/>
+                                       FontSize="Medium"
+                                       FontFamily="{StaticResource Lobster}"/>
                                 <ImageButton Grid.Column="1" 
                                              Source="delete.png"
                                              Command="{Binding BindingContext.DeleteCategorieCommand, Source={x:Reference CategoriesListView}}"
@@ -45,7 +46,8 @@
                     TextColor="White"
                     CornerRadius="0"
                     x:Name="Button_AddCategorie"
-                    Clicked="Button_AddCategorie_Clicked"/>
+                    Clicked="Button_AddCategorie_Clicked"
+                    FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

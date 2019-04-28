@@ -26,7 +26,8 @@
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Email}"
                                        FontSize="Small"
-                                       HorizontalTextAlignment="Center"/>
+                                       HorizontalTextAlignment="Center"
+                                       FontFamily="{StaticResource Lobster}"/>
                                 <ImageButton Grid.Column="1" 
                                              Source="delete.png"
                                              Command="{Binding BindingContext.DeleteWaiterCommand, Source={x:Reference WaitersListView}}"
@@ -46,7 +47,8 @@
                     TextColor="White"
                     CornerRadius="0"
                     x:Name="Button_AddWaiter"
-                    Clicked="Button_AddWaiter_Clicked"/>
+                    Clicked="Button_AddWaiter_Clicked"
+                    FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

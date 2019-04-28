@@ -19,7 +19,7 @@
                       Margin="10, 5, 10, 0"
                       SeparatorVisibility="Default">
                 <ListView.Header>
-                    <Grid Margin="0, 0, 0, 10">
+                    <Grid Margin="0, 15, 0, 10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width=".5*" />
                             <ColumnDefinition Width=".5*" />
@@ -30,11 +30,11 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Label Text="No." Grid.Column="0" Grid.Row="0"/>
-                        <Label Text="Name" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center"/>
-                        <Label Text="Price" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center"/>
-                        <Label Text="Amount" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center"/>
-                        <Label Text="Subtotal" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center"/>
+                        <Label Text="No." Grid.Column="0" Grid.Row="0" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Name" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Price" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Amount" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Subtotal" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
@@ -57,7 +57,8 @@
                                        VerticalTextAlignment="Center"
                                        Text="{Binding Id}"
                                        TextColor="Black"
-                                       FontSize="12"/>
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="0"
                                        Grid.Column="1"
@@ -65,7 +66,8 @@
                                        HorizontalTextAlignment="Center"
                                        Text="{Binding Name}"
                                        TextColor="Black"
-                                       FontSize="12"/>
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="0"
                                        Grid.Column="2"
@@ -73,7 +75,8 @@
                                        HorizontalTextAlignment="Center"
                                        Text="{Binding Price, StringFormat='{}{0} lei'}"
                                        TextColor="Black"
-                                       FontSize="12"/>
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="0"
                                        Grid.Column="3"
@@ -81,7 +84,8 @@
                                        HorizontalTextAlignment="Center"
                                        Text="{Binding Amount, StringFormat='{}{0}'}"
                                        TextColor="Black"
-                                       FontSize="12"/>
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="0"
                                        Grid.Column="4"
@@ -89,7 +93,8 @@
                                        HorizontalTextAlignment="Center"
                                        Text="{Binding Total, StringFormat='{}{0} lei'}"
                                        TextColor="Black"
-                                       FontSize="12"/>
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -109,7 +114,8 @@
                                Grid.Row="0"
                                Grid.ColumnSpan="2"
                                HorizontalTextAlignment="End"
-                               Margin="0, 15, 0, 0"/>
+                               Margin="0, 15, 0, 0"
+                               FontFamily="{StaticResource Lobster}"/>
                         <Button Grid.Row="1"
                                 Grid.Column="0"
                                 Text="Pay order"
@@ -119,14 +125,16 @@
                                 CornerRadius="20"
                                 x:Name="Button_PayOrder"
                                 Margin="15, 0, 0, 0"
-                                Command="{Binding PayOrderCommand}"/>
+                                Command="{Binding PayOrderCommand}"
+                                FontFamily="{StaticResource Lobster}"/>
                         <Picker Grid.Row="1"
                                 Grid.Column="1"
-                                FontSize="12"
+                                FontSize="10"
                                 Margin="15, 0, 15, 0"
                                 Title="Payment Method"
                                 x:Name="PaymentMethod_Picker"
-                                SelectedItem="{Binding PaymentMethod}">
+                                SelectedItem="{Binding PaymentMethod}"
+                                FontFamily="{StaticResource Lobster}">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Waiter Payment</x:String>
@@ -144,7 +152,8 @@
                        HorizontalOptions="Center"
                        VerticalOptions="Center"
                        HorizontalTextAlignment="Center"
-                       VerticalTextAlignment="Center"/>
+                       VerticalTextAlignment="Center"
+                       FontFamily="{StaticResource Lobster}"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

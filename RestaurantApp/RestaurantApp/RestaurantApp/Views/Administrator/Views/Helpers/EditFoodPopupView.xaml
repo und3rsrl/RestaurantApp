@@ -23,12 +23,14 @@
                            VerticalTextAlignment="Center"
                            HorizontalOptions="Start"
                            Margin="0, 0, 15, 0"
-                           FontSize="Medium"/>
+                           FontSize="Medium"
+                           FontFamily="{StaticResource Lobster}"/>
                     <Entry Text="{Binding Name}"
                            x:Name="Name_Entry"
                            FontSize="Medium"
                            Placeholder="food name"
-                           HorizontalOptions="FillAndExpand"/>
+                           HorizontalOptions="FillAndExpand"
+                           FontFamily="{StaticResource Lobster}"/>
                 </StackLayout>
 
                 <StackLayout Orientation="Vertical">
@@ -36,12 +38,14 @@
                            VerticalTextAlignment="Center"
                            HorizontalOptions="StartAndExpand"
                            Margin="0, 0, 15, 0"
-                           FontSize="Medium"/>
+                           FontSize="Medium"
+                           FontFamily="{StaticResource Lobster}"/>
                     <Entry Text="{Binding Ingredients}"
                            x:Name="Ingredients_Entry"
                            FontSize="Medium"
                            HorizontalOptions="Fill"
-                           Placeholder="ingredients"/>
+                           Placeholder="ingredients"
+                           FontFamily="{StaticResource Lobster}"/>
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
@@ -49,12 +53,14 @@
                            VerticalTextAlignment="Center"
                            HorizontalOptions="Start"
                            Margin="0, 0, 15, 0"
-                           FontSize="Medium"/>
+                           FontSize="Medium"
+                           FontFamily="{StaticResource Lobster}"/>
                     <Entry Text="{Binding Price}"
                            x:Name="Price_Entry"
                            FontSize="Medium"
                            HorizontalOptions="FillAndExpand"
-                           Placeholder="price"/>
+                           Placeholder="price"
+                           FontFamily="{StaticResource Lobster}"/>
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
@@ -62,12 +68,14 @@
                            VerticalTextAlignment="Center"
                            HorizontalOptions="Start"
                            Margin="0, 0, 15, 0"
-                           FontSize="Medium"/>
+                           FontSize="Medium"
+                           FontFamily="{StaticResource Lobster}"/>
                     <Picker x:Name="category_picker"
                             TextColor="#41bbf4"
                             ItemsSource="{Binding Categories}"
                             SelectedItem="{Binding Category}"
-                            HorizontalOptions="FillAndExpand"/>
+                            HorizontalOptions="FillAndExpand"
+                            FontFamily="{StaticResource Lobster}"/>
                 </StackLayout>
 
                 <StackLayout Orientation="Horizontal">
@@ -75,13 +83,15 @@
                             BackgroundColor="#41bbf4"
                             TextColor="White"
                             Clicked="PickPhoto_Clicked"
-                            HorizontalOptions="FillAndExpand"/>
+                            HorizontalOptions="FillAndExpand"
+                            FontFamily="{StaticResource Lobster}"/>
 
                     <Button Text="Take Photo"
                             BackgroundColor="#41bbf4"
                             TextColor="White"
                             Clicked="TakePhoto_Clicked"
-                            HorizontalOptions="FillAndExpand"/>
+                            HorizontalOptions="FillAndExpand"
+                            FontFamily="{StaticResource Lobster}"/>
                 </StackLayout>
 
                 <Image x:Name="FileImage"
@@ -94,13 +104,15 @@
                         Text="Save"
                         TextColor="White"
                         Command="{Binding EditFoodCommand}"
-                        Clicked="Button_Clicked"/>
+                        Clicked="Button_Clicked"
+                        FontFamily="{StaticResource Lobster}"/>
 
                 <Button BackgroundColor="#e03838"
                         FontSize="Medium"
                         Text="Close"
                         TextColor="White"
-                        Clicked="Button_Clicked"/>
+                        Clicked="Button_Clicked"
+                        FontFamily="{StaticResource Lobster}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

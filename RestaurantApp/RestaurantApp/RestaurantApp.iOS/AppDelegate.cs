@@ -29,7 +29,7 @@ namespace RestaurantApp.iOS
             Rg.Plugins.Popup.Popup.Init();
             Xamarin.FormsMaps.Init();
             KeyboardOverlapRenderer.Init();
-            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+            //FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
             DependencyService.Register<ToastNotification>();
             ToastNotification.Init();
             LoadApplication(new App());

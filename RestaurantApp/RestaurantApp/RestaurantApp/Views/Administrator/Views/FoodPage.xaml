@@ -16,7 +16,8 @@
                     TextColor="#41bbf4"
                     ItemsSource="{Binding Categories}"
                     SelectedItem="{Binding SelectedCategory}"
-                    Margin="10, 10, 10, 0">
+                    Margin="10, 10, 10, 0"
+                    FontFamily="{StaticResource Lobster}">
             </Picker>
             
             <ListView x:Name="FoodListView" 
@@ -38,7 +39,7 @@
                                     <ColumnDefinition Width=".5*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <forms:CachedImage Grid.Row="0"
+                                <Image Grid.Row="0"
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Aspect="AspectFill"
@@ -46,12 +47,14 @@
 
                                 <Label Grid.Row="1"
                                        Grid.Column="0"
-                                       Text="{Binding Name}"/>
+                                       Text="{Binding Name}"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="1"
                                        Grid.Column="1"
                                        HorizontalTextAlignment="End"
-                                       Text="{Binding Price, StringFormat='{}{0} lei'}"/>
+                                       Text="{Binding Price, StringFormat='{}{0} lei'}"
+                                       FontFamily="{StaticResource Lobster}"/>
 
                                 <Button Grid.Row="2"
                                         Grid.Column="0"
@@ -63,7 +66,8 @@
                                         CornerRadius="20"
                                         x:Name="Button_DeleteFood"
                                         Command="{Binding BindingContext.DeleteFoodCommand, Source={x:Reference FoodListView}}"
-                                        CommandParameter="{Binding Id}"/>
+                                        CommandParameter="{Binding Id}"
+                                        FontFamily="{StaticResource Lobster}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -74,7 +78,8 @@
                     TextColor="White"
                     CornerRadius="0"
                     x:Name="Button_AddFood"
-                    Clicked="Button_AddFood_Clicked"/>
+                    Clicked="Button_AddFood_Clicked"
+                    FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

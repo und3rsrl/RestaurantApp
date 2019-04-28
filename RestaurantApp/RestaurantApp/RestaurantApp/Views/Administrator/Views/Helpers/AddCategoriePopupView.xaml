@@ -18,11 +18,13 @@
         
         <StackLayout Orientation="Horizontal">
             <Label Text="Name"
+                   FontFamily="{StaticResource Lobster}"
                    VerticalTextAlignment="Center"
                    HorizontalOptions="Start"
                    Margin="0, 0, 30, 0"></Label>
             <Entry Text="{Binding Name}"
                    FontSize="Medium"
+                   FontFamily="{StaticResource Lobster}"
                    Placeholder="Category name"/>
         </StackLayout>
 
@@ -31,6 +33,7 @@
                 FontSize="Medium"
                 Text="Add"
                 TextColor="White"
+                FontFamily="{StaticResource Lobster}"
                 Clicked="Button_Clicked"/>
     </StackLayout>
 </pages:PopupPage>

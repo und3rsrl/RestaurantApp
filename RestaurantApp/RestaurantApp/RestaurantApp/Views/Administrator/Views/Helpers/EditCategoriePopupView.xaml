@@ -17,11 +17,13 @@
         <StackLayout Orientation="Horizontal">
             <Label Text="Name"
                    VerticalTextAlignment="Center"
-                   Margin="0, 0, 30, 0"></Label>
+                   Margin="0, 0, 30, 0"
+                   FontFamily="{StaticResource Lobster}"/>
             <Entry Text="{Binding Name}"
                    x:Name="Name_Entry"
                    FontSize="Medium"
-                   Placeholder="Category name"/>
+                   Placeholder="Category name"
+                   FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
 
         <Button BackgroundColor="#41bbf4"
@@ -29,6 +31,7 @@
                 FontSize="Medium"
                 Text="Edit"
                 TextColor="White"
-                Clicked="Button_Clicked"/>
+                Clicked="Button_Clicked"
+                FontFamily="{StaticResource Lobster}"/>
     </StackLayout>
 </pages:PopupPage>

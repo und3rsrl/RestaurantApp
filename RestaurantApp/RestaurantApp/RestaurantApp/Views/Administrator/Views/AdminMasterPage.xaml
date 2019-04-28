@@ -32,7 +32,8 @@
                                 <Image Source="{Binding Icon}"/>
                                 <Label Grid.Column="1"
                                        Text="{Binding Title}"
-                                       FontAttributes="Bold"/>
+                                       FontAttributes="Bold"
+                                       FontFamily="{StaticResource Lobster}"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -43,7 +44,8 @@
                     TextColor="White"
                     CornerRadius="0"
                     Clicked="Button_Logout_Clicked"
-                    x:Name="Button_Logout"/>
+                    x:Name="Button_Logout"
+                    FontFamily="{StaticResource Lobster}"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

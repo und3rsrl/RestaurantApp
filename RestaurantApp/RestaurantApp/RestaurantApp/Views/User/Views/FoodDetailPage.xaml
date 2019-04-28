@@ -32,7 +32,8 @@
                        TextColor="Black"
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
-                       FontAttributes="Bold"/>
+                       FontAttributes="Bold"
+                       FontFamily="{StaticResource Lobster}"/>
                 <Image x:Name="FoodImage"
                        Grid.Row="1"
                        Grid.ColumnSpan="3"
@@ -44,7 +45,8 @@
                        FontSize="Large"
                        TextColor="Black"
                        FontAttributes="Bold"
-                       Margin="0, 10, 0, 10"/>
+                       Margin="0, 10, 0, 10"
+                       FontFamily="{StaticResource Lobster}"/>
                 <Label x:Name="PriceLabel"                   
                        Grid.Row="2"
                        Grid.Column="1"
@@ -53,14 +55,16 @@
                        FontSize="20"
                        FontAttributes="Bold"
                        HorizontalTextAlignment="End"
-                       Margin="0, 10, 0, 10"/>
+                       Margin="0, 10, 0, 10"
+                       FontFamily="{StaticResource Lobster}"/>
                 <Label Text="Ingredients: "
                        FontSize="Large"
                        TextColor="Black"
                        Grid.Row="3"
                        Grid.Column="0"
                        Grid.ColumnSpan="2"
-                       Margin="0, 15, 0, 10"/>
+                       Margin="0, 15, 0, 10"
+                       FontFamily="{StaticResource Lobster}"/>
                 <Label x:Name="IngredientsLabel"
                        FontSize="18"
                        TextColor="Black"
@@ -68,7 +72,8 @@
                        Grid.Column="1"
                        Grid.ColumnSpan="2"
                        HorizontalTextAlignment="End"
-                       Margin="0, 10, 0, 10"/>
+                       Margin="0, 10, 0, 10"
+                       FontFamily="{StaticResource Lobster}"/>
                 <ImageButton Grid.Row="4"
                              Grid.Column="0"
                              Source="minus.png"
@@ -80,7 +85,8 @@
                        Margin="10, 0, 10, 0"
                        FontSize="16"
                        HorizontalTextAlignment="Center"
-                       Text="{Binding Amount}"/>
+                       Text="{Binding Amount}"
+                       FontFamily="{StaticResource Lobster}"/>
                 <ImageButton Grid.Row="4"
                              Grid.Column="2"
                              Source="plus.png"
@@ -96,7 +102,8 @@
                         CornerRadius="20"
                         Margin="20, 10, 20, 0"
                         x:Name="Button_AddToBasket"
-                        Command="{Binding AddToCartCommand}"/>            
+                        Command="{Binding AddToCartCommand}"
+                        FontFamily="{StaticResource Lobster}"/>            
             </Grid>
         </ScrollView>
     </ContentPage.Content>
