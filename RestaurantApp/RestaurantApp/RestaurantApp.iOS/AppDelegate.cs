@@ -6,6 +6,7 @@ using Foundation;
 using KeyboardOverlap.Forms.Plugin.iOSUnified;
 using Plugin.Toasts;
 using UIKit;
+using UserNotifications;
 using Xamarin.Forms;
 
 namespace RestaurantApp.iOS
@@ -33,6 +34,22 @@ namespace RestaurantApp.iOS
             DependencyService.Register<ToastNotification>();
             ToastNotification.Init();
             LoadApplication(new App());
+
+            if (UIDevice.CurrentDevice.CheckSystemVersion(10, 0))
+            {
+                // Request Permissions
+                UNUserNotificationCenter.Current.RequestAuthorization(UNAuthorizationOptions.Alert | UNAuthorizationOptions.Badge | UNAuthorizationOptions.Sound, (granted, error) =>
+                {
+                    // Do something if needed
+                });
+            }
+            else if (UIDevice.CurrentDevice.CheckSystemVersion(8, 0))
+            {
+                var notificationSettings = UIUserNotificationSettings.GetSettingsForTypes(
+                UIUserNotificationType.Alert | UIUserNotificationType.Badge | UIUserNotificationType.Sound, null);
+
+                app.RegisterUserNotificationSettings(notificationSettings);
+            }
 
             return base.FinishedLaunching(app, options);
         }

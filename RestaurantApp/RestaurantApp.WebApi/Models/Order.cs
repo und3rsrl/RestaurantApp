@@ -24,5 +24,7 @@ namespace RestaurantApp.WebApi.Models
         public int Table { get; set; }
 
         public DateTime SubmitDateTime { get; set; }
+
+        public bool WaiterPayment { get; set; }
     }
 }

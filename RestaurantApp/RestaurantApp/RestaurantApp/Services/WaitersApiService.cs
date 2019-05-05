@@ -49,11 +49,29 @@ namespace RestaurantApp.Services
             return await response.Content.ReadAsStringAsync();
         }
 
+        public async void PaidOrder(int id)
+        {
+            await HttpClient.PostAsync("Orders/paidOrder/" + id, null);
+        }
+
         public async Task<string> DeleteWaiter(string userId)
         {           
             var response = await HttpClient.DeleteAsync("Waiters/" + userId);
 
             return await response.Content.ReadAsStringAsync();
+        }
+
+        public async Task<IEnumerable<WaiterOrderInfo>> GetOrders(string email)
+        {
+            var response = await HttpClient.GetAsync("Orders/activeWaiterOrders/" + email).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<WaiterOrderInfo>>(content);
+            }
+
+            return null;
         }
     }
 }

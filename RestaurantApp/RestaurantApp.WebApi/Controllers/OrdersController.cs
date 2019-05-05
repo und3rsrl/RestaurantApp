@@ -36,6 +36,30 @@ namespace RestaurantApp.WebApi.Controllers
             return _context.Orders.Where(x => x.Submitter.Equals(email) && x.IsPaid == true);
         }
 
+        [HttpGet("activeWaiterOrders/{email}")]
+        public IEnumerable<WaiterOrderInfoDTO> GetWaiterActiveOrders([FromRoute] string email)
+        {
+            var orders =_context.Orders.Include(x => x.OrderItems).Where(x => x.Waiter.Equals(email) && x.IsPaid == false);
+
+            List<WaiterOrderInfoDTO> waiterOrdersInfosList = new List<WaiterOrderInfoDTO>();
+
+            foreach (Order order in orders)
+            {
+                WaiterOrderInfoDTO orderInfoDTO = new WaiterOrderInfoDTO()
+                {
+                    Id = order.OrderId,
+                    Submitter = order.Submitter,
+                    Table = order.Table,
+                    Total = order.Total,
+                    WaiterPayment = order.WaiterPayment
+                };
+
+                waiterOrdersInfosList.Add(orderInfoDTO);
+            }
+
+            return waiterOrdersInfosList;
+        }
+
         // GET: api/Orders/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOrder([FromRoute] int id)
@@ -68,6 +92,68 @@ namespace RestaurantApp.WebApi.Controllers
             {
                 return BadRequest();
             }
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("paidOrder/{id}")]
+        public async Task<IActionResult> PaidOrder([FromRoute] int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+                return BadRequest();
+
+            order.IsPaid = true;
+
+            _context.Entry(order).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        [HttpPost("waiterPayment/{id}")]
+        public async Task<IActionResult> WaiterPaymentOrder([FromRoute] int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+                return BadRequest();
+
+            order.WaiterPayment = true;
 
             _context.Entry(order).State = EntityState.Modified;
 

@@ -19,6 +19,7 @@ namespace RestaurantApp.ViewModels
         public ActiveOrderViewModel()
         {
             OrderItems = new ObservableRangeCollection<OrderItem>();
+            PaymentNotSelected = true;
         }
 
         public EventHandler NoActiveOrderUIHandler;
@@ -30,11 +31,34 @@ namespace RestaurantApp.ViewModels
             get; private set;
         }
 
+        public bool PaymentNotSelected { get; set; }
+
+        public string PaymentMethod { get; set; }
+
         public ICommand GetActiveOrder
         {
             get
             {
                 return new Command(async () => await ExecuteGetActiveOrderCommand());
+            }
+        }
+
+        public ICommand PayOrderCommand
+        {
+            get
+            {
+                return new Command(async () => 
+                {
+                    if (PaymentMethod.Contains("Waiter Payment"))
+                    {
+                        //_ordersApiService.WaiterPay();
+                        PaymentNotSelected = false;
+                    }
+                    else if(PaymentMethod.Contains("Credit Card"))
+                    {
+                        PaymentNotSelected = false;
+                    }
+                });
             }
         }
 

@@ -54,6 +54,7 @@ namespace RestaurantApp.Domain
         public void Clear()
         {
             _orderItems.Clear();
+            _idSequence = 0;
         }
     }
 }

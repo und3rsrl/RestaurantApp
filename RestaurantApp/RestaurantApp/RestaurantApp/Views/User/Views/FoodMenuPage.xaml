@@ -14,7 +14,9 @@
             <Picker x:Name="category_picker"
                     TextColor="#41bbf4"
                     ItemsSource="{Binding Categories}"
-                    SelectedItem="{Binding SelectedCategory}">
+                    SelectedItem="{Binding SelectedCategory}"
+                    FontFamily="{StaticResource Lobster}"
+                    FontAttributes="Bold">
             </Picker>
 
             <ListView VerticalOptions="FillAndExpand" 

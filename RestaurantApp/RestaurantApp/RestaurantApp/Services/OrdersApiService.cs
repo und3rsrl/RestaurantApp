@@ -46,5 +46,10 @@ namespace RestaurantApp.Services
 
             return null;
         }
+
+        public async void WaiterPay(int id)
+        {
+            await HttpClient.PostAsync("Orders/paidOrder/" + id, null);
+        }
     }
 }
