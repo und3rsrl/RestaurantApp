@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
+             xmlns:Helpers="clr-namespace:RestaurantApp.Helpers"
              x:Class="RestaurantApp.Views.User.Views.ActiveOrderPage">
     
     <ContentPage.BindingContext>
@@ -108,6 +109,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                             <RowDefinition Height="35" />
+                            <RowDefinition Height="35" />
                         </Grid.RowDefinitions>
                         <Label x:Name="Total_Label"
                                Grid.Column="0"
@@ -126,7 +128,8 @@
                                 x:Name="Button_PayOrder"
                                 Margin="15, 0, 0, 0"
                                 Command="{Binding PayOrderCommand}"
-                                FontFamily="{StaticResource Lobster}"/>
+                                FontFamily="{StaticResource Lobster}"
+                                IsVisible="{Binding PaymentNotSelected}"/>
                         <Picker Grid.Row="1"
                                 Grid.Column="1"
                                 FontSize="10"
@@ -135,7 +138,7 @@
                                 x:Name="PaymentMethod_Picker"
                                 SelectedItem="{Binding PaymentMethod}"
                                 FontFamily="{StaticResource Lobster}"
-                                IsVisible="{Binding PaymentSelected}">
+                                IsVisible="{Binding PaymentNotSelected}">
                             <Picker.ItemsSource>
                                 <x:Array Type="{x:Type x:String}">
                                     <x:String>Waiter Payment</x:String>
@@ -143,6 +146,17 @@
                                 </x:Array>
                             </Picker.ItemsSource>
                         </Picker>
+                        <Label Grid.Row="2"
+                               Grid.Column="0"
+                               Grid.ColumnSpan="2"
+                               Text="Wait for waiter to complete the order!"
+                               FontSize="Small"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"
+                               HorizontalTextAlignment="Center"
+                               VerticalTextAlignment="Center"
+                               FontFamily="{StaticResource Lobster}"
+                               IsVisible="{Binding PaymentNotSelected, Converter={Helpers:InverseBoolConverter}}"/>
                     </Grid>
                 </ListView.Footer>
             </ListView>
@@ -155,7 +169,7 @@
                        HorizontalTextAlignment="Center"
                        VerticalTextAlignment="Center"
                        FontFamily="{StaticResource Lobster}"
-                       Margin="0, 250, 0, 0"/>
+                       Margin="0, 200, 0, 0"/>
             </StackLayout>
         </StackLayout>
     </ContentPage.Content>

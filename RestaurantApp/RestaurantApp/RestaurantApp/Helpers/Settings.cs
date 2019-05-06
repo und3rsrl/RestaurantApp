@@ -56,6 +56,19 @@ namespace RestaurantApp.Helpers
             }
         }
 
+        public static bool PaymentNotSelected
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("PaymentNotSelected", false);
+            }
+
+            set
+            {
+                AppSettings.AddOrUpdateValue("PaymentNotSelected", value);
+            }
+        }
+
         public static Cart Bascket
         {
             get

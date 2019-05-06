@@ -77,6 +77,7 @@ namespace RestaurantApp.ViewModels
                             Settings.Bascket.Clear();
                             FoodItems.ReplaceRange(Settings.Bascket.AddedFoods);
                             ResetTotal?.Invoke(this, EventArgs.Empty);
+                            Settings.PaymentNotSelected = true;
                             await Page.DisplayAlert("Basket", "Your order has been registered. Have a good meal", "Ok");
                         }
                     }

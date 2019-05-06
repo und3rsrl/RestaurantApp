@@ -49,7 +49,7 @@ namespace RestaurantApp.Services
 
         public async void WaiterPay(int id)
         {
-            await HttpClient.PostAsync("Orders/paidOrder/" + id, null);
+            await HttpClient.PostAsync("Orders/waiterPayment/" + id, null);
         }
     }
 }
