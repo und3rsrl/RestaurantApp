@@ -69,7 +69,7 @@ namespace RestaurantApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.OrderId == id);
+            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.OrderId == id && i.IsPaid == false);
 
             if (order == null)
             {

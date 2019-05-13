@@ -45,7 +45,11 @@ namespace RestaurantApp.ViewModels
         {
             get
             {
-                return new Command<int>(async (id) => _waitersApiService.PaidOrder(id));
+                return new Command<int>(async (id) =>
+                {
+                    _waitersApiService.PaidOrder(id);
+                    await ExecuteGetOrdersCommand();
+                });
             }
         }
 

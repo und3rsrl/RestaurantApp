@@ -84,13 +84,14 @@ namespace RestaurantApp.ViewModels
                     var options = new NotificationOptions()
                     {
                         Title = "Cart",
+                        ClearFromHistory = true,
                         Description = "You've added food to cart!",
                         IsClickable = false // Set to true if you want the result Clicked to come back (if the user clicks it)
                     };
 
-                    var result = await notificator.Notify(options);
-
                     Settings.Bascket.AddOrderItem(orderItem);
+
+                    var result = await notificator.Notify(options);                    
                 });
             }
         }

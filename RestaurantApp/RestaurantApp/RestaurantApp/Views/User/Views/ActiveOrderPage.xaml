@@ -31,11 +31,10 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
                         </Grid.RowDefinitions>
-                        <Label Text="No." Grid.Column="0" Grid.Row="0" FontFamily="{StaticResource Lobster}"/>
-                        <Label Text="Name" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
-                        <Label Text="Price" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
-                        <Label Text="Amount" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
-                        <Label Text="Subtotal" Grid.Column="4" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Name" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Price" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Amount" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Subtotal" Grid.Column="3" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
                     </Grid>
                 </ListView.Header>
                 <ListView.ItemTemplate>
@@ -47,7 +46,6 @@
                                 </Grid.RowDefinitions>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width=".5*" />
-                                    <ColumnDefinition Width=".5*" />
                                     <ColumnDefinition Width=".5*"/>
                                     <ColumnDefinition Width=".5*"/>
                                     <ColumnDefinition Width=".5*"/>
@@ -56,7 +54,8 @@
                                 <Label Grid.Row="0"
                                        Grid.Column="0"
                                        VerticalTextAlignment="Center"
-                                       Text="{Binding Id}"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Name}"
                                        TextColor="Black"
                                        FontSize="12"
                                        FontFamily="{StaticResource Lobster}"/>
@@ -65,7 +64,7 @@
                                        Grid.Column="1"
                                        VerticalTextAlignment="Center"
                                        HorizontalTextAlignment="Center"
-                                       Text="{Binding Name}"
+                                       Text="{Binding Price, StringFormat='{}{0} lei'}"
                                        TextColor="Black"
                                        FontSize="12"
                                        FontFamily="{StaticResource Lobster}"/>
@@ -74,22 +73,13 @@
                                        Grid.Column="2"
                                        VerticalTextAlignment="Center"
                                        HorizontalTextAlignment="Center"
-                                       Text="{Binding Price, StringFormat='{}{0} lei'}"
-                                       TextColor="Black"
-                                       FontSize="12"
-                                       FontFamily="{StaticResource Lobster}"/>
-
-                                <Label Grid.Row="0"
-                                       Grid.Column="3"
-                                       VerticalTextAlignment="Center"
-                                       HorizontalTextAlignment="Center"
                                        Text="{Binding Amount, StringFormat='{}{0}'}"
                                        TextColor="Black"
                                        FontSize="12"
                                        FontFamily="{StaticResource Lobster}"/>
 
                                 <Label Grid.Row="0"
-                                       Grid.Column="4"
+                                       Grid.Column="3"
                                        VerticalTextAlignment="Center"
                                        HorizontalTextAlignment="Center"
                                        Text="{Binding Total, StringFormat='{}{0} lei'}"
