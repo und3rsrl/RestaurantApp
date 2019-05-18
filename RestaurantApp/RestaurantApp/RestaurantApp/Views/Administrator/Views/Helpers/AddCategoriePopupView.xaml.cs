@@ -18,7 +18,6 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
         public AddCategoriePopupView(EventHandler refreshCategories)
         {
             InitializeComponent();
-
             BindData(refreshCategories);
         }
 
@@ -26,9 +25,10 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
         {
             var viewModel = BindingContext as AddCategorieViewModel;
             viewModel.RefreshCategories += refreshCategories;
+            viewModel.SuccesffulAdd += OnSuccesffulAdd;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnSuccesffulAdd(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync(true);
         }

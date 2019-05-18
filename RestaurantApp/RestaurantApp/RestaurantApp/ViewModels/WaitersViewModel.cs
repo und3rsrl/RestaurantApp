@@ -24,8 +24,6 @@ namespace RestaurantApp.ViewModels
         {
             get; private set;
         }
-
-
         public async void Refresh(object sender, EventArgs e)
         {
             await ExecuteLoadWaitersCommand();

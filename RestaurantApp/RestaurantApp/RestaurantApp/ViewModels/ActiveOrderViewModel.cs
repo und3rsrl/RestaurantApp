@@ -1,4 +1,6 @@
 ﻿using MvvmHelpers;
+using PayPal.Forms;
+using PayPal.Forms.Abstractions;
 using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
@@ -15,9 +17,15 @@ namespace RestaurantApp.ViewModels
     public class ActiveOrderViewModel : BaseViewModel
     {
         private OrdersApiService _ordersApiService = new OrdersApiService();
+        private WaitersApiService _waiterApiService = new WaitersApiService();
         private Order _order;
 
         public ActiveOrderViewModel()
+        {
+            OrderItems = new ObservableRangeCollection<OrderItem>();
+        }
+
+        public ActiveOrderViewModel(Page page)
         {
             OrderItems = new ObservableRangeCollection<OrderItem>();
         }
@@ -31,6 +39,8 @@ namespace RestaurantApp.ViewModels
             get; private set;
         }
 
+        public Page Page { get; set; }
+
         public bool PaymentNotSelected
         {
             get => Settings.PaymentNotSelected;
@@ -39,6 +49,17 @@ namespace RestaurantApp.ViewModels
             {
                 Settings.PaymentNotSelected = value;
                 OnPropertyChanged(nameof(PaymentNotSelected));
+            }
+        }
+
+        public bool WaiterPaymentSelected
+        {
+            get => Settings.WaiterPaymentSelected;
+
+            set
+            {
+                Settings.WaiterPaymentSelected = value;
+                OnPropertyChanged(nameof(WaiterPaymentSelected));
             }
         }
 
@@ -58,18 +79,43 @@ namespace RestaurantApp.ViewModels
             {
                 return new Command(async () => 
                 {
-                    if (PaymentMethod.Contains("Waiter Payment"))
+                    var splits = Settings.ActiveOrder.Split('/');
+                    var id = Convert.ToInt32(splits[splits.Length - 1]);
+                    try
                     {
-                        var splits = Settings.ActiveOrder.Split('/');
+                        if (PaymentMethod.Contains("Waiter Payment"))
+                        {
+                            _ordersApiService.WaiterPay(id);
+                            PaymentNotSelected = false;
+                            WaiterPaymentSelected = true;
+                        }
+                        else if (PaymentMethod.Contains("Credit Card"))
+                        {
+                            PaymentNotSelected = false;
 
-                        var id = Convert.ToInt32(splits[splits.Length - 1]);
-
-                        _ordersApiService.WaiterPay(id);
-                        PaymentNotSelected = false;
+                            var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order-" + id, new Decimal(_order.Total), "RON"), new Decimal(0));
+                            if (result.Status == PayPalStatus.Cancelled)
+                            {
+                                await Page.DisplayAlert("Payment", "Payment cancelled", "Ok");
+                                Debug.WriteLine("Cancelled");
+                            }
+                            else if (result.Status == PayPalStatus.Error)
+                            {
+                                await Page.DisplayAlert("Payment", "Payment unsuccessful", "Ok");
+                                Debug.WriteLine(result.ErrorMessage);
+                            }
+                            else if (result.Status == PayPalStatus.Successful)
+                            {
+                                await Page.DisplayAlert("Payment", "Payment successfully", "Ok");
+                                Debug.WriteLine(result.ServerResponse.Response.Id);
+                                _waiterApiService.PaidOrder(id);
+                                await ExecuteGetActiveOrderCommand();
+                            }
+                        }
                     }
-                    else if(PaymentMethod.Contains("Credit Card"))
+                    catch (Exception e)
                     {
-                        PaymentNotSelected = false;
+                        PaymentNotSelected = true;
                     }
                 });
             }
@@ -87,7 +133,10 @@ namespace RestaurantApp.ViewModels
                 _order = await _ordersApiService.GetActiveOrder();
 
                 if (_order == null)
+                {
                     NoActiveOrderUIHandler?.Invoke(this, EventArgs.Empty);
+                    WaiterPaymentSelected = false;
+                }
                 else
                 {
                     OrderItems.ReplaceRange(_order.OrderItems);

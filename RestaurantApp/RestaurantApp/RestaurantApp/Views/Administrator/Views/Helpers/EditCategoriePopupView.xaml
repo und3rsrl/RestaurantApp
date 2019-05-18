@@ -9,29 +9,35 @@
     </ContentPage.BindingContext>
 
     <StackLayout Margin="12"
-                 Padding="24"
-                 Spacing="24"
+                 Padding="25"
+                 Spacing="25"
                  BackgroundColor="White"
                  HorizontalOptions="Center"
                  VerticalOptions="Center">
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Vertical"
+                     Spacing="0"
+                     MinimumWidthRequest="150"
+                     WidthRequest="150">
             <Label Text="Name"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
                    VerticalTextAlignment="Center"
-                   Margin="0, 0, 30, 0"
-                   FontFamily="{StaticResource Lobster}"/>
+                   HorizontalOptions="Start"/>
             <Entry Text="{Binding Name}"
                    x:Name="Name_Entry"
-                   FontSize="Medium"
+                   FontSize="Small"
+                   FontAttributes="Bold"
                    Placeholder="Category name"
-                   FontFamily="{StaticResource Lobster}"/>
+                   HorizontalOptions="FillAndExpand"
+                   TextColor="Gray"/>
         </StackLayout>
 
         <Button BackgroundColor="#41bbf4"
                 Command="{Binding EditCategorieCommand}"
-                FontSize="Medium"
+                FontSize="Small"
                 Text="Edit"
                 TextColor="White"
-                Clicked="Button_Clicked"
-                FontFamily="{StaticResource Lobster}"/>
+                FontAttributes="Bold"
+                HeightRequest="40"/>
     </StackLayout>
 </pages:PopupPage>

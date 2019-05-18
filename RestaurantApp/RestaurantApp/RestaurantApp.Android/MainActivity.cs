@@ -11,6 +11,9 @@ using Android;
 using Plugin.CurrentActivity;
 using Xamarin.Forms;
 using Plugin.Toasts;
+using PayPal.Forms;
+using PayPal.Forms.Abstractions;
+using Android.Content;
 
 namespace RestaurantApp.Droid
 {
@@ -27,11 +30,37 @@ namespace RestaurantApp.Droid
             Rg.Plugins.Popup.Popup.Init(this, savedInstanceState);
             //CrossCurrentActivity.Current.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            var config = new PayPalConfiguration(PayPalEnvironment.NoNetwork, "ARIHKnPqN07GY-CuoPFnZ6C82IXR9EpK5wFRQDaUv8qIfgFZZUyRM7CbpVL2xLYo3hhZPS2bpEukyYpo")
+            {
+                //If you want to accept credit cards
+                AcceptCreditCards = false,
+                //Your business name
+                MerchantName = "Test Store",
+                //Your privacy policy Url
+                MerchantPrivacyPolicyUri = "https://www.example.com/privacy",
+                //Your user agreement Url
+                MerchantUserAgreementUri = "https://www.example.com/legal",
+            };
+            CrossPayPalManager.Init(config, this);
+
             global::Xamarin.FormsMaps.Init(this, savedInstanceState);
             //FFImageLoading.Forms.Platform.CachedImageRenderer.Init(false);
             DependencyService.Register<ToastNotification>();
             ToastNotification.Init(this);
             LoadApplication(new App());
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            PayPalManagerImplementation.Manager.OnActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnDestroy()
+        {
+            base.OnDestroy();
+            PayPalManagerImplementation.Manager.Destroy();
         }
 
         #region RuntimePermissions

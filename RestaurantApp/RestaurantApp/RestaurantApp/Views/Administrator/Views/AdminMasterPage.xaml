@@ -26,14 +26,16 @@
                         <ViewCell>
                             <Grid Padding="5,10">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="50"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="{Binding Icon}"/>
+                                <Image Source="{Binding Icon}"
+                                       Margin="0, 0, 15, 0"/>
                                 <Label Grid.Column="1"
                                        Text="{Binding Title}"
                                        FontAttributes="Bold"
-                                       FontFamily="{StaticResource Lobster}"/>
+                                       FontSize="Medium"
+                                       VerticalTextAlignment="Center"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -45,7 +47,7 @@
                     CornerRadius="0"
                     Clicked="Button_Logout_Clicked"
                     x:Name="Button_Logout"
-                    FontFamily="{StaticResource Lobster}"/>
+                    FontAttributes="Bold"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

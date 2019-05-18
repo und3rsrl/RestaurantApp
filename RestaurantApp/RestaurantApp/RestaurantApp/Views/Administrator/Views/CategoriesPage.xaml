@@ -47,7 +47,7 @@
                     CornerRadius="0"
                     x:Name="Button_AddCategorie"
                     Clicked="Button_AddCategorie_Clicked"
-                    FontFamily="{StaticResource Lobster}"/>
+                    FontAttributes="Bold"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

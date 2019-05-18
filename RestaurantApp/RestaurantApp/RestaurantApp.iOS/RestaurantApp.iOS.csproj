@@ -185,6 +185,9 @@
     <PackageReference Include="LiveXAML">
       <Version>2.1.70</Version>
     </PackageReference>
+    <PackageReference Include="PayPal.Forms">
+      <Version>2.18.5</Version>
+    </PackageReference>
     <PackageReference Include="Rg.Plugins.Popup">
       <Version>1.1.5.188</Version>
     </PackageReference>

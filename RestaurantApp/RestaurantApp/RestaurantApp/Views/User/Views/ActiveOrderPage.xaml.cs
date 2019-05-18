@@ -16,7 +16,8 @@ namespace RestaurantApp.Views.User.Views
 		public ActiveOrderPage ()
 		{
 			InitializeComponent ();
-		}
+            BindingContext = new ActiveOrderViewModel(this);
+        }
 
         protected override void OnAppearing()
         {

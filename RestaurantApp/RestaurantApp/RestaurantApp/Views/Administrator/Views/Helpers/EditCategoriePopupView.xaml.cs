@@ -28,9 +28,10 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             var viewModel = BindingContext as EditCategorieViewModel;
             viewModel.Id = item.Id;
             viewModel.RefreshCategories += refreshCategories;
+            viewModel.SuccesffulEdit += OnSuccesffulEdit;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnSuccesffulEdit(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync(true);
         }

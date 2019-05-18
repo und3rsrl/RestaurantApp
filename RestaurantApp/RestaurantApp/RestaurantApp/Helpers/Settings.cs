@@ -69,6 +69,19 @@ namespace RestaurantApp.Helpers
             }
         }
 
+        public static bool WaiterPaymentSelected
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("WaiterPaymentSelected", false);
+            }
+
+            set
+            {
+                AppSettings.AddOrUpdateValue("WaiterPaymentSelected", value);
+            }
+        }
+
         public static Cart Bascket
         {
             get

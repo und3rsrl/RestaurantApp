@@ -10,30 +10,35 @@
     </ContentPage.BindingContext>
 
     <StackLayout Margin="12"
-                 Padding="24"
-                 Spacing="24"
+                 Padding="25"
+                 Spacing="25"
                  BackgroundColor="White"
                  HorizontalOptions="Center"
                  VerticalOptions="Center">
         
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Vertical"
+                     Spacing="0"
+                     MinimumWidthRequest="150"
+                     WidthRequest="150">
             <Label Text="Name"
-                   FontFamily="{StaticResource Lobster}"
-                   VerticalTextAlignment="Center"
-                   HorizontalOptions="Start"
-                   Margin="0, 0, 30, 0"></Label>
-            <Entry Text="{Binding Name}"
+                   FontAttributes="Bold"
                    FontSize="Medium"
-                   FontFamily="{StaticResource Lobster}"
-                   Placeholder="Category name"/>
+                   VerticalTextAlignment="Center"
+                   HorizontalOptions="Start"/>
+            <Entry Text="{Binding Name}"
+                   FontSize="Small"
+                   FontAttributes="Bold"
+                   Placeholder="Category name"
+                   HorizontalOptions="FillAndExpand"
+                   TextColor="Gray"/>
         </StackLayout>
 
         <Button BackgroundColor="#41bbf4"
                 Command="{Binding AddCategorieCommand}"
-                FontSize="Medium"
+                FontSize="Small"
                 Text="Add"
                 TextColor="White"
-                FontFamily="{StaticResource Lobster}"
-                Clicked="Button_Clicked"/>
+                FontAttributes="Bold"
+                HeightRequest="40"/>
     </StackLayout>
 </pages:PopupPage>

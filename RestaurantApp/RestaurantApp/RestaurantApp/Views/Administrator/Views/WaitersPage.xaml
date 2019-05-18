@@ -14,7 +14,8 @@
             <ListView x:Name="WaitersListView"
                       CachingStrategy="RecycleElement"
                       ItemSelected="WaitersListView_ItemSelected"
-                      IsPullToRefreshEnabled="false"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding LoadWaiters}"
                       ItemsSource="{Binding Waiters}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
@@ -25,8 +26,9 @@
                                     <ColumnDefinition Width="45"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Email}"
-                                       FontSize="Small"
+                                       FontSize="Medium"
                                        HorizontalTextAlignment="Center"
+                                       VerticalTextAlignment="Center"
                                        FontFamily="{StaticResource Lobster}"/>
                                 <ImageButton Grid.Column="1" 
                                              Source="delete.png"
@@ -48,7 +50,7 @@
                     CornerRadius="0"
                     x:Name="Button_AddWaiter"
                     Clicked="Button_AddWaiter_Clicked"
-                    FontFamily="{StaticResource Lobster}"/>
+                    FontAttributes="Bold"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

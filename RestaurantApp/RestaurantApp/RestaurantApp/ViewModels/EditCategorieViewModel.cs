@@ -1,4 +1,5 @@
 ﻿using MvvmHelpers;
+using Plugin.Toasts;
 using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
@@ -18,18 +19,39 @@ namespace RestaurantApp.ViewModels
 
         public event EventHandler RefreshCategories;
 
+        public event EventHandler SuccesffulEdit;
+
         public ICommand EditCategorieCommand
         {
             get
             {
                 return new Command(async () =>
                 {
-                    var response = await _categoriesApiService.EditCategorie(Id, Name);
+                    if (string.IsNullOrEmpty(Name))
+                    {
+                        var notificator = DependencyService.Get<IToastNotificator>();
+                        var options = new NotificationOptions()
+                        {
+                            Title = "Categories",
+                            ClearFromHistory = true,
+                            Description = "Please provide a name for category!",
+                            IsClickable = false // Set to true if you want the result Clicked to come back (if the user clicks it)
+                        };
 
-                    if (!string.IsNullOrEmpty(response))
-                        await Application.Current.MainPage.DisplayAlert("Edit Categorie", response, "Ok");
+                        await notificator.Notify(options);
+                    }
                     else
-                        RefreshCategories?.Invoke(this, EventArgs.Empty);                    
+                    {
+                        var response = await _categoriesApiService.EditCategorie(Id, Name);
+
+                        if (!string.IsNullOrEmpty(response))
+                            await Application.Current.MainPage.DisplayAlert("Edit Categorie", response, "Ok");
+                        else
+                        {
+                            RefreshCategories?.Invoke(this, EventArgs.Empty);
+                            SuccesffulEdit?.Invoke(this, EventArgs.Empty);
+                        }
+                    }
                 });
             }
         }

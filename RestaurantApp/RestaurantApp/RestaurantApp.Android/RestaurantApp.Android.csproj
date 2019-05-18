@@ -72,6 +72,9 @@
     <PackageReference Include="LiveXAML">
       <Version>2.1.70</Version>
     </PackageReference>
+    <PackageReference Include="PayPal.Forms">
+      <Version>2.18.5</Version>
+    </PackageReference>
     <PackageReference Include="Plugin.CurrentActivity">
       <Version>2.1.0.4</Version>
     </PackageReference>

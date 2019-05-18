@@ -17,7 +17,7 @@
                     ItemsSource="{Binding Categories}"
                     SelectedItem="{Binding SelectedCategory}"
                     Margin="10, 10, 10, 0"
-                    FontFamily="{StaticResource Lobster}">
+                    FontAttributes="Bold">
             </Picker>
             
             <ListView x:Name="FoodListView" 
@@ -43,7 +43,8 @@
                                        Grid.Column="0"
                                        Grid.ColumnSpan="2"
                                        Aspect="AspectFill"
-                                       Source="{Binding ImageUrl}" />
+                                       Source="{Binding ImageUrl}"
+                                       Margin="0, 0, 0, 15"/>
 
                                 <Label Grid.Row="1"
                                        Grid.Column="0"
@@ -67,7 +68,7 @@
                                         x:Name="Button_DeleteFood"
                                         Command="{Binding BindingContext.DeleteFoodCommand, Source={x:Reference FoodListView}}"
                                         CommandParameter="{Binding Id}"
-                                        FontFamily="{StaticResource Lobster}"/>
+                                        FontAttributes="Bold"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>
@@ -79,7 +80,7 @@
                     CornerRadius="0"
                     x:Name="Button_AddFood"
                     Clicked="Button_AddFood_Clicked"
-                    FontFamily="{StaticResource Lobster}"/>
+                    FontAttributes="Bold"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

@@ -4,6 +4,8 @@ using System.Linq;
 
 using Foundation;
 using KeyboardOverlap.Forms.Plugin.iOSUnified;
+using PayPal.Forms;
+using PayPal.Forms.Abstractions;
 using Plugin.Toasts;
 using UIKit;
 using UserNotifications;
@@ -27,6 +29,21 @@ namespace RestaurantApp.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            var config = new PayPalConfiguration(PayPalEnvironment.NoNetwork, "ARIHKnPqN07GY-CuoPFnZ6C82IXR9EpK5wFRQDaUv8qIfgFZZUyRM7CbpVL2xLYo3hhZPS2bpEukyYpo")
+            {
+                //If you want to accept credit cards
+                AcceptCreditCards = false,
+                //Your business name
+                MerchantName = "Test Store",
+                //Your privacy policy Url
+                MerchantPrivacyPolicyUri = "https://www.example.com/privacy",
+                //Your user agreement Url
+                MerchantUserAgreementUri = "https://www.example.com/legal",
+            };
+
+            CrossPayPalManager.Init(config);
+
             Rg.Plugins.Popup.Popup.Init();
             Xamarin.FormsMaps.Init();
             KeyboardOverlapRenderer.Init();
