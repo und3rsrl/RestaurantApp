@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using Plugin.Media.Abstractions;
+using Plugin.Toasts;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
 using System;
@@ -25,6 +26,12 @@ namespace RestaurantApp.ViewModels
             Categories = new ObservableRangeCollection<string>();
         }
 
+        public AddFoodViewModel(Page page)
+        {
+            Categories = new ObservableRangeCollection<string>();
+            Page = page;
+        }
+
         public ObservableRangeCollection<string> Categories
         {
             get; private set;
@@ -35,6 +42,8 @@ namespace RestaurantApp.ViewModels
         public string Ingredients { get; set; }
 
         public double Price { get; set; }
+
+        public Page Page { get; set; }
 
         public string SelectedCategorie
         {
@@ -49,20 +58,78 @@ namespace RestaurantApp.ViewModels
 
         public event EventHandler RefreshFoods;
 
+        public event EventHandler SuccessfulAdd;
+
         public ICommand AddFoodCommand
         {
             get
             {
-                return new Command(async () =>
-                {
-                    var response = await _foodsApiService.AddFood(Name, Ingredients, Price, SelectedCategorie, Image);
+                    return new Command(async () =>
+                    {
+                        if (!Validate(Name, Price, SelectedCategorie, Image, out List<string> messages))
+                        {
+                            string description = FormatMessage(messages);
 
-                    if (!string.IsNullOrEmpty(response))
-                        await Application.Current.MainPage.DisplayAlert("Add Categorie", response, "Ok");
-                    else
-                        RefreshFoods?.Invoke(this, EventArgs.Empty);
-                });
+                            await Page.DisplayAlert("Foods", description, "Ok");
+                        }
+                        else
+                        {
+                            var response = await _foodsApiService.AddFood(Name, Ingredients, Price, SelectedCategorie, Image);
+
+                            if (!string.IsNullOrEmpty(response))
+                                await Application.Current.MainPage.DisplayAlert("Add Categorie", response, "Ok");
+                            else
+                            {
+                                RefreshFoods?.Invoke(this, EventArgs.Empty);
+                                SuccessfulAdd?.Invoke(this, EventArgs.Empty);
+                            }
+                        }
+                    });
             }
+        }
+
+        private bool Validate(string name, double price, string selectedCategorie, MediaFile image, out List<string> messages)
+        {
+            bool isValid = true;
+            messages = new List<string>();
+
+            if (string.IsNullOrEmpty(name))
+            {
+                messages.Add("Please provide a Food Name!");
+                isValid = false;
+            }
+
+            if (price <= 0d)
+            {
+                messages.Add("Please provide the price!");
+                isValid = false;
+            }
+
+            if (string.IsNullOrEmpty(selectedCategorie))
+            {
+                messages.Add("Please select the category!");
+                isValid = false;
+            }
+
+            if (image == null)
+            {
+                messages.Add("Please provide an image!");
+                isValid = false;
+            }
+
+            return isValid;
+        }
+
+        private string FormatMessage(List<string> messages)
+        {
+            StringBuilder stringBuilder = new StringBuilder();
+
+            foreach (var message in messages)
+            {
+                stringBuilder.AppendLine(message);
+            }
+
+            return stringBuilder.ToString();
         }
     }
 }

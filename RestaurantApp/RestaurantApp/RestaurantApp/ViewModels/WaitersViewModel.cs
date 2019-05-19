@@ -24,6 +24,9 @@ namespace RestaurantApp.ViewModels
         {
             get; private set;
         }
+
+        public EventHandler EndRefreshHandler;
+
         public async void Refresh(object sender, EventArgs e)
         {
             await ExecuteLoadWaitersCommand();
@@ -60,6 +63,7 @@ namespace RestaurantApp.ViewModels
             {
                 var items = await _waitersApiService.GetWaiters();
                 Waiters.ReplaceRange(items);
+                EndRefreshHandler?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {

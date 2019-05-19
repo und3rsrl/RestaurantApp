@@ -110,14 +110,13 @@
                         Text="Save"
                         TextColor="White"
                         Command="{Binding EditFoodCommand}"
-                        Clicked="Button_Clicked"
                         FontAttributes="Bold"/>
 
                 <Button BackgroundColor="#e03838"
                         FontSize="Medium"
                         Text="Close"
+                        Clicked="OnClose"
                         TextColor="White"
-                        Clicked="Button_Clicked"
                         FontAttributes="Bold"/>
             </StackLayout>
         </ScrollView>

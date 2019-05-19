@@ -21,7 +21,8 @@
             </Picker>
             
             <ListView x:Name="FoodListView" 
-                      IsPullToRefreshEnabled="false"
+                      IsPullToRefreshEnabled="True"
+                      RefreshCommand="{Binding LoadFoods}"
                       ItemSelected="FoodListView_ItemSelected"
                       ItemsSource="{Binding FilteredItems}"
                       RowHeight="300">

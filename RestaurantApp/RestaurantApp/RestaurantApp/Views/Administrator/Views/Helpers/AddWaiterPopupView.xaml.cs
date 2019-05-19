@@ -18,15 +18,17 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
 		public AddWaiterPopupView (EventHandler refreshWaiters)
 		{
 			InitializeComponent ();
+            BindingContext = new AddWaiterViewModel(this);
 		}
 
         private void BindData(EventHandler refreshWaiters)
         {
             var viewModel = BindingContext as AddWaiterViewModel;
             viewModel.RefreshWaiters += refreshWaiters;
+            viewModel.SuccessfulAdd += OnSuccessfulAdd;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnSuccessfulAdd(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync(true);
         }

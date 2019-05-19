@@ -22,7 +22,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
 		public AddFoodPopupView (EventHandler refreshFood, string selectedCategorie, List<string> categories)
 		{
 			InitializeComponent ();
-
+            BindingContext = new AddFoodViewModel(this);
             BindData(refreshFood, selectedCategorie, categories);
         }
 
@@ -30,6 +30,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
         {
             var viewModel = BindingContext as AddFoodViewModel;
             viewModel.RefreshFoods += refreshFoods;
+            viewModel.SuccessfulAdd += OnSuccessfulAdd;
             category_picker.ItemsSource = categories;
             category_picker.SelectedItem = selectedCategorie;
         }
@@ -87,7 +88,12 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             });
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnSuccessfulAdd(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PopAsync(true);
+        }
+
+        public void OnClose(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync(true);
         }

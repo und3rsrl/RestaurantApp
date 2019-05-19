@@ -28,6 +28,8 @@ namespace RestaurantApp.ViewModels
             AllItems = new ObservableRangeCollection<FoodItem>();
         }
 
+        public EventHandler EndRefreshHandler;
+
         public ObservableRangeCollection<FoodItem> AllItems { get; set; }
 
         public ObservableRangeCollection<FoodItem> FilteredItems { get; set; }
@@ -141,6 +143,7 @@ namespace RestaurantApp.ViewModels
 
                 AllItems.ReplaceRange(items);
                 FilterItems();
+                EndRefreshHandler?.Invoke(this, EventArgs.Empty);
             }
             catch (Exception ex)
             {

@@ -16,8 +16,8 @@
                  VerticalOptions="Center">
         <StackLayout Orientation="Vertical"
                      Spacing="0"
-                     MinimumWidthRequest="150"
-                     WidthRequest="150">
+                     MinimumWidthRequest="200"
+                     WidthRequest="200">
             <Label Text="Name"
                    FontAttributes="Bold"
                    FontSize="Medium"

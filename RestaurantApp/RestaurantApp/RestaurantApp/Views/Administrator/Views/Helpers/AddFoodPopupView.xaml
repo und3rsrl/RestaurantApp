@@ -105,14 +105,13 @@
                         Text="Add"
                         TextColor="White"
                         Command="{Binding AddFoodCommand}"
-                        Clicked="Button_Clicked"
                         FontAttributes="Bold"/>
 
                 <Button BackgroundColor="#e03838"
                         FontSize="Medium"
                         Text="Close"
                         TextColor="White"
-                        Clicked="Button_Clicked"
+                        Clicked="OnClose"
                         FontAttributes="Bold"/>
             </StackLayout>
         </ScrollView>

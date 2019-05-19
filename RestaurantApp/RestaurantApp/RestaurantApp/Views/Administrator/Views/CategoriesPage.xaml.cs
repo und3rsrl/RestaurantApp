@@ -19,8 +19,6 @@ namespace RestaurantApp.Views.Administrator.Views
 		public CategoriesPage ()
 		{
 			InitializeComponent ();
-
-            CategoriesListView.SeparatorVisibility = SeparatorVisibility.None;
         }
 
         protected override void OnAppearing()
@@ -36,6 +34,7 @@ namespace RestaurantApp.Views.Administrator.Views
             }
 
             CategoriesListView.RefreshCommand = viewModel.LoadCategories;
+            viewModel.EndRefreshHandler += EndRefresh;
         }
 
         private void Button_AddCategorie_Clicked(object sender, EventArgs e)
@@ -43,6 +42,11 @@ namespace RestaurantApp.Views.Administrator.Views
             var viewModel = BindingContext as CategoriesViewModel;
 
             PopupNavigation.Instance.PushAsync(new AddCategoriePopupView(viewModel.Refresh));
+        }
+
+        private void EndRefresh(object sender, EventArgs e)
+        {
+            CategoriesListView.EndRefresh();
         }
 
         private async void CategoriesListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

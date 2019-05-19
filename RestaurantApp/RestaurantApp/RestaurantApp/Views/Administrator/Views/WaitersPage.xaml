@@ -13,27 +13,31 @@
         <StackLayout>
             <ListView x:Name="WaitersListView"
                       CachingStrategy="RecycleElement"
-                      ItemSelected="WaitersListView_ItemSelected"
                       IsPullToRefreshEnabled="True"
                       RefreshCommand="{Binding LoadWaiters}"
-                      ItemsSource="{Binding Waiters}">
+                      ItemsSource="{Binding Waiters}"
+                      RowHeight="60"
+                      SeparatorVisibility="Default"
+                      SeparatorColor="LightGray">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <Grid Padding="30, 10, 10, 0">
+                            <Grid Padding="30, 0, 15, 0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="45"/>
+                                    <ColumnDefinition Width="50"/>
                                 </Grid.ColumnDefinitions>
                                 <Label Text="{Binding Email}"
                                        FontSize="Medium"
                                        HorizontalTextAlignment="Center"
                                        VerticalTextAlignment="Center"
+                                       VerticalOptions="Center"
                                        FontFamily="{StaticResource Lobster}"/>
                                 <ImageButton Grid.Column="1" 
                                              Source="delete.png"
                                              Command="{Binding BindingContext.DeleteWaiterCommand, Source={x:Reference WaitersListView}}"
-                                             CommandParameter="{Binding UserId}">
+                                             CommandParameter="{Binding UserId}"
+                                             VerticalOptions="Center">
                                     <ImageButton.BackgroundColor>
                                         <OnPlatform x:TypeArguments="Color" 
                                                     Android="Transparent"/>

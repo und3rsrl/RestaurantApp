@@ -39,6 +39,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             viewModel.Id = item.Id;
             viewModel.ImageUrl = item.ImageUrl;
             viewModel.RefreshFoods += refreshFoods;
+            viewModel.SuccessfulEdit += OnSuccessfulEdit;
         }
 
         private async void PickPhoto_Clicked(object sender, EventArgs e)
@@ -93,7 +94,12 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             });
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void OnSuccessfulEdit(object sender, EventArgs e)
+        {
+            PopupNavigation.Instance.PopAsync(true);
+        }
+
+        public void OnClose(object sender, EventArgs e)
         {
             PopupNavigation.Instance.PopAsync(true);
         }

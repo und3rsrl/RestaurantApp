@@ -34,6 +34,7 @@ namespace RestaurantApp.Views.Administrator.Views
             }
 
             FoodListView.RefreshCommand = viewModel.LoadFoods;
+            viewModel.EndRefreshHandler += EndRefresh;
         }
 
         private void Button_AddFood_Clicked(object sender, EventArgs e)
@@ -41,6 +42,11 @@ namespace RestaurantApp.Views.Administrator.Views
             var viewModel = BindingContext as FoodItemsViewModel;
 
             PopupNavigation.Instance.PushAsync(new AddFoodPopupView(viewModel.Refresh, viewModel.SelectedCategory, viewModel.Categories.ToList()));
+        }
+
+        private void EndRefresh(object sender, EventArgs e)
+        {
+            FoodListView.EndRefresh();
         }
 
         private async void FoodListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

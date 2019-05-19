@@ -9,35 +9,43 @@
                  BackgroundColor="White"
                  HorizontalOptions="Center"
                  VerticalOptions="Center">
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Vertical"
+                     Spacing="0"
+                     MinimumWidthRequest="200"
+                     WidthRequest="200">
             <Label Text="Email"
                    VerticalTextAlignment="Center"
-                   Margin="0, 0, 30, 0"
-                   FontFamily="{StaticResource Lobster}"/>
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
             <Entry Text="{Binding Email}"
-                   FontSize="Medium"
-                   Placeholder="Category name"
-                   FontFamily="{StaticResource Lobster}"/>
+                   FontSize="Small"
+                   Placeholder="Email"
+                   FontAttributes="Bold"
+                   TextColor="Gray"/>
         </StackLayout>
 
-        <StackLayout Orientation="Horizontal">
+        <StackLayout Orientation="Vertical"
+                     Spacing="0"
+                     MinimumWidthRequest="200"
+                     WidthRequest="200">
             <Label Text="Password"
                    VerticalTextAlignment="Center"
-                   Margin="0, 0, 30, 0"
-                   FontFamily="{StaticResource Lobster}"/>
+                   FontAttributes="Bold"
+                   FontSize="Medium"/>
             <Entry Text="{Binding Password}"
-                   FontSize="Medium"
-                   Placeholder="password"
+                   FontSize="Small"
+                   Placeholder="Password"
                    IsPassword="True"
-                   FontFamily="{StaticResource Lobster}"/>
+                   FontAttributes="Bold"
+                   TextColor="Gray"/>
         </StackLayout>
 
         <Button BackgroundColor="#41bbf4"
                 Command="{Binding AddWaiterCommand}"
-                FontSize="Medium"
+                FontSize="Small"
                 Text="Add"
                 TextColor="White"
-                Clicked="Button_Clicked"
-                FontFamily="{StaticResource Lobster}"/>
+                FontAttributes="Bold"
+                HeightRequest="40"/>
     </StackLayout>
 </pages:PopupPage>

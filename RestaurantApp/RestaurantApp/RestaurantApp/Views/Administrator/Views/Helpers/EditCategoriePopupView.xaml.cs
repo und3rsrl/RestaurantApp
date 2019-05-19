@@ -19,6 +19,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
         public EditCategoriePopupView (CategorieItem categorieItem, EventHandler refreshCategories)
 		{
 			InitializeComponent ();
+            BindingContext = new EditCategorieViewModel();
             BindData(categorieItem, refreshCategories);
         }
 
@@ -28,7 +29,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
             var viewModel = BindingContext as EditCategorieViewModel;
             viewModel.Id = item.Id;
             viewModel.RefreshCategories += refreshCategories;
-            viewModel.SuccesffulEdit += OnSuccesffulEdit;
+            viewModel.SuccesfulEdit += OnSuccesffulEdit;
         }
 
         private void OnSuccesffulEdit(object sender, EventArgs e)

@@ -19,7 +19,7 @@ namespace RestaurantApp.ViewModels
 
         public event EventHandler RefreshCategories;
 
-        public event EventHandler SuccesffulEdit;
+        public event EventHandler SuccesfulEdit;
 
         public ICommand EditCategorieCommand
         {
@@ -49,7 +49,7 @@ namespace RestaurantApp.ViewModels
                         else
                         {
                             RefreshCategories?.Invoke(this, EventArgs.Empty);
-                            SuccesffulEdit?.Invoke(this, EventArgs.Empty);
+                            SuccesfulEdit?.Invoke(this, EventArgs.Empty);
                         }
                     }
                 });

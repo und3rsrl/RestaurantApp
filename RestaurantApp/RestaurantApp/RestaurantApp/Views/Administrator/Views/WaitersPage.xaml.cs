@@ -18,8 +18,6 @@ namespace RestaurantApp.Views.Administrator.Views
 		public WaitersPage ()
 		{
 			InitializeComponent ();
-
-            WaitersListView.SeparatorVisibility = SeparatorVisibility.None;
 		}
 
         protected override void OnAppearing()
@@ -35,6 +33,12 @@ namespace RestaurantApp.Views.Administrator.Views
             }
 
             WaitersListView.RefreshCommand = viewModel.LoadWaiters;
+            viewModel.EndRefreshHandler += EndRefresh;
+        }
+
+        private void EndRefresh(object sender, EventArgs e)
+        {
+            WaitersListView.EndRefresh();
         }
 
         private void Button_AddWaiter_Clicked(object sender, EventArgs e)
@@ -42,13 +46,6 @@ namespace RestaurantApp.Views.Administrator.Views
             var viewModel = BindingContext as WaitersViewModel;
 
             PopupNavigation.Instance.PushAsync(new AddWaiterPopupView(viewModel.Refresh));
-        }
-
-        private async void WaitersListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            var viewModel = BindingContext as CategoriesViewModel;
-            //var selectedCategorie = e.SelectedItem as WaiterItem;
-            //await PopupNavigation.Instance.PushAsync(new EditCategoriePopupView(selectedCategorie, viewModel.Refresh));
         }
     }
 }
