@@ -38,8 +38,6 @@ namespace RestaurantApp
                     else
                         throw e;
                 }
-
-
             }
             else
                 MainPage = new WelcomePage();

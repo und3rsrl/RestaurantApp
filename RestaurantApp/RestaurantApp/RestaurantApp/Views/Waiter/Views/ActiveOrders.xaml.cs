@@ -1,4 +1,5 @@
-﻿using RestaurantApp.ViewModels;
+﻿using RestaurantApp.Models;
+using RestaurantApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,6 +51,12 @@ namespace RestaurantApp.Views.Waiter.Views
         {
             OrdersListView.IsVisible = false;
             NoActiveOrder_Layout.IsVisible = true;
+        }
+
+        private async void OrdersListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var selectedPie = e.SelectedItem as WaiterOrderInfo;
+            await Navigation.PushAsync(new ActiveOrderDetail(selectedPie));
         }
     }
 }

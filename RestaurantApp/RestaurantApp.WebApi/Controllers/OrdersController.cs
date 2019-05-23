@@ -30,7 +30,7 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         // GET: api/Orders/user@restaurant.com
-        [HttpGet]
+        [HttpGet("userHistoryOrders/{email}")]
         public IEnumerable<Order> GetOrders([FromRoute] string email)
         {
             return _context.Orders.Where(x => x.Submitter.Equals(email) && x.IsPaid == true);
@@ -51,7 +51,8 @@ namespace RestaurantApp.WebApi.Controllers
                     Submitter = order.Submitter,
                     Table = order.Table,
                     Total = order.Total,
-                    WaiterPayment = order.WaiterPayment
+                    WaiterPayment = order.WaiterPayment,
+                    OrderItems = order.OrderItems
                 };
 
                 waiterOrdersInfosList.Add(orderInfoDTO);

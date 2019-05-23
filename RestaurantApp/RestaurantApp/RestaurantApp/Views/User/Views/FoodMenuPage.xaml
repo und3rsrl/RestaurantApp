@@ -15,7 +15,6 @@
                     TextColor="#41bbf4"
                     ItemsSource="{Binding Categories}"
                     SelectedItem="{Binding SelectedCategory}"
-                    FontFamily="{StaticResource Lobster}"
                     FontAttributes="Bold">
             </Picker>
 
@@ -73,7 +72,7 @@
                                         x:Name="Button_AddToBasket"
                                         Command="{Binding BindingContext.AddToCart, Source={x:Reference FoodListView}}"
                                         CommandParameter="{Binding Id}"
-                                        FontFamily="{StaticResource Lobster}"/>
+                                        FontAttributes="Bold"/>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

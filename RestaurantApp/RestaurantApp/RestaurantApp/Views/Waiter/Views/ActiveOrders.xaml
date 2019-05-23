@@ -17,10 +17,10 @@
                       IsPullToRefreshEnabled="True" 
                       RowHeight="50"
                       ItemsSource="{Binding Orders}"
+                      ItemSelected="OrdersListView_OnItemSelected"
                       Margin="10, 5, 10, 0"
                       SeparatorVisibility="Default"
-                      RefreshCommand="{Binding GetOrders}"
-                      SelectionMode="None">
+                      RefreshCommand="{Binding GetOrders}">
                 <ListView.Header>
                     <Grid Margin="0, 15, 0, 10">
                         <Grid.ColumnDefinitions>
@@ -72,6 +72,7 @@
                                 <Label Grid.Row="0"
                                        Grid.Column="2"
                                        VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
                                        Text="{Binding Table}"
                                        TextColor="Black"
                                        FontSize="12"
@@ -86,7 +87,7 @@
                                         CornerRadius="20"
                                         x:Name="Button_PayedOrder"
                                         Margin="15, 0, 0, 0"
-                                        FontFamily="{StaticResource Lobster}"
+                                        FontAttributes="Bold"
                                         IsVisible="{Binding WaiterPayment}"
                                         Command="{Binding BindingContext.PaidOrder, Source={x:Reference OrdersListView}}"
                                         CommandParameter="{Binding Id}"/>
