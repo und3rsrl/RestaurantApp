@@ -51,5 +51,18 @@ namespace RestaurantApp.Services
         {
             await HttpClient.PostAsync("Orders/waiterPayment/" + id, null);
         }
+
+        public async Task<IEnumerable<PreviousOrder>> GetPreviousOrders(string email)
+        {
+            var response = await HttpClient.GetAsync("Orders/userPreviousOrders/" + email).ConfigureAwait(false);
+
+            if (response.IsSuccessStatusCode)
+            {
+                var content = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<List<PreviousOrder>>(content);
+            }
+
+            return null;
+        }
     }
 }

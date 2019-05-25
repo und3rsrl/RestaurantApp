@@ -1,12 +1,95 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:RestaurantApp.ViewModels"
              x:Class="RestaurantApp.Views.User.Views.HistoryOrdersPage">
+
+    <ContentPage.BindingContext>
+        <vm:HistoryOrdersViewModel/>
+    </ContentPage.BindingContext>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout x:Name="HasActiveOrderUI_Layout">
+            <ListView VerticalOptions="FillAndExpand" 
+                      x:Name="HistoryOrdersListView"
+                      CachingStrategy="RecycleElement"
+                      IsPullToRefreshEnabled="True" 
+                      RowHeight="50"
+                      ItemsSource="{Binding PreviousOrders}"
+                      ItemSelected="HistoryOrdersListView_OnItemSelected"
+                      Margin="10, 5, 10, 0"
+                      SeparatorVisibility="Default"
+                      RefreshCommand="{Binding GetPreviousOrders}">
+                <ListView.Header>
+                    <Grid Margin="0, 15, 0, 10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*" />
+                            <ColumnDefinition Width=".5*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Label Text="Date" Grid.Column="0" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Table" Grid.Column="1" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                        <Label Text="Total" Grid.Column="2" Grid.Row="0" HorizontalTextAlignment="Center" FontFamily="{StaticResource Lobster}"/>
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width=".5*" />
+                                    <ColumnDefinition Width=".5*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="0"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding SubmitDate}"
+                                       TextColor="Black"
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="2"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Table}"
+                                       TextColor="Black"
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
+
+                                <Label Grid.Row="0"
+                                       Grid.Column="1"
+                                       VerticalTextAlignment="Center"
+                                       HorizontalTextAlignment="Center"
+                                       Text="{Binding Total, StringFormat='{}{0} lei'}"
+                                       TextColor="Black"
+                                       FontSize="12"
+                                       FontFamily="{StaticResource Lobster}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <StackLayout Orientation="Vertical"
+                         x:Name="NoActiveOrder_Layout">
+                <Label Text="No previous orders!"
+                       FontSize="Large"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
+                       HorizontalTextAlignment="Center"
+                       VerticalTextAlignment="Center"
+                       FontFamily="{StaticResource Lobster}"
+                       Margin="0, 250, 0, 0"/>
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
