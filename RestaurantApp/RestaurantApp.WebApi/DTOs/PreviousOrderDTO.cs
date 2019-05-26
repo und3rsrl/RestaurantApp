@@ -1,10 +1,12 @@
-﻿using System;
+﻿using RestaurantApp.WebApi.Models;
+using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace RestaurantApp.Models
+namespace RestaurantApp.WebApi.DTOs
 {
-    public class PreviousOrder
+    public class PreviousOrderDTO
     {
         public DateTime SubmitDate { get; set; }
 

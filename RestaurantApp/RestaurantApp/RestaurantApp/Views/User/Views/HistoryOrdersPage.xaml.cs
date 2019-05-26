@@ -1,4 +1,5 @@
-﻿using RestaurantApp.ViewModels;
+﻿using RestaurantApp.Models;
+using RestaurantApp.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace RestaurantApp.Views.User.Views
 
             viewModel.NoOrdersUIHandler += NoActiveOrderUI;
             viewModel.HasOrdersUIHandler += HasActiveOrderUI;
+            viewModel.EndRefreshHandler += EndRefresh;
 
             if (viewModel != null)
             {
@@ -46,9 +48,15 @@ namespace RestaurantApp.Views.User.Views
             NoActiveOrder_Layout.IsVisible = true;
         }
 
-        private void HistoryOrdersListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void EndRefresh(object sender, EventArgs e)
         {
+            HistoryOrdersListView.EndRefresh();
+        }
 
+        private async void HistoryOrdersListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var selectedPie = e.SelectedItem as PreviousOrder;
+            await Navigation.PushAsync(new PreviousOrderDetail(selectedPie));
         }
     }
 }

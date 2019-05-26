@@ -31,9 +31,25 @@ namespace RestaurantApp.WebApi.Controllers
 
         // GET: api/Orders/user@restaurant.com
         [HttpGet("userPreviousOrders/{email}")]
-        public IEnumerable<Order> GetOrders([FromRoute] string email)
+        public IEnumerable<PreviousOrderDTO> GetOrders([FromRoute] string email)
         {
-            return _context.Orders.Where(x => x.Submitter.Equals(email) && x.IsPaid == true);
+            var orders = _context.Orders.Include(x => x.OrderItems).Where(x => x.Submitter.Equals(email) && x.IsPaid == true);
+
+            List<PreviousOrderDTO> previousOrders = new List<PreviousOrderDTO>();
+            foreach (var order in orders)
+            {
+                var previousOrder = new PreviousOrderDTO()
+                {
+                    SubmitDate = order.SubmitDateTime,
+                    OrderItems = order.OrderItems,
+                    Table = order.Table,
+                    Total = order.Total
+                };
+
+                previousOrders.Add(previousOrder);
+            }
+
+            return previousOrders;
         }
 
         [HttpGet("activeWaiterOrders/{email}")]
