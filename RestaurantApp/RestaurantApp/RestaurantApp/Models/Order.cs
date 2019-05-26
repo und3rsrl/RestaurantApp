@@ -5,7 +5,9 @@ using System.Text;
 namespace RestaurantApp.Models
 {
     public class Order
-    {        
+    {
+        public int OrderId { get; set; }
+
         public string Submitter { get; set; }
 
         public DateTime SubmitDatetime { get; set; }

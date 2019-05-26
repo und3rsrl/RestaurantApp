@@ -47,6 +47,19 @@ namespace RestaurantApp.Services
             return null;
         }
 
+        public async Task<string> UpdateOrder(int id, Order order)
+        {
+            var json = JsonConvert.SerializeObject(order);
+            HttpContent content = new StringContent(json);
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            var response = await HttpClient.PutAsync("Orders/" + id, content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                return "Order successfuly updated";
+
+            return "Something went wrong with the order.";
+        }
+
         public async void WaiterPay(int id)
         {
             await HttpClient.PostAsync("Orders/waiterPayment/" + id, null);

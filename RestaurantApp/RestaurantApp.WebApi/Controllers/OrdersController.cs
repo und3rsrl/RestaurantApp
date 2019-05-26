@@ -49,7 +49,7 @@ namespace RestaurantApp.WebApi.Controllers
                 previousOrders.Add(previousOrder);
             }
 
-            return previousOrders;
+            return previousOrders.OrderByDescending(x => x.SubmitDate);
         }
 
         [HttpGet("activeWaiterOrders/{email}")]
@@ -110,7 +110,7 @@ namespace RestaurantApp.WebApi.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(order).State = EntityState.Modified;
+            _context.Orders.Update(order);
 
             try
             {
@@ -200,7 +200,7 @@ namespace RestaurantApp.WebApi.Controllers
             Order order = new Order()
             {
                 IsPaid = false,
-                SubmitDateTime = orderDetails.SubmiteDatetime,
+                SubmitDateTime = DateTime.Now,
                 Submitter = orderDetails.Submitter,
                 Total = orderDetails.Total,
                 Table = orderDetails.Table

@@ -58,26 +58,43 @@ namespace RestaurantApp.ViewModels
                     }
                     else
                     {
-                        Order order = new Order()
+                        if (string.IsNullOrEmpty(Settings.ActiveOrder))
                         {
-                            SubmitDatetime = DateTime.Now,
-                            Table = Table,
-                            Submitter = Settings.UserName,
-                            Total = Total,
-                            OrderItems = FoodItems.ToList()
-                        };
 
-                        var response = await _ordersApiService.PlaceOrders(order);
+                            Order order = new Order()
+                            {
+                                SubmitDatetime = DateTime.Now,
+                                Table = Table,
+                                Submitter = Settings.UserName,
+                                Total = Total,
+                                OrderItems = FoodItems.ToList()
+                            };
 
-                        if (string.IsNullOrEmpty(response))
-                            await Page.DisplayAlert("Basket", "Something went wrong with your order. Please try again", "Ok");
+                            var response = await _ordersApiService.PlaceOrders(order);
+
+                            if (string.IsNullOrEmpty(response))
+                                await Page.DisplayAlert("Basket", "Something went wrong with your order. Please try again", "Ok");
+                            else
+                            {
+                                Settings.ActiveOrder = response;
+                                Settings.Bascket.Clear();
+                                FoodItems.ReplaceRange(Settings.Bascket.AddedFoods);
+                                ResetTotal?.Invoke(this, EventArgs.Empty);
+                                Settings.PaymentNotSelected = true;
+                                await Page.DisplayAlert("Basket", "Your order has been registered. Have a good meal", "Ok");
+                            }
+                        }
                         else
                         {
-                            Settings.ActiveOrder = response;
-                            Settings.Bascket.Clear();
-                            FoodItems.ReplaceRange(Settings.Bascket.AddedFoods);
-                            ResetTotal?.Invoke(this, EventArgs.Empty);
-                            Settings.PaymentNotSelected = true;
+                            var activeOrder = await _ordersApiService.GetActiveOrder();
+
+                            foreach (var food in FoodItems)
+                            {
+                                activeOrder.OrderItems.Add(food);
+                            }
+
+                            var message = await _ordersApiService.UpdateOrder(activeOrder.OrderId, activeOrder);
+
                             await Page.DisplayAlert("Basket", "Your order has been registered. Have a good meal", "Ok");
                         }
                     }

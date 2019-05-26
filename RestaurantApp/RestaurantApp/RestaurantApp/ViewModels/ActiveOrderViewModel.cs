@@ -28,6 +28,7 @@ namespace RestaurantApp.ViewModels
         public ActiveOrderViewModel(Page page)
         {
             OrderItems = new ObservableRangeCollection<OrderItem>();
+            Page = page;
         }
 
         public EventHandler NoActiveOrderUIHandler;
@@ -90,22 +91,23 @@ namespace RestaurantApp.ViewModels
                             WaiterPaymentSelected = true;
                         }
                         else if (PaymentMethod.Contains("Credit Card"))
-                        {
-                            PaymentNotSelected = false;
-
-                            var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order-" + id, new Decimal(_order.Total), "RON"), new Decimal(0));
+                        {                          
+                            var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order-" + id, new Decimal(_order.Total), "USD"), new Decimal(0));
                             if (result.Status == PayPalStatus.Cancelled)
                             {
                                 await Page.DisplayAlert("Payment", "Payment cancelled", "Ok");
                                 Debug.WriteLine("Cancelled");
+                                PaymentNotSelected = true;
                             }
                             else if (result.Status == PayPalStatus.Error)
                             {
                                 await Page.DisplayAlert("Payment", "Payment unsuccessful", "Ok");
                                 Debug.WriteLine(result.ErrorMessage);
+                                PaymentNotSelected = true;
                             }
                             else if (result.Status == PayPalStatus.Successful)
                             {
+                                PaymentNotSelected = false;
                                 await Page.DisplayAlert("Payment", "Payment successfully", "Ok");
                                 Debug.WriteLine(result.ServerResponse.Response.Id);
                                 _waiterApiService.PaidOrder(id);
