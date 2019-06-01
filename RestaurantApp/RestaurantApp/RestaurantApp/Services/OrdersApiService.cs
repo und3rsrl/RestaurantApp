@@ -33,18 +33,13 @@ namespace RestaurantApp.Services
 
         public async Task<Order> GetActiveOrder()
         {
-            if (string.IsNullOrEmpty(Settings.ActiveOrder))
+            var response = await HttpClient.GetAsync("Orders/userActiveOrder/" + Settings.UserName);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
                 return null;
-
-            var response = await HttpClient.GetAsync(Settings.ActiveOrder);
-
-            if (response.IsSuccessStatusCode)
-            {
-                var content = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<Order>(content);
-            }
-
-            return null;
+  
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<Order>(content); 
         }
 
         public async Task<string> UpdateOrder(int id, Order order)

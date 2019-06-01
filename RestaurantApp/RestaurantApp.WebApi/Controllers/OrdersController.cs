@@ -96,6 +96,25 @@ namespace RestaurantApp.WebApi.Controllers
             return Ok(order);
         }
 
+        // GET: api/Orders/5
+        [HttpGet("userActiveOrder/{email}")]
+        public async Task<IActionResult> GetActiveOrder([FromRoute] string email)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.Submitter.Equals(email, StringComparison.OrdinalIgnoreCase) && i.IsPaid == false);
+
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(order);
+        }
+
         // PUT: api/Orders/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutOrder([FromRoute] int id, [FromBody] Order order)

@@ -58,9 +58,10 @@ namespace RestaurantApp.ViewModels
                     }
                     else
                     {
-                        if (string.IsNullOrEmpty(Settings.ActiveOrder))
-                        {
+                        var activeOrder = await _ordersApiService.GetActiveOrder();
 
+                        if (activeOrder == null)
+                        {
                             Order order = new Order()
                             {
                                 SubmitDatetime = DateTime.Now,
@@ -76,7 +77,6 @@ namespace RestaurantApp.ViewModels
                                 await Page.DisplayAlert("Basket", "Something went wrong with your order. Please try again", "Ok");
                             else
                             {
-                                Settings.ActiveOrder = response;
                                 Settings.Bascket.Clear();
                                 FoodItems.ReplaceRange(Settings.Bascket.AddedFoods);
                                 ResetTotal?.Invoke(this, EventArgs.Empty);
@@ -86,20 +86,39 @@ namespace RestaurantApp.ViewModels
                         }
                         else
                         {
-                            var activeOrder = await _ordersApiService.GetActiveOrder();
-
-                            foreach (var food in FoodItems)
-                            {
-                                activeOrder.OrderItems.Add(food);
-                            }
-
+                            UpdateOrder(activeOrder, FoodItems);
+                            Settings.Bascket.Clear();
+                            FoodItems.ReplaceRange(Settings.Bascket.AddedFoods);
+                            ResetTotal?.Invoke(this, EventArgs.Empty);
+                            Settings.PaymentNotSelected = true;
                             var message = await _ordersApiService.UpdateOrder(activeOrder.OrderId, activeOrder);
-
-                            await Page.DisplayAlert("Basket", "Your order has been registered. Have a good meal", "Ok");
+                            await Page.DisplayAlert("Basket", "Your order has been updated. Have a good meal", "Ok");
                         }
                     }
                 });
             }
+        }
+
+        private void UpdateOrder(Order order, IEnumerable<OrderItem> newFoods)
+        {
+            foreach (var food in newFoods)
+            {
+                var foodItem = order.OrderItems.FirstOrDefault(x => x.ProductId == food.ProductId);
+
+                if (foodItem == null)
+                {
+                    food.OrderItemId = 0;
+                    order.OrderItems.Add(food);
+                }             
+                else
+                    UpdateOrderItem(foodItem, food);
+            }
+        }
+
+        private void UpdateOrderItem(OrderItem previousOrderItem, OrderItem newOrderItem)
+        {
+            previousOrderItem.Amount += newOrderItem.Amount;
+            previousOrderItem.Total += newOrderItem.Total;
         }
     }
 }

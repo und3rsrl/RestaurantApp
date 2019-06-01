@@ -46,7 +46,7 @@ namespace RestaurantApp.Domain
             else
             {
                 _idSequence++;
-                item.Id = _idSequence;
+                item.OrderItemId = _idSequence;
                 _orderItems.Add(item);
             }
         }

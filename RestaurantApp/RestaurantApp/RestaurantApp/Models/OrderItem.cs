@@ -6,7 +6,7 @@ namespace RestaurantApp.Models
 {
     public class OrderItem
     {
-        public int Id { get; set; }
+        public int OrderItemId { get; set; }
 
         public int ProductId { get; set; }
 
