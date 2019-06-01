@@ -41,6 +41,53 @@ namespace RestaurantApp.ViewModels
         public Page Page { get; set; }
 
         public event EventHandler ResetTotal;
+        public event EventHandler RecalculateTotal;
+
+        public ICommand IncreaseAmount
+        {
+            get
+            {
+                return new Command<int>((int item) =>
+                {
+                    var orderItem = Settings.Bascket.AddedFoods.First(x => x.ProductId == item);
+                    orderItem.Amount += 1;
+                    orderItem.Total = orderItem.Price * orderItem.Amount;
+                    ExecuteLoadFoodsCommand();
+                    RecalculateTotal?.Invoke(this, EventArgs.Empty);
+                });
+            }
+        }
+
+        public ICommand DecreaseAmount
+        {
+            get
+            {
+                return new Command<int>((int item) =>
+                {
+                    var orderItem = Settings.Bascket.AddedFoods.First(x => x.ProductId == item);
+                    if (orderItem.Amount > 1)
+                    {
+                        orderItem.Amount -= 1;
+                        orderItem.Total = orderItem.Price * orderItem.Amount;
+                        ExecuteLoadFoodsCommand();
+                        RecalculateTotal?.Invoke(this, EventArgs.Empty);
+                    }
+                });
+            }
+        }
+
+        public ICommand DeleteOrderItem
+        {
+            get
+            {
+                return new Command<OrderItem>((OrderItem item) =>
+                {
+                    Settings.Bascket.Delete(item);
+                    ExecuteLoadFoodsCommand();
+                    RecalculateTotal?.Invoke(this, EventArgs.Empty);
+                });
+            }
+        }
 
         public ICommand PlaceOrderCommand
         {
@@ -119,6 +166,29 @@ namespace RestaurantApp.ViewModels
         {
             previousOrderItem.Amount += newOrderItem.Amount;
             previousOrderItem.Total += newOrderItem.Total;
+        }
+
+        private void ExecuteLoadFoodsCommand()
+        {
+            if (IsBusy)
+                return;
+
+            IsBusy = true;
+
+            try
+            {
+                var items = Settings.Bascket.AddedFoods;
+
+                FoodItems.ReplaceRange(items);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex);
+            }
+            finally
+            {
+                IsBusy = false;
+            }
         }
     }
 }

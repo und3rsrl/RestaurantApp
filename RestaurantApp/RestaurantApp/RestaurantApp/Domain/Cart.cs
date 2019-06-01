@@ -51,6 +51,11 @@ namespace RestaurantApp.Domain
             }
         }
 
+        public void Delete(OrderItem item)
+        {
+            _orderItems.Remove(item);
+        }
+
         public void Clear()
         {
             _orderItems.Clear();
