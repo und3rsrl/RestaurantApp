@@ -20,11 +20,20 @@ namespace RestaurantApp.Views.User.Views
             BindingContext = new BasketViewModel(this);
             ((BasketViewModel)BindingContext).ResetTotal += ResetTotal;
             ((BasketViewModel)BindingContext).RecalculateTotal += RecalculateTotal;
+            ((BasketViewModel)BindingContext).HideTableSelection += HideTableSelection;
         }
 
         protected override void OnAppearing()
         {
             base.OnAppearing();
+
+            var viewModel = BindingContext as BasketViewModel;
+
+            if (viewModel != null)
+            {
+                if (viewModel.HasActiveOrder.CanExecute(null))
+                    viewModel.HasActiveOrder.Execute(null);
+            }
 
             CalculateTotal();
         }
@@ -55,6 +64,11 @@ namespace RestaurantApp.Views.User.Views
             viewModel.Total = total;
 
             Total_Label.Text = string.Format("Total: {0} lei", total);
+        }
+
+        private void HideTableSelection(object sender, EventArgs e)
+        {
+            Table_Picker.IsVisible = false;
         }
     }
 }

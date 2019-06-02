@@ -18,6 +18,13 @@ namespace RestaurantApp.Services
             
         }
 
+        public async Task<bool> HasActiveOrder()
+        {
+            var result = await GetActiveOrder().ConfigureAwait(false);
+
+            return result != null;
+        }
+
         public async Task<string> PlaceOrders(Order order)
         {
             var json = JsonConvert.SerializeObject(order);

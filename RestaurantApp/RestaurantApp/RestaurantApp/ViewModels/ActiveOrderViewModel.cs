@@ -18,6 +18,7 @@ namespace RestaurantApp.ViewModels
     {
         private OrdersApiService _ordersApiService = new OrdersApiService();
         private WaitersApiService _waiterApiService = new WaitersApiService();
+        private CurrencyConverterService _currencyConverterService = new CurrencyConverterService();
         private Order _order;
 
         public ActiveOrderViewModel()
@@ -34,6 +35,8 @@ namespace RestaurantApp.ViewModels
         public EventHandler NoActiveOrderUIHandler;
 
         public EventHandler HasActiveOrderUIHandler;
+
+        public EventHandler CalculateTotal;
 
         public ObservableRangeCollection<OrderItem> OrderItems
         {
@@ -80,19 +83,18 @@ namespace RestaurantApp.ViewModels
             {
                 return new Command(async () => 
                 {
-                    var splits = Settings.ActiveOrder.Split('/');
-                    var id = Convert.ToInt32(splits[splits.Length - 1]);
                     try
                     {
                         if (PaymentMethod.Contains("Waiter Payment"))
                         {
-                            _ordersApiService.WaiterPay(id);
+                            _ordersApiService.WaiterPay(_order.OrderId);
                             PaymentNotSelected = false;
                             WaiterPaymentSelected = true;
                         }
                         else if (PaymentMethod.Contains("Credit Card"))
-                        {                          
-                            var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order-" + id, new Decimal(_order.Total), "USD"), new Decimal(0));
+                        {
+                            var totalInUSD = await _currencyConverterService.ConvertRONtoUSD(_order.Total);
+                            var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order-" + _order.OrderId, new Decimal(totalInUSD), "USD"), new Decimal(0));
                             if (result.Status == PayPalStatus.Cancelled)
                             {
                                 await Page.DisplayAlert("Payment", "Payment cancelled", "Ok");
@@ -110,7 +112,7 @@ namespace RestaurantApp.ViewModels
                                 PaymentNotSelected = false;
                                 await Page.DisplayAlert("Payment", "Payment successfully", "Ok");
                                 Debug.WriteLine(result.ServerResponse.Response.Id);
-                                _waiterApiService.PaidOrder(id);
+                                _waiterApiService.PaidOrder(_order.OrderId);
                                 await ExecuteGetActiveOrderCommand();
                             }
                         }
@@ -143,6 +145,7 @@ namespace RestaurantApp.ViewModels
                 {
                     OrderItems.ReplaceRange(_order.OrderItems);
                     HasActiveOrderUIHandler?.Invoke(this, EventArgs.Empty);
+                    CalculateTotal?.Invoke(this, EventArgs.Empty);
                 }
             }
             catch (Exception ex)

@@ -106,7 +106,8 @@
                                Grid.ColumnSpan="2"
                                HorizontalTextAlignment="End"
                                Margin="0, 15, 0, 0"
-                               FontFamily="{StaticResource Lobster}"/>
+                               FontFamily="{StaticResource Lobster}"
+                               Text="{Binding Total}"/>
                         <Button Grid.Row="1"
                                 Grid.Column="0"
                                 Text="Pay order"

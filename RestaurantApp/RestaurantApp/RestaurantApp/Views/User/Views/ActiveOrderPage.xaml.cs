@@ -27,12 +27,18 @@ namespace RestaurantApp.Views.User.Views
 
             viewModel.NoActiveOrderUIHandler += NoActiveOrderUI;
             viewModel.HasActiveOrderUIHandler += HasActiveOrderUI;
+            viewModel.CalculateTotal += RecalculateTotal;
 
             if (viewModel != null)
             {
                 if (viewModel.GetActiveOrder.CanExecute(null))
                     viewModel.GetActiveOrder.Execute(null);
             }
+        }
+
+        private void RecalculateTotal(object sender, EventArgs e)
+        {
+            CalculateTotal();
         }
 
         private void HasActiveOrderUI(object sender, EventArgs e)
@@ -45,6 +51,19 @@ namespace RestaurantApp.Views.User.Views
         {
             ActiveOrderListView.IsVisible = false;
             NoActiveOrder_Layout.IsVisible = true;
+        }
+
+        private void CalculateTotal()
+        {
+            var viewModel = BindingContext as ActiveOrderViewModel;
+            var total = 0d;
+
+            foreach (var item in viewModel.OrderItems)
+            {
+                total += item.Total;
+            }
+
+            Total_Label.Text = string.Format("Total: {0} lei", total);
         }
     }
 }

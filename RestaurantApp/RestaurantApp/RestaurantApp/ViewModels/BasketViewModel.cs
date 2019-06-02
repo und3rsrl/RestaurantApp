@@ -1,4 +1,5 @@
-﻿using MvvmHelpers;
+﻿using Android.Content;
+using MvvmHelpers;
 using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
@@ -42,6 +43,21 @@ namespace RestaurantApp.ViewModels
 
         public event EventHandler ResetTotal;
         public event EventHandler RecalculateTotal;
+        public event EventHandler HideTableSelection;
+
+        public ICommand HasActiveOrder
+        {
+            get
+            {
+                return new Command(async () =>
+                {
+                    var result = await _ordersApiService.HasActiveOrder();
+
+                    if (result)
+                        HideTableSelection?.Invoke(this, EventArgs.Empty);
+                });
+            }
+        }
 
         public ICommand IncreaseAmount
         {
@@ -160,12 +176,26 @@ namespace RestaurantApp.ViewModels
                 else
                     UpdateOrderItem(foodItem, food);
             }
+
+            CalculateTotal(order);
         }
 
         private void UpdateOrderItem(OrderItem previousOrderItem, OrderItem newOrderItem)
         {
             previousOrderItem.Amount += newOrderItem.Amount;
             previousOrderItem.Total += newOrderItem.Total;
+        }
+
+        private void CalculateTotal(Order order)
+        {
+            var total = 0d;
+
+            foreach (var item in order.OrderItems)
+            {
+                total += item.Total;
+            }
+
+            order.Total = total;
         }
 
         private void ExecuteLoadFoodsCommand()
