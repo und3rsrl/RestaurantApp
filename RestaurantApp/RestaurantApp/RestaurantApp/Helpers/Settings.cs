@@ -82,6 +82,32 @@ namespace RestaurantApp.Helpers
             }
         }
 
+        public static DateTime CurrencyRateDate
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("CurrencyRateDate", DateTime.MinValue);
+            }
+
+            set
+            {
+                AppSettings.AddOrUpdateValue("CurrencyRateDate", value);
+            }
+        }
+
+        public static double CurrencyRate
+        {
+            get
+            {
+                return AppSettings.GetValueOrDefault("CurrencyRate", 0d);
+            }
+
+            set
+            {
+                AppSettings.AddOrUpdateValue("CurrencyRate", value);
+            }
+        }
+
         public static Cart Bascket
         {
             get

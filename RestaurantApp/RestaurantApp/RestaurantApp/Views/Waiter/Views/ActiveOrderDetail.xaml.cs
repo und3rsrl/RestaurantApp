@@ -24,7 +24,7 @@ namespace RestaurantApp.Views.Waiter.Views
             OrderListView.ItemsSource = order.OrderItems;
             Total_Label.Text = string.Concat("Total: ", order.Total, " Lei");
             Submitter_Label.Text = string.Concat("Submitter: ", order.Submitter);
-            Tabel_Label.Text = string.Concat("Tabel: ", order.Total);
+            Tabel_Label.Text = string.Concat("Tabel: ", order.Table);
         }
 	}
 }
