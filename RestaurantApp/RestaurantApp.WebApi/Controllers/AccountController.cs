@@ -14,6 +14,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using RestaurantApp.WebApi.Entities;
 using RestaurantApp.WebApi.Models;
+using Serilog;
 
 namespace RestaurantApp.WebApi.Controllers
 {
@@ -45,6 +46,7 @@ namespace RestaurantApp.WebApi.Controllers
 
             if (result.Succeeded)
             {
+                Log.Information(string.Format("User: {0} has been logged in successfuly.", model.Email));
                 var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
                 return await GenerateJwtToken(model.Email, appUser);
             }
@@ -61,12 +63,13 @@ namespace RestaurantApp.WebApi.Controllers
                 Email = model.Email
             };
 
-            var result = await _userManager.CreateAsync(user, model.Password);
+            var result = await _userManager.CreateAsync(user, model.Password);           
 
             if (result.Succeeded)
             {
                 await _signInManager.SignInAsync(user, false);
                 await _userManager.AddToRoleAsync(user, "User");
+                Log.Information(string.Format("User: {0} has been registered successfuly.", model.Email));
 
                 var token = await GenerateJwtToken(model.Email, user);
 
