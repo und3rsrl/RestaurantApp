@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -54,6 +55,7 @@ namespace RestaurantApp.WebApi.Controllers
 
         // PUT: api/Foods/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PutFood([FromRoute] int id, [FromBody] Food food)
         {
             if (!ModelState.IsValid)
@@ -107,6 +109,7 @@ namespace RestaurantApp.WebApi.Controllers
 
         // POST: api/Foods
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> PostFood([FromBody] Food food)
         {
 
@@ -123,6 +126,7 @@ namespace RestaurantApp.WebApi.Controllers
 
         // DELETE: api/Foods/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Administrator")]
         public async Task<IActionResult> DeleteFood([FromRoute] int id)
         {
             if (!ModelState.IsValid)
@@ -149,6 +153,7 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Administrator")]
         [Route("UploadPhoto")]
         public async Task<IActionResult> UploadPhoto(IFormFile photo)
         {
