@@ -70,6 +70,14 @@
                         TextColor="White"
                         CornerRadius="20"
                         x:Name="Button_LogIn"/>
+
+                <Button Text="Forgot your password?"
+                        WidthRequest="300"
+                        BackgroundColor="#41bbf4"
+                        TextColor="White"
+                        CornerRadius="20"
+                        x:Name="Button_ForgotPassword"
+                        Clicked="Button_ForgotPassword_Clicked"/>
             </StackLayout>
         </Grid>
     </RelativeLayout>

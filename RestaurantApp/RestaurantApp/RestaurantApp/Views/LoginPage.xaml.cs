@@ -25,5 +25,10 @@ namespace RestaurantApp.Views
             Entry_UserName.Completed += (s, e) => Entry_Password.Focus();
             Entry_Password.Completed += (s, e) => Button_LogIn.Focus();
         }
+
+        private void Button_ForgotPassword_Clicked(object sender, EventArgs e)
+        {
+
+        }
     }
 }
