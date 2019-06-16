@@ -78,5 +78,59 @@ namespace RestaurantApp.Services
 
             return await response.Content.ReadAsStringAsync();
         }
+
+        public async Task<bool> RequestPasswordChange(string email)
+        {
+            HttpContent content = null;
+            var response = await HttpClient.PostAsync("Account/forgotMyPassword/" + email, content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> SendCodeForValidation(string email, string code)
+        {
+            var response = await HttpClient.GetAsync(String.Format("Account/verifyCode/{0}&{1}", code, email));
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> UpdatePassword(string email, string password)
+        {
+            var model = new PasswordChangeRequest()
+            {
+                Email = email,
+                Password = password,
+            };
+
+            var json = JsonConvert.SerializeObject(model);
+
+            HttpContent content = new StringContent(json);
+
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            var response = await HttpClient.PutAsync("Account/updatePassword", content);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                return true;
+
+            return false;
+        }
+
+        private class PasswordChangeRequest
+        {
+            public string Email { get; set; }
+
+            public string Password { get; set; }
+        }
     }
 }

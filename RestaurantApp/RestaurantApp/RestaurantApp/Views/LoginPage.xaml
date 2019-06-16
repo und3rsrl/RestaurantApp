@@ -22,7 +22,7 @@
             <Label VerticalOptions="Start"
                    HorizontalTextAlignment="Center"
                    TextColor="White"
-                   Margin="0, 120, 0, 0"
+                   Margin="0, 70, 0, 0"
                    FontSize="38"
                    Text="Login"
                    FontAttributes="Bold"/>

@@ -14,6 +14,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using MimeKit;
+using RestaurantApp.WebApi.DTOs;
 using RestaurantApp.WebApi.Entities;
 using RestaurantApp.WebApi.Models;
 using Serilog;
@@ -103,6 +104,7 @@ namespace RestaurantApp.WebApi.Controllers
 
                     // save in database
                     var result = await _context.ForgotPassword.AddAsync(entity);
+                    await _context.SaveChangesAsync();
 
                     var message = new MimeMessage();
                     message.From.Add(new MailboxAddress("From", "alex.chiurtu@gmail.com"));
@@ -140,7 +142,7 @@ namespace RestaurantApp.WebApi.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{code}&{email}")]
         [Route("verifyCode")]
         public async Task<ActionResult> VerifyCode(string code, string email)
         {
@@ -161,8 +163,7 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("updatePassword")]
-        public async Task<ActionResult> UpdatePassword(PasswordsRequest model)
+        public async Task<ActionResult> UpdatePassword([FromBody]PasswordChangeRequest model)
         {
             try
             {
@@ -171,12 +172,9 @@ namespace RestaurantApp.WebApi.Controllers
                     var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
                     if (user != null)
                     {
-                        
+                        user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
 
-                        _userManager.Change
-
-                        appUser.PasswordHash = HashPassword(model.NewPassword);
-                        var result = await userManager.UpdateAsync(appUser);
+                        var result = await _userManager.UpdateAsync(user);
                         return Ok(result);
                     }
                 }

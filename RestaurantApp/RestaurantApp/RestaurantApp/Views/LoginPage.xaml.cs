@@ -28,7 +28,7 @@ namespace RestaurantApp.Views
 
         private void Button_ForgotPassword_Clicked(object sender, EventArgs e)
         {
-
+            Application.Current.MainPage = new  ForgotPasswordPage();
         }
     }
 }
