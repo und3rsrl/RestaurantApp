@@ -41,16 +41,23 @@ namespace RestaurantApp.Views.User.Views
             FoodImage.Source = item.ImageUrl;
             PriceLabel.Text = item.Price.ToString() + "lei";
 
-            List<string> ingredients = item.Ingredients.Split(',').ToList();
-
-            StringBuilder ingredientsStringBuilder = new StringBuilder();
-
-            foreach (string ingredient in ingredients)
+            if (item.Ingredients != null)
             {
-                ingredientsStringBuilder.AppendLine(ingredient);
-            }
+                List<string> ingredients = item.Ingredients.Split(',').ToList();
 
-            IngredientsLabel.Text = ingredientsStringBuilder.ToString();
+                StringBuilder ingredientsStringBuilder = new StringBuilder();
+
+                foreach (string ingredient in ingredients)
+                {
+                    ingredientsStringBuilder.AppendLine(ingredient);
+                }
+
+                IngredientsLabel.Text = ingredientsStringBuilder.ToString();
+            }
+            else
+            {
+                IngredientsLabel.Text = string.Empty;
+            }
         }
 
         private void ImageButton_IncreaseAmount(object sender, EventArgs e)

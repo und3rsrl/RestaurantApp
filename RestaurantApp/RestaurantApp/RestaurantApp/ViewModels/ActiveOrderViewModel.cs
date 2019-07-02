@@ -93,7 +93,7 @@ namespace RestaurantApp.ViewModels
                         }
                         else if (PaymentMethod.Contains("Credit Card"))
                         {
-                            var totalInUSD = 10; //await _currencyConverterService.ConvertRONtoUSD(_order.Total);
+                            var totalInUSD = await _currencyConverterService.ConvertRONtoUSD(_order.Total);
                             var result = await CrossPayPalManager.Current.Buy(new PayPalItem("Order-" + _order.OrderId, new Decimal(totalInUSD), "USD"), new Decimal(0));
                             if (result.Status == PayPalStatus.Cancelled)
                             {

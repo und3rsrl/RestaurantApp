@@ -7,8 +7,8 @@ namespace RestaurantApp.Services
 {
     public abstract class ApiService
     {
-        public const string BASE_API_URL = "http://alexchiurtu.asuscomm.com:50915/api/";
-        public const string BASE_SERVER_IMAGE_URL = "http://alexchiurtu.asuscomm.com:50915/FoodPhotos/";
+        public const string BASE_API_URL = "http://192.168.1.100:50915/api/";
+        public const string BASE_SERVER_IMAGE_URL = "http://192.168.1.100:50915/FoodPhotos/";
 
         private HttpClient _httpClient;
 

@@ -105,7 +105,7 @@ namespace RestaurantApp.WebApi.Controllers
                 return BadRequest(ModelState);
             }
 
-            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.Submitter.Equals(email, StringComparison.OrdinalIgnoreCase) && i.IsPaid == false);
+            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.Submitter == email && i.IsPaid == false);
 
             if (order == null)
             {
