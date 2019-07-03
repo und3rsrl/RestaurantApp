@@ -75,7 +75,7 @@ namespace RestaurantApp.ViewModels
                     }
                     else
                     {
-                        
+                        await Page.DisplayAlert("Forgot Password", "Email is not valid or empty.", "Ok");
                     }
                 });
             }
@@ -112,7 +112,7 @@ namespace RestaurantApp.ViewModels
                     }
                     else
                     {
-
+                        await Page.DisplayAlert("Forgot Password", "Email is not valid or empty.", "Ok");
                     }
                 });
             }
@@ -125,7 +125,7 @@ namespace RestaurantApp.ViewModels
                 return new Command(async () => {
 
                     if (!CheckEmailIsValid())
-                        await Page.DisplayAlert("Register", "Email is not valid.", "Ok");
+                        await Page.DisplayAlert("Forgot Password", "Email is not valid.", "Ok");
                     else
                     {
                         if (!CheckPasswordIsValid())
@@ -138,7 +138,7 @@ namespace RestaurantApp.ViewModels
                             passwordNotValidMessage.AppendLine("- At least one lowercase letter");
                             passwordNotValidMessage.AppendLine("- At least one number");
 
-                            await Page.DisplayAlert("Register", passwordNotValidMessage.ToString(), "Ok");
+                            await Page.DisplayAlert("Forgot password", passwordNotValidMessage.ToString(), "Ok");
                         }
                         else
                         {
