@@ -106,12 +106,6 @@ namespace RestaurantApp.ViewModels
                 isValid = false;
             }
 
-            if (image == null)
-            {
-                messages.Add("Please provide an image!");
-                isValid = false;
-            }
-
             return isValid;
         }
 

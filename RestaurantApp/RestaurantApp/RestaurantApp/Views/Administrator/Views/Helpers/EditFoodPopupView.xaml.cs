@@ -24,6 +24,7 @@ namespace RestaurantApp.Views.Administrator.Views.Helpers
         public EditFoodPopupView(FoodItem foodItem, EventHandler refreshFoods, List<string> categories)
         {
             InitializeComponent();
+            BindingContext = new EditFoodViewModel(this);
             BindData(foodItem, refreshFoods, categories);
         }
 
