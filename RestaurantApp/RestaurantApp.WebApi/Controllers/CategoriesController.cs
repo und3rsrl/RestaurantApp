@@ -1,12 +1,11 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RestaurantApp.DataServices;
+using RestaurantApp.WebApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestaurantApp.WebApi.Entities;
-using RestaurantApp.WebApi.Models;
 
 namespace RestaurantApp.WebApi.Controllers
 {
@@ -14,9 +13,9 @@ namespace RestaurantApp.WebApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Entities _context;
 
-        public CategoriesController(ApplicationDbContext context)
+        public CategoriesController(Entities context)
         {
             _context = context;
         }

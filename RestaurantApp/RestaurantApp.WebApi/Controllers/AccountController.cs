@@ -1,4 +1,15 @@
-﻿using System;
+﻿using MailKit.Net.Smtp;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.Tokens;
+using MimeKit;
+using RestaurantApp.DataServices;
+using RestaurantApp.WebApi.DTOs;
+using RestaurantApp.WebApi.Models;
+using Serilog;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
@@ -6,35 +17,23 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using MimeKit;
-using RestaurantApp.WebApi.DTOs;
-using RestaurantApp.WebApi.Entities;
-using RestaurantApp.WebApi.Models;
-using Serilog;
 
 namespace RestaurantApp.WebApi.Controllers
 {
-    [Route("api/[controller]/[action]")]
     [ApiController]
+    [Route("[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IConfiguration _configuration;
-        private readonly ApplicationDbContext _context;
+        private readonly Entities _context;
 
         public AccountController(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             IConfiguration configuration,
-            ApplicationDbContext context)
+            Entities context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -42,7 +41,7 @@ namespace RestaurantApp.WebApi.Controllers
             _context = context;
         }
 
-        [HttpPost]
+        [HttpPost("login")]
         public async Task<object> Login([FromBody] LoginDto model)
         {
             var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
@@ -57,7 +56,7 @@ namespace RestaurantApp.WebApi.Controllers
             return Unauthorized();
         }
 
-        [HttpPost]
+        [HttpPost("register")]
         public async Task<object> Register([FromBody] RegisterDto model)
         {
             var user = new IdentityUser
@@ -82,8 +81,7 @@ namespace RestaurantApp.WebApi.Controllers
             return BadRequest();
         }
 
-        [HttpPost("{email}")]
-        [Route("forgotMyPassword")]
+        [HttpPost("forgotMyPassword/{email}")]
         public async Task<ActionResult> ForgotMyPassword(string email)
         {
             try
@@ -142,8 +140,7 @@ namespace RestaurantApp.WebApi.Controllers
             }
         }
 
-        [HttpGet("{code}&{email}")]
-        [Route("verifyCode")]
+        [HttpGet("verifyCode/{code}&{email}")]
         public async Task<ActionResult> VerifyCode(string code, string email)
         {
             try
@@ -163,7 +160,7 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdatePassword([FromBody]PasswordChangeRequest model)
+        public async Task<ActionResult> UpdatePassword([FromBody] PasswordChangeRequest model)
         {
             try
             {
@@ -200,7 +197,7 @@ namespace RestaurantApp.WebApi.Controllers
             var roles = await _userManager.GetRolesAsync(user);
 
             if (roles.Contains("Waiter"))
-               await SetWaiterStatus(email);
+                await SetWaiterStatus(email);
 
             claims.AddRange(roles.Select(role => new Claim("Role", role)));
 

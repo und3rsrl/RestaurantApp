@@ -1,16 +1,14 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RestaurantApp.DataServices;
+using RestaurantApp.WebApi.Models;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestaurantApp.WebApi.DTOs;
-using RestaurantApp.WebApi.Entities;
-using RestaurantApp.WebApi.Models;
 
 namespace RestaurantApp.WebApi.Controllers
 {
@@ -18,10 +16,10 @@ namespace RestaurantApp.WebApi.Controllers
     [ApiController]
     public class FoodsController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Entities _context;
         private readonly IHostingEnvironment _environment;
 
-        public FoodsController(ApplicationDbContext context, IHostingEnvironment environment)
+        public FoodsController(Entities context, IHostingEnvironment environment)
         {
             _context = context;
             _environment = environment;

@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using RestaurantApp.WebApi.Models;
 
-namespace RestaurantApp.WebApi.Entities
+namespace RestaurantApp.DataServices
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class Entities : IdentityDbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        public Entities(DbContextOptions<Entities> options)
             : base(options)
-        {         
+        {
         }
         public DbSet<Categorie> Categories { get; set; }
         public DbSet<Food> Foods { get; set; }

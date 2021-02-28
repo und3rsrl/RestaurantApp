@@ -1,13 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using RestaurantApp.DataServices;
+using RestaurantApp.WebApi.DTOs;
+using RestaurantApp.WebApi.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestaurantApp.WebApi.DTOs;
-using RestaurantApp.WebApi.Entities;
-using RestaurantApp.WebApi.Models;
 
 namespace RestaurantApp.WebApi.Controllers
 {
@@ -15,9 +14,9 @@ namespace RestaurantApp.WebApi.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly ApplicationDbContext _context;
+        private readonly Entities _context;
 
-        public OrdersController(ApplicationDbContext context)
+        public OrdersController(Entities context)
         {
             _context = context;
         }
@@ -55,7 +54,7 @@ namespace RestaurantApp.WebApi.Controllers
         [HttpGet("activeWaiterOrders/{email}")]
         public IEnumerable<WaiterOrderInfoDTO> GetWaiterActiveOrders([FromRoute] string email)
         {
-            var orders =_context.Orders.Include(x => x.OrderItems).Where(x => x.Waiter.Equals(email) && x.IsPaid == false);
+            var orders = _context.Orders.Include(x => x.OrderItems).Where(x => x.Waiter.Equals(email) && x.IsPaid == false);
 
             List<WaiterOrderInfoDTO> waiterOrdersInfosList = new List<WaiterOrderInfoDTO>();
 

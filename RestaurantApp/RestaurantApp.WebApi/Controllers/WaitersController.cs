@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using RestaurantApp.DataServices;
 using RestaurantApp.WebApi.DTOs;
-using RestaurantApp.WebApi.Entities;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using static RestaurantApp.WebApi.Controllers.AccountController;
 
 namespace RestaurantApp.WebApi.Controllers
@@ -17,10 +14,11 @@ namespace RestaurantApp.WebApi.Controllers
     public class WaitersController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ApplicationDbContext _context;
+        private readonly Entities _context;
 
-        public WaitersController(UserManager<IdentityUser> userManager,
-            ApplicationDbContext context)
+        public WaitersController(
+            UserManager<IdentityUser> userManager,
+            Entities context)
         {
             _userManager = userManager;
             _context = context;
