@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RestaurantApp.WebApi.Models
+﻿namespace RestaurantApp.DataModel.Models
 {
     public class Food
     {
@@ -15,8 +10,10 @@ namespace RestaurantApp.WebApi.Models
 
         public double Price { get; set; }
 
-        public string Category { get; set; }
-
         public string ImageUrl { get; set; }
+
+        public int CategoryId { get; set; }
+
+        public Category Category { get; set; }
     }
 }

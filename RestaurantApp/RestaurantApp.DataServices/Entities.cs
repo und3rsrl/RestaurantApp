@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using RestaurantApp.WebApi.Models;
+using RestaurantApp.DataModel.Models;
 
 namespace RestaurantApp.DataServices
 {
@@ -10,7 +10,7 @@ namespace RestaurantApp.DataServices
             : base(options)
         {
         }
-        public DbSet<Categorie> Categories { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Food> Foods { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderItem> OrderItems { get; set; }
