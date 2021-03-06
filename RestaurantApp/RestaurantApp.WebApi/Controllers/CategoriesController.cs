@@ -1,10 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestaurantApp.DataServices;
-using RestaurantApp.WebApi.Models;
-using System;
+using RestaurantApp.BusinessService.Interfaces;
+using RestaurantApp.DataModel.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.WebApi.Controllers
@@ -13,116 +10,64 @@ namespace RestaurantApp.WebApi.Controllers
     [ApiController]
     public class CategoriesController : ControllerBase
     {
-        private readonly Entities _context;
+        private readonly ICategoryBusinessService _categoryBusinessService;
 
-        public CategoriesController(Entities context)
+        public CategoriesController(ICategoryBusinessService categoryBusinessService)
         {
-            _context = context;
+            _categoryBusinessService = categoryBusinessService;
         }
 
         // GET: api/Categories
         [HttpGet]
-        public IEnumerable<Categorie> GetCategorie()
+        public IEnumerable<Category> GetCategories()
         {
-            return _context.Categories;
+            return _categoryBusinessService.GetAllCategories();
         }
 
         // GET: api/Categories/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetCategorie([FromRoute] int id)
+        public Category GetCategory([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var categorie = await _context.Categories.FindAsync(id);
-
-            if (categorie == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(categorie);
+            return _categoryBusinessService.GetCategory(id);
         }
 
         // PUT: api/Categories/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutCategorie([FromRoute] int id, [FromBody] Categorie categorie)
+        public IActionResult PutCategorie([FromRoute] int id, [FromBody] Category category)
         {
-            if (!ModelState.IsValid)
+            var result = _categoryBusinessService.UpdateCategory(id, category);
+            if (result == Common.Enums.OperationResult.Succeeded)
             {
-                return BadRequest(ModelState);
+                return Ok();
             }
 
-            if (id != categorie.Id)
-            {
-                return BadRequest("Error occured");
-            }
-
-            _context.Entry(categorie).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CategorieExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return BadRequest();
         }
 
         // POST: api/Categories
         [HttpPost]
-        public async Task<IActionResult> PostCategorie([FromBody] Categorie categorie)
+        public async Task<IActionResult> PostCategorie([FromBody] Category category)
         {
-            if (!ModelState.IsValid)
+            var result = await _categoryBusinessService.CreateCategory(category);
+            if (result == Common.Enums.OperationResult.Succeeded)
             {
-                return BadRequest(ModelState);
+                return Ok();
             }
 
-            if (_context.Categories.Where(x => x.Name.Equals(categorie.Name, StringComparison.OrdinalIgnoreCase)).FirstOrDefault() != null)
-                return BadRequest("Categorie already exists.");
-
-            _context.Categories.Add(categorie);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetCategorie", new { id = categorie.Id }, categorie);
+            return BadRequest();
         }
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategorie([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
+            var result = await _categoryBusinessService.DeleteCategory(id);
+            if (result == Common.Enums.OperationResult.Succeeded)
             {
-                return BadRequest(ModelState);
+                return Ok();
             }
 
-            var categorie = await _context.Categories.FindAsync(id);
-            if (categorie == null)
-            {
-                return NotFound();
-            }
-
-            _context.Categories.Remove(categorie);
-            await _context.SaveChangesAsync();
-
-            return Ok(categorie);
-        }
-
-        private bool CategorieExists(int id)
-        {
-            return _context.Categories.Any(e => e.Id == id);
+            return BadRequest();
         }
     }
 }
