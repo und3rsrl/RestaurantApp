@@ -1,21 +1,7 @@
-﻿using MailKit.Net.Smtp;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.IdentityModel.Tokens;
-using MimeKit;
-using RestaurantApp.DataServices;
+﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantApp.BusinessEntities.DTOs.Account;
+using RestaurantApp.BusinessService.Interfaces;
 using RestaurantApp.WebApi.DTOs;
-using RestaurantApp.WebApi.Models;
-using Serilog;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.WebApi.Controllers
@@ -24,57 +10,36 @@ namespace RestaurantApp.WebApi.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IConfiguration _configuration;
-        private readonly Entities _context;
+        private readonly IAccountBusinessService _accountBusinessService;
 
-        public AccountController(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            IConfiguration configuration,
-            Entities context)
+        public AccountController
+            (
+                IAccountBusinessService accountBusinessService
+            )
         {
-            _userManager = userManager;
-            _signInManager = signInManager;
-            _configuration = configuration;
-            _context = context;
+            _accountBusinessService = accountBusinessService;
         }
 
         [HttpPost("login")]
-        public async Task<object> Login([FromBody] LoginDto model)
+        public async Task<ActionResult<string>> Login([FromBody] LoginDetails loginDetails)
         {
-            var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, false);
+            var token = await _accountBusinessService.Login(loginDetails);
 
-            if (result.Succeeded)
+            if (!string.IsNullOrEmpty(token))
             {
-                Log.Information(string.Format("User: {0} has been logged in successfuly.", model.Email));
-                var appUser = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                return await GenerateJwtToken(model.Email, appUser);
+                return Ok(token);
             }
 
             return Unauthorized();
         }
 
         [HttpPost("register")]
-        public async Task<object> Register([FromBody] RegisterDto model)
+        public async Task<ActionResult<string>> Register([FromBody] RegisterDetails registerDetails)
         {
-            var user = new IdentityUser
+            var token = await _accountBusinessService.Register(registerDetails);
+
+            if (!string.IsNullOrEmpty(token))
             {
-                UserName = model.Email,
-                Email = model.Email
-            };
-
-            var result = await _userManager.CreateAsync(user, model.Password);
-
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(user, false);
-                await _userManager.AddToRoleAsync(user, "User");
-                Log.Information(string.Format("User: {0} has been registered successfuly.", model.Email));
-
-                var token = await GenerateJwtToken(model.Email, user);
-
                 return Ok(token);
             }
 
@@ -84,201 +49,40 @@ namespace RestaurantApp.WebApi.Controllers
         [HttpPost("forgotMyPassword/{email}")]
         public async Task<ActionResult> ForgotMyPassword(string email)
         {
-            try
+            var result = await _accountBusinessService.PasswordRecovery(email);
+
+            if (result == Common.Enums.OperationResult.Succeeded)
             {
-                var user = _userManager.Users.SingleOrDefault(u => u.Email == email);
-                if (user != null)
-                {
-                    var code = GenerateCode();
-                    var entity = new ForgotPassword()
-                    {
-                        Email = email,
-                        Code = code,
-                        CreatedAt = DateTime.Now,
-                        CreatedBy = email,
-                        LastUpdatedAt = DateTime.Now,
-                        LastUpdatedBy = email
-                    };
-
-                    // save in database
-                    var result = await _context.ForgotPassword.AddAsync(entity);
-                    await _context.SaveChangesAsync();
-
-                    var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress("From", "alex.chiurtu@gmail.com"));
-                    message.To.Add(new MailboxAddress("To", email));
-                    message.Subject = "RestaurantApp: Code for reset password";
-                    message.Body = new TextPart("html")
-                    {
-                        Text = "Code: " + code
-                    };
-
-                    using (var client = new SmtpClient())
-                    {
-                        client.Connect("smtp.gmail.com", 587, false);
-                        try
-                        {
-                            client.Authenticate("alex.chiurtu@gmail.com", "Alexandru2005");
-                        }
-                        catch (Exception ex)
-                        {
-                            throw new ApplicationException(ex.ToString());
-
-                        }
-                        client.Send(message);
-                        client.Disconnect(true);
-                    }
-                    return Ok();
-                }
-
-                return NoContent();
+                return Ok();
             }
-            catch (Exception e)
-            {
-                throw new ApplicationException(e.ToString());
 
-            }
+            return BadRequest();
         }
 
         [HttpGet("verifyCode/{code}&{email}")]
         public async Task<ActionResult> VerifyCode(string code, string email)
         {
-            try
-            {
-                var result = await _context.ForgotPassword.Where(x => x.Email == email && x.Code == code).OrderByDescending(x => x.CreatedAt).FirstOrDefaultAsync();
+            var result = await _accountBusinessService.ValidateVerificationCode(code, email);
 
-                if (result == null)
-                {
-                    return NoContent();
-                }
-                return Ok(result);
-            }
-            catch (Exception ex)
+            if (result == Common.Enums.OperationResult.Succeeded)
             {
-                throw ex;
+                return Ok();
             }
+
+            return BadRequest();
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdatePassword([FromBody] PasswordChangeRequest model)
+        public async Task<ActionResult> UpdatePassword([FromBody] PasswordChangeRequest passwordChangeDetails)
         {
-            try
+            var result = await _accountBusinessService.UpdatePassword(passwordChangeDetails);
+
+            if (result == Common.Enums.OperationResult.Succeeded)
             {
-                if (ModelState.IsValid)
-                {
-                    var user = _userManager.Users.SingleOrDefault(r => r.Email == model.Email);
-                    if (user != null)
-                    {
-                        user.PasswordHash = _userManager.PasswordHasher.HashPassword(user, model.Password);
-
-                        var result = await _userManager.UpdateAsync(user);
-                        return Ok(result);
-                    }
-                }
-                return NoContent();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-        private async Task<object> GenerateJwtToken(string email, IdentityUser user)
-        {
-            var claims = new List<Claim>
-            {
-                new Claim(JwtRegisteredClaimNames.Sub, email),
-                new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
-            };
-
-            ClaimsIdentity claimsIdentity = new ClaimsIdentity(claims, "Token");
-
-            var roles = await _userManager.GetRolesAsync(user);
-
-            if (roles.Contains("Waiter"))
-                await SetWaiterStatus(email);
-
-            claims.AddRange(roles.Select(role => new Claim("Role", role)));
-
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
-            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-            var expires = DateTime.Now.AddDays(Convert.ToDouble(_configuration["JwtExpireDays"]));
-
-            var token = new JwtSecurityToken(
-                _configuration["JwtIssuer"],
-                _configuration["JwtIssuer"],
-                claims,
-                expires: expires,
-                signingCredentials: creds
-            );
-
-            return new JwtSecurityTokenHandler().WriteToken(token);
-        }
-
-        public class LoginDto
-        {
-            [Required]
-            public string Email { get; set; }
-
-            [Required]
-            public string Password { get; set; }
-        }
-
-        public class RegisterDto
-        {
-            [Required]
-            public string Email { get; set; }
-
-            [Required]
-            [StringLength(100, ErrorMessage = "PASSWORD_MIN_LENGTH", MinimumLength = 6)]
-            public string Password { get; set; }
-        }
-
-        private async Task SetWaiterStatus(string email)
-        {
-            var result = await _context.WaitersStatus.FindAsync(email);
-
-            if (result == null)
-            {
-                WaiterStatus status = new WaiterStatus()
-                {
-                    Waiter = email,
-                    IsActive = true
-                };
-
-                await _context.WaitersStatus.AddAsync(status);
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                result.IsActive = true;
-                _context.Entry(result).State = EntityState.Modified;
-
-                try
-                {
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    throw;
-                }
-            }
-        }
-
-        private string GenerateCode()
-        {
-            Random random = new Random();
-            const string pool = "abcdefghijklmnopqrstuvwxyz0123456789";
-            var builder = new StringBuilder();
-
-            for (var i = 0; i < 6; i++)
-            {
-                var c = pool[random.Next(0, pool.Length)];
-                builder.Append(c);
+                return Ok();
             }
 
-            return builder.ToString();
+            return BadRequest();
         }
     }
 }
