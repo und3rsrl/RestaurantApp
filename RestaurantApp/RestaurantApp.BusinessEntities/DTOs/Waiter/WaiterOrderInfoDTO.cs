@@ -1,10 +1,7 @@
-﻿using RestaurantApp.WebApi.Models;
-using System;
+﻿using RestaurantApp.BusinessEntities.DTOs.Order;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RestaurantApp.WebApi.DTOs
+namespace RestaurantApp.BusinessEntities.DTOs.Waiter
 {
     public class WaiterOrderInfoDTO
     {
@@ -18,6 +15,6 @@ namespace RestaurantApp.WebApi.DTOs
 
         public bool WaiterPayment { get; set; }
 
-        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public IEnumerable<OrderItemDTO> OrderItems { get; set; }
     }
 }

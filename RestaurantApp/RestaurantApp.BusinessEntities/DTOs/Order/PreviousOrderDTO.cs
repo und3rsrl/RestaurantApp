@@ -1,10 +1,7 @@
-﻿using RestaurantApp.WebApi.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace RestaurantApp.WebApi.DTOs
+namespace RestaurantApp.BusinessEntities.DTOs.Order
 {
     public class PreviousOrderDTO
     {
@@ -14,6 +11,6 @@ namespace RestaurantApp.WebApi.DTOs
 
         public double Total { get; set; }
 
-        public IEnumerable<OrderItem> OrderItems { get; set; }
+        public IEnumerable<OrderItemDTO> OrderItems { get; set; }
     }
 }
