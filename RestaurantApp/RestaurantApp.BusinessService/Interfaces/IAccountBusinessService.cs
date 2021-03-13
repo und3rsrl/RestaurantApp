@@ -1,6 +1,5 @@
 ﻿using RestaurantApp.BusinessEntities.DTOs.Account;
 using RestaurantApp.Common.Enums;
-using RestaurantApp.WebApi.DTOs;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.BusinessService.Interfaces

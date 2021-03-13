@@ -9,7 +9,6 @@ using RestaurantApp.Common.Enums;
 using RestaurantApp.DataContracts.Interfaces;
 using RestaurantApp.DataModel.Models;
 using RestaurantApp.DataServices.Interfaces;
-using RestaurantApp.WebApi.DTOs;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
