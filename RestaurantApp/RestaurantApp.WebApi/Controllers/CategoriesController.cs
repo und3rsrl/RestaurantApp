@@ -17,21 +17,18 @@ namespace RestaurantApp.WebApi.Controllers
             _categoryBusinessService = categoryBusinessService;
         }
 
-        // GET: api/Categories
         [HttpGet]
         public IEnumerable<Category> GetCategories()
         {
             return _categoryBusinessService.GetAllCategories();
         }
 
-        // GET: api/Categories/5
         [HttpGet("{id}")]
         public Category GetCategory([FromRoute] int id)
         {
             return _categoryBusinessService.GetCategory(id);
         }
 
-        // PUT: api/Categories/5
         [HttpPut("{id}")]
         public IActionResult PutCategorie([FromRoute] int id, [FromBody] Category category)
         {
@@ -44,7 +41,6 @@ namespace RestaurantApp.WebApi.Controllers
             return BadRequest();
         }
 
-        // POST: api/Categories
         [HttpPost]
         public async Task<IActionResult> PostCategorie([FromBody] Category category)
         {
@@ -57,7 +53,6 @@ namespace RestaurantApp.WebApi.Controllers
             return BadRequest();
         }
 
-        // DELETE: api/Categories/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteCategorie([FromRoute] int id)
         {

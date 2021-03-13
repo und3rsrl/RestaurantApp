@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using RestaurantApp.BusinessEntities.DTOs.Account;
 using RestaurantApp.BusinessService.Interfaces;
-using RestaurantApp.WebApi.DTOs;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.WebApi.Controllers
