@@ -24,19 +24,24 @@ namespace RestaurantApp.BusinessService.Implementation
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IForgotPasswordRepository _forgotPasswordRepository;
+        private readonly IWaiterRepository _waiterRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IConfiguration _configuration;
 
-        public AccountBusinessService(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
-            IForgotPasswordRepository forgotPasswordRepository,
-            IConfiguration configuration)
+        public AccountBusinessService
+            (
+                UserManager<IdentityUser> userManager,
+                SignInManager<IdentityUser> signInManager,
+                IForgotPasswordRepository forgotPasswordRepository,
+                IConfiguration configuration,
+                IWaiterRepository waiterRepository
+            )
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
             _forgotPasswordRepository = forgotPasswordRepository;
+            _waiterRepository = waiterRepository;
         }
 
         public async Task<string> Login(LoginDetails loginDetails)
@@ -149,9 +154,7 @@ namespace RestaurantApp.BusinessService.Implementation
             var roles = await _userManager.GetRolesAsync(user);
             if (roles.Contains("Waiter"))
             {
-                // waiter is online
-                // TO BE DONE
-                //await SetWaiterStatus(email); 
+                await SetWaiterStatus(email);
             }
             claims.AddRange(roles.Select(role => new Claim("Role", role)));
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JwtKey"]));
@@ -206,6 +209,30 @@ namespace RestaurantApp.BusinessService.Implementation
                 await smtpClient.SendAsync(emailTemplate);
                 await smtpClient.DisconnectAsync(true);
             }
+        }
+
+        private async Task SetWaiterStatus(string email)
+        {
+            var result = await _waiterRepository.GetWaiterStatus(email);
+
+            if (result == null)
+            {
+                var status = new WaiterStatus
+                {
+                    Waiter = email,
+                    IsActive = true
+                };
+                _waiterRepository.Add(status);
+
+            }
+            else
+            {
+                result.IsActive = true;
+                _waiterRepository.Update(result);
+
+            }
+
+            await _unitOfWork.CommitChangesAsync();
         }
     }
 }

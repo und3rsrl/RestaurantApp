@@ -2,7 +2,7 @@
 {
     public class OrderItemDTO
     {
-        public int ProductId { get; set; }
+        public int FoodId { get; set; }
 
         public string Name { get; set; }
 

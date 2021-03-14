@@ -28,7 +28,7 @@ namespace RestaurantApp.WebApi
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public void ConfigureServices(IServiceCollection services)
+        public IServiceProvider ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
@@ -56,6 +56,8 @@ namespace RestaurantApp.WebApi
             {
                 options.SuppressModelStateInvalidFilter = true;
             });
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
             services.AddControllers();
 
@@ -97,6 +99,7 @@ namespace RestaurantApp.WebApi
             builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
             builder.RegisterModule(new WebApiModule());
             var container = builder.Build();
+            return container.Resolve<IServiceProvider>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

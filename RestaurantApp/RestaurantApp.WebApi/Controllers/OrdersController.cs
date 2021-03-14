@@ -1,11 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RestaurantApp.DataServices;
-using RestaurantApp.WebApi.DTOs;
-using RestaurantApp.WebApi.Models;
-using System;
+using RestaurantApp.BusinessEntities.DTOs.Order;
+using RestaurantApp.BusinessEntities.DTOs.Waiter;
+using RestaurantApp.BusinessService.Interfaces;
+using RestaurantApp.Common.Enums;
+using RestaurantApp.DataModel.Models;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.WebApi.Controllers
@@ -14,267 +13,115 @@ namespace RestaurantApp.WebApi.Controllers
     [ApiController]
     public class OrdersController : ControllerBase
     {
-        private readonly Entities _context;
+        private readonly IOrderBusinessService _orderBusinessService;
 
-        public OrdersController(Entities context)
+        public OrdersController
+            (
+                IOrderBusinessService orderBusinessService
+            )
         {
-            _context = context;
+            _orderBusinessService = orderBusinessService;
         }
 
-        // GET: api/Orders
         [HttpGet]
         public IEnumerable<Order> GetOrders()
         {
-            return _context.Orders;
+            return _orderBusinessService.GetAllOrders();
         }
 
         // GET: api/Orders/user@restaurant.com
         [HttpGet("userPreviousOrders/{email}")]
-        public IEnumerable<PreviousOrderDTO> GetOrders([FromRoute] string email)
+        public async Task<IEnumerable<PreviousOrderDTO>> GetUserPreviousOrders([FromRoute] string email)
         {
-            var orders = _context.Orders.Include(x => x.OrderItems).Where(x => x.Submitter.Equals(email) && x.IsPaid == true);
-
-            List<PreviousOrderDTO> previousOrders = new List<PreviousOrderDTO>();
-            foreach (var order in orders)
-            {
-                var previousOrder = new PreviousOrderDTO()
-                {
-                    SubmitDate = order.SubmitDateTime,
-                    OrderItems = order.OrderItems,
-                    Table = order.Table,
-                    Total = order.Total
-                };
-
-                previousOrders.Add(previousOrder);
-            }
-
-            return previousOrders.OrderByDescending(x => x.SubmitDate);
+            return await _orderBusinessService.GetUserPreviousOrders(email);
         }
 
         [HttpGet("activeWaiterOrders/{email}")]
-        public IEnumerable<WaiterOrderInfoDTO> GetWaiterActiveOrders([FromRoute] string email)
+        public async Task<IEnumerable<WaiterOrderInfoDTO>> GetWaiterActiveOrders([FromRoute] string email)
         {
-            var orders = _context.Orders.Include(x => x.OrderItems).Where(x => x.Waiter.Equals(email) && x.IsPaid == false);
-
-            List<WaiterOrderInfoDTO> waiterOrdersInfosList = new List<WaiterOrderInfoDTO>();
-
-            foreach (Order order in orders)
-            {
-                WaiterOrderInfoDTO orderInfoDTO = new WaiterOrderInfoDTO()
-                {
-                    Id = order.OrderId,
-                    Submitter = order.Submitter,
-                    Table = order.Table,
-                    Total = order.Total,
-                    WaiterPayment = order.WaiterPayment,
-                    OrderItems = order.OrderItems
-                };
-
-                waiterOrdersInfosList.Add(orderInfoDTO);
-            }
-
-            return waiterOrdersInfosList;
+            return await _orderBusinessService.GetWaiterActiveOrders(email);
         }
 
         // GET: api/Orders/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetOrder([FromRoute] int id)
+        public async Task<Order> GetOrder([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.OrderId == id && i.IsPaid == false);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(order);
+            return await _orderBusinessService.GetActiveOrder(id);
         }
 
         // GET: api/Orders/5
         [HttpGet("userActiveOrder/{email}")]
-        public async Task<IActionResult> GetActiveOrder([FromRoute] string email)
+        public async Task<Order> GetActiveOrder([FromRoute] string email)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var order = await _context.Orders.Include(x => x.OrderItems).FirstOrDefaultAsync(i => i.Submitter == email && i.IsPaid == false);
-
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            return Ok(order);
+            return await _orderBusinessService.GetUserActiveOrder(email);
         }
 
         // PUT: api/Orders/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutOrder([FromRoute] int id, [FromBody] Order order)
+        public async Task<IActionResult> UpdateOrder([FromRoute] int id, [FromBody] Order order)
         {
-            if (!ModelState.IsValid)
+            var result = await _orderBusinessService.UpdateOrder(id, order);
+
+            if (result == OperationResult.Succeeded)
             {
-                return BadRequest(ModelState);
+                return Ok();
             }
 
-            if (id != order.OrderId)
-            {
-                return BadRequest();
-            }
-
-            _context.Orders.Update(order);
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return BadRequest();
         }
 
         [HttpPost("paidOrder/{id}")]
-        public async Task<IActionResult> PaidOrder([FromRoute] int id)
+        public async Task<IActionResult> MarkAsPaid([FromRoute] int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var result = await _orderBusinessService.MarkAsPaid(id);
 
-            if (order == null)
-                return BadRequest();
-
-            order.IsPaid = true;
-
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
+            if (result == OperationResult.Succeeded)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Ok();
             }
 
-            return NoContent();
+            return BadRequest();
         }
 
         [HttpPost("waiterPayment/{id}")]
-        public async Task<IActionResult> WaiterPaymentOrder([FromRoute] int id)
+        public async Task<IActionResult> MarkAsWaiterPayment([FromRoute] int id)
         {
-            var order = await _context.Orders.FindAsync(id);
+            var result = await _orderBusinessService.MarkAsWaiterPayment(id);
 
-            if (order == null)
-                return BadRequest();
-
-            order.WaiterPayment = true;
-
-            _context.Entry(order).State = EntityState.Modified;
-
-            try
+            if (result == OperationResult.Succeeded)
             {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!OrderExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                return Ok();
             }
 
-            return NoContent();
+            return BadRequest();
         }
 
         // POST: api/Orders
         [HttpPost]
-        public async Task<IActionResult> PostOrder([FromBody] OrderDTO orderDetails)
+        public async Task<IActionResult> CreateOrder([FromBody] OrderDTO orderDetails)
         {
-            Order order = new Order()
+            var result = await _orderBusinessService.CreateOrder(orderDetails);
+
+            if (result == OperationResult.Succeeded)
             {
-                IsPaid = false,
-                SubmitDateTime = DateTime.Now,
-                Submitter = orderDetails.Submitter,
-                Total = orderDetails.Total,
-                Table = orderDetails.Table
-            };
-
-            var waiters = _context.WaitersStatus.Where(x => x.IsActive == true).ToList();
-
-            Random random = new Random();
-            var waiterIndex = random.Next(waiters.Count());
-            order.Waiter = waiters[waiterIndex].Waiter;
-
-            order.OrderItems = new List<OrderItem>();
-            foreach (OrderItemDTO orderItemDetails in orderDetails.OrderItems)
-            {
-                OrderItem orderItem = new OrderItem()
-                {
-                    Amount = orderItemDetails.Amount,
-                    Name = orderItemDetails.Name,
-                    Price = orderItemDetails.Price,
-                    ProductId = orderItemDetails.ProductId,
-                    Total = orderItemDetails.Total,
-                };
-
-                order.OrderItems.Add(orderItem);
+                return Ok();
             }
 
-            _context.Orders.Add(order);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetOrder", new { id = order.OrderId }, order);
+            return BadRequest();
         }
 
         // DELETE: api/Orders/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteOrder([FromRoute] int id)
         {
-            if (!ModelState.IsValid)
+            var result = await _orderBusinessService.DeleteOrder(id);
+
+            if (result == OperationResult.Succeeded)
             {
-                return BadRequest(ModelState);
+                return Ok();
             }
 
-            var order = await _context.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return NotFound();
-            }
-
-            _context.Orders.Remove(order);
-            await _context.SaveChangesAsync();
-
-            return Ok(order);
-        }
-
-        private bool OrderExists(int id)
-        {
-            return _context.Orders.Any(e => e.OrderId == id);
+            return BadRequest();
         }
     }
 }
