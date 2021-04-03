@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RestaurantApp.BusinessEntities.DTOs.Food;
 using RestaurantApp.BusinessService.Interfaces;
 using RestaurantApp.Common.Enums;
-using RestaurantApp.DataModel.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,21 +23,19 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Food> GetFood()
+        public IEnumerable<FoodDetails> GetFood()
         {
             return _foodBusinessService.GetAllFood();
         }
 
-        // GET: api/Foods/5
         [HttpGet("{id}")]
-        public Food GetFood([FromRoute] int id)
+        public FoodDetails GetFood([FromRoute] int id)
         {
             return _foodBusinessService.GetFood(id);
         }
 
-        // PUT: api/Foods/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFood([FromRoute] int id, [FromBody] Food food)
+        public async Task<IActionResult> PutFood([FromRoute] int id, [FromBody] FoodDetails food)
         {
             var result = await _foodBusinessService.UpdateFood(id, food);
 
@@ -49,9 +47,8 @@ namespace RestaurantApp.WebApi.Controllers
             return BadRequest();
         }
 
-        // POST: api/Foods
         [HttpPost]
-        public async Task<IActionResult> PostFood([FromBody] Food food)
+        public async Task<IActionResult> PostFood([FromBody] FoodDetails food)
         {
             var result = await _foodBusinessService.CreateFood(food);
 
@@ -63,7 +60,6 @@ namespace RestaurantApp.WebApi.Controllers
             return BadRequest();
         }
 
-        // DELETE: api/Foods/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteFood([FromRoute] int id)
         {

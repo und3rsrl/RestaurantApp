@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RestaurantApp.BusinessEntities.DTOs.Order
 {
-    public class PreviousOrderDTO
+    public class PreviousOrderDetails
     {
         public DateTime SubmitDate { get; set; }
 
@@ -11,6 +11,6 @@ namespace RestaurantApp.BusinessEntities.DTOs.Order
 
         public double Total { get; set; }
 
-        public IEnumerable<OrderItemDTO> OrderItems { get; set; }
+        public IEnumerable<OrderItemDetails> OrderItems { get; set; }
     }
 }

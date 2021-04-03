@@ -1,6 +1,6 @@
 ﻿namespace RestaurantApp.BusinessEntities.DTOs.Waiter
 {
-    public class WaiterDTO
+    public class WaiterDetails
     {
         public string UserId { get; set; }
 

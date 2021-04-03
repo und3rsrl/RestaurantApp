@@ -13,6 +13,6 @@ namespace RestaurantApp.BusinessEntities.DTOs.Order
 
         public double Total { get; set; }
 
-        public ICollection<OrderItemDTO> OrderItems { get; set; }
+        public ICollection<OrderItemDetails> OrderItems { get; set; }
     }
 }

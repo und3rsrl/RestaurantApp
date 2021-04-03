@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
 using RestaurantApp.Models;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
@@ -32,13 +29,21 @@ namespace RestaurantApp.Services
             HttpContent content = new StringContent(json);
 
             content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+            try
+            {
+                var response = await HttpClient.PostAsync("Account/Register", content);
 
-            var response = await HttpClient.PostAsync("Account/Register", content);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    return await response.Content.ReadAsStringAsync();
+                else
+                    return "NotCreated";
+            }
+            catch (Exception e)
+            {
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                return await response.Content.ReadAsStringAsync();
-            else
-                return "NotCreated";
+            }
+
+            return "";
         }
 
         public async Task<string> LoginAsync(string userName, string password)

@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using AutoMapper.Contrib.Autofac.DependencyInjection;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,28 +8,35 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using RestaurantApp.BusinessEntities.Infrastructure;
 using RestaurantApp.DataServices;
 using RestaurantApp.WebApi.Infrastructure;
 using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Reflection;
 using System.Text;
 
 namespace RestaurantApp.WebApi
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IWebHostEnvironment env)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true)
+                .AddEnvironmentVariables();
+
+            Configuration = builder.Build();
         }
 
-        public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; private set; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
             services.AddSwaggerGen(c =>
             {
@@ -95,19 +103,27 @@ namespace RestaurantApp.WebApi
                     };
                 });
 
-            var builder = new ContainerBuilder();
-            builder.RegisterAssemblyModules(Assembly.GetExecutingAssembly());
+            services.AddOptions();
+        }
+
+        public void ConfigureContainer(ContainerBuilder builder)
+        {
+            // Register your own things directly with Autofac here. Don't
+            // call builder.Populate(), that happens in AutofacServiceProviderFactory
+            // for you.
             builder.RegisterModule(new WebApiModule());
-            var container = builder.Build();
-            return container.Resolve<IServiceProvider>();
+            builder.RegisterAutoMapper(typeof(BusinessEntitiesModule).Assembly);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app,
-            IHostingEnvironment env)
-        //Entities dbContext,
-        //UserManager<IdentityUser> userManager,
-        //RoleManager<IdentityRole> roleManager)
+        public void Configure
+            (
+                IApplicationBuilder app,
+                IWebHostEnvironment env,
+                Entities dbContext,
+                UserManager<IdentityUser> userManager,
+                RoleManager<IdentityRole> roleManager
+            )
         {
             if (env.IsDevelopment())
             {
@@ -116,9 +132,8 @@ namespace RestaurantApp.WebApi
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "RestaurantApp.WebAPI v1"));
             }
 
-            //dbContext.Database.EnsureCreated();
-
-            //IdentityInitializer.SeedData(userManager, roleManager);
+            dbContext.Database.EnsureCreated();
+            IdentityInitializer.SeedData(userManager, roleManager);
 
             app.UseStaticFiles();
 

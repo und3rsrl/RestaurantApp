@@ -1,15 +1,11 @@
 ﻿using MvvmHelpers;
 using Plugin.Media.Abstractions;
-using Plugin.Toasts;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -20,16 +16,18 @@ namespace RestaurantApp.ViewModels
         private CategoriesApiService _categoriesApiService = new CategoriesApiService();
         private FoodApiService _foodsApiService = new FoodApiService();
         private string _selectedCategorie;
+        private List<CategorieItem> _categories;
 
         public AddFoodViewModel()
         {
             Categories = new ObservableRangeCollection<string>();
         }
 
-        public AddFoodViewModel(Page page)
+        public AddFoodViewModel(Page page, List<CategorieItem> categories)
         {
             Categories = new ObservableRangeCollection<string>();
             Page = page;
+            _categories = categories;
         }
 
         public ObservableRangeCollection<string> Categories
@@ -64,27 +62,27 @@ namespace RestaurantApp.ViewModels
         {
             get
             {
-                    return new Command(async () =>
+                return new Command(async () =>
+                {
+                    if (!Validate(Name, Price, SelectedCategorie, Image, out List<string> messages))
                     {
-                        if (!Validate(Name, Price, SelectedCategorie, Image, out List<string> messages))
-                        {
-                            string description = FormatMessage(messages);
+                        string description = FormatMessage(messages);
 
-                            await Page.DisplayAlert("Foods", description, "Ok");
-                        }
+                        await Page.DisplayAlert("Foods", description, "Ok");
+                    }
+                    else
+                    {
+                        var response = await _foodsApiService.AddFood(Name, Ingredients, Price, _categories.FirstOrDefault(x => x.Name == SelectedCategorie).Id, Image);
+
+                        if (!string.IsNullOrEmpty(response))
+                            await Application.Current.MainPage.DisplayAlert("Add Categorie", response, "Ok");
                         else
                         {
-                            var response = await _foodsApiService.AddFood(Name, Ingredients, Price, SelectedCategorie, Image);
-
-                            if (!string.IsNullOrEmpty(response))
-                                await Application.Current.MainPage.DisplayAlert("Add Categorie", response, "Ok");
-                            else
-                            {
-                                RefreshFoods?.Invoke(this, EventArgs.Empty);
-                                SuccessfulAdd?.Invoke(this, EventArgs.Empty);
-                            }
+                            RefreshFoods?.Invoke(this, EventArgs.Empty);
+                            SuccessfulAdd?.Invoke(this, EventArgs.Empty);
                         }
-                    });
+                    }
+                });
             }
         }
 

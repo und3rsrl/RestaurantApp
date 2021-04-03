@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace RestaurantApp.BusinessEntities.DTOs.Waiter
 {
-    public class WaiterOrderInfoDTO
+    public class WaiterOrderInfoDetails
     {
         public int Id { get; set; }
 
@@ -15,6 +15,6 @@ namespace RestaurantApp.BusinessEntities.DTOs.Waiter
 
         public bool WaiterPayment { get; set; }
 
-        public IEnumerable<OrderItemDTO> OrderItems { get; set; }
+        public IEnumerable<OrderItemDetails> OrderItems { get; set; }
     }
 }

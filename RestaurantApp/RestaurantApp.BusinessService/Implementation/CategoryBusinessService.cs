@@ -1,8 +1,11 @@
-﻿using RestaurantApp.BusinessService.Interfaces;
+﻿using AutoMapper;
+using RestaurantApp.BusinessEntities.DTOs.Category;
+using RestaurantApp.BusinessService.Interfaces;
 using RestaurantApp.Common.Enums;
 using RestaurantApp.DataContracts.Interfaces;
 using RestaurantApp.DataModel.Models;
 using RestaurantApp.DataServices.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,52 +15,67 @@ namespace RestaurantApp.BusinessService.Implementation
     {
         private readonly ICategoryRepository _categoryRepository;
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IMapper _mapper;
 
         public CategoryBusinessService
             (
                 ICategoryRepository categoryRepository,
-                IUnitOfWork unitOfWork
+                IUnitOfWork unitOfWork,
+                IMapper mapper
             )
         {
             _categoryRepository = categoryRepository;
             _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Category> GetAllCategories()
+        public IEnumerable<CategoryDetails> GetAllCategories()
         {
-            return _categoryRepository.GetAll();
+            var categories = _categoryRepository.GetAll();
+            return _mapper.Map<IEnumerable<CategoryDetails>>(categories);
+
         }
 
-        public Category GetCategory(int id)
+        public CategoryDetails GetCategory(int id)
         {
-            return _categoryRepository.GetById(id);
+            var category = _categoryRepository.GetById(id);
+            return _mapper.Map<CategoryDetails>(category);
         }
 
-        public OperationResult UpdateCategory(int id, Category category)
+        public OperationResult UpdateCategory(int id, CategoryDetails category)
         {
-            if (id != category.Id)
+            var model = _mapper.Map<Category>(category);
+            if (id != model.Id)
             {
                 return OperationResult.Failed;
             }
 
-            _categoryRepository.Update(category);
+            _categoryRepository.Update(model);
             _unitOfWork.CommitChangesAsync();
 
             return OperationResult.Succeeded;
         }
 
-        public async Task<OperationResult> CreateCategory(Category category)
+        public async Task<OperationResult> CreateCategory(CategoryDetails category)
         {
-            var existingCategory = await _categoryRepository.GetCategoryByName(category.Name);
-            if (existingCategory != null)
+            try
+            {
+                var model = _mapper.Map<Category>(category);
+                var existingCategory = await _categoryRepository.GetCategoryByName(category.Name);
+                if (existingCategory != null)
+                {
+                    return OperationResult.Failed;
+                }
+
+                _categoryRepository.Add(model);
+                await _unitOfWork.CommitChangesAsync();
+
+                return OperationResult.Succeeded;
+            }
+            catch (Exception e)
             {
                 return OperationResult.Failed;
             }
-
-            _categoryRepository.Add(category);
-            await _unitOfWork.CommitChangesAsync();
-
-            return OperationResult.Succeeded;
         }
 
         public async Task<OperationResult> DeleteCategory(int id)

@@ -32,10 +32,23 @@ namespace RestaurantApp.BusinessService.Implementation
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<WaiterDTO>> GetWaiters()
+        public async Task<IEnumerable<WaiterDetails>> GetWaiters()
         {
+
             var waiters = await _userManager.GetUsersInRoleAsync("Waiter");
-            return _mapper.Map<IEnumerable<WaiterDTO>>(waiters);
+
+            List<WaiterDetails> waitersDTO = new List<WaiterDetails>();
+
+            foreach (var waiter in waiters)
+            {
+                waitersDTO.Add(new WaiterDetails
+                {
+                    UserId = waiter.Id,
+                    Email = waiter.Email
+                });
+            }
+
+            return waitersDTO;
         }
 
         public async Task<OperationResult> AddWaiter(RegisterDetails registerDetails)

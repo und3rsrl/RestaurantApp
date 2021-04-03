@@ -1,14 +1,11 @@
-﻿using Android.Content;
-using MvvmHelpers;
+﻿using MvvmHelpers;
 using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
-using RestaurantApp.Views.User.Views;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -172,7 +169,7 @@ namespace RestaurantApp.ViewModels
                 {
                     food.OrderItemId = 0;
                     order.OrderItems.Add(food);
-                }             
+                }
                 else
                     UpdateOrderItem(foodItem, food);
             }

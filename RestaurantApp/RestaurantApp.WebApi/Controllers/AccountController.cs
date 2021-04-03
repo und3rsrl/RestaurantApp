@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace RestaurantApp.WebApi.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
         private readonly IAccountBusinessService _accountBusinessService;

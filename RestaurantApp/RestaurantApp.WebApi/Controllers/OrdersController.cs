@@ -31,13 +31,13 @@ namespace RestaurantApp.WebApi.Controllers
 
         // GET: api/Orders/user@restaurant.com
         [HttpGet("userPreviousOrders/{email}")]
-        public async Task<IEnumerable<PreviousOrderDTO>> GetUserPreviousOrders([FromRoute] string email)
+        public async Task<IEnumerable<PreviousOrderDetails>> GetUserPreviousOrders([FromRoute] string email)
         {
             return await _orderBusinessService.GetUserPreviousOrders(email);
         }
 
         [HttpGet("activeWaiterOrders/{email}")]
-        public async Task<IEnumerable<WaiterOrderInfoDTO>> GetWaiterActiveOrders([FromRoute] string email)
+        public async Task<IEnumerable<WaiterOrderInfoDetails>> GetWaiterActiveOrders([FromRoute] string email)
         {
             return await _orderBusinessService.GetWaiterActiveOrders(email);
         }

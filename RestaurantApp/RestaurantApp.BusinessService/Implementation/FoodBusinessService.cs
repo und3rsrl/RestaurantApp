@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using RestaurantApp.BusinessEntities.DTOs.Food;
 using RestaurantApp.BusinessService.Interfaces;
 using RestaurantApp.Common.Enums;
 using RestaurantApp.DataContracts.Interfaces;
@@ -18,39 +20,48 @@ namespace RestaurantApp.BusinessService.Implementation
         private readonly IFoodRepository _foodRepository;
         private readonly IUnitOfWork _unitOfWork;
         private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly IMapper _mapper;
 
         public FoodBusinessService
             (
+                IUnitOfWork unitOfWork,
                 IFoodRepository foodRepository,
+                IMapper mapper,
                 IHostingEnvironment hostingEnvironment
             )
         {
             _foodRepository = foodRepository;
             _hostingEnvironment = hostingEnvironment;
+            _unitOfWork = unitOfWork;
+            _mapper = mapper;
         }
 
-        public IEnumerable<Food> GetAllFood()
+        public IEnumerable<FoodDetails> GetAllFood()
         {
-            return _foodRepository.GetAll();
+            var foods = _foodRepository.GetAll();
+            return _mapper.Map<IEnumerable<FoodDetails>>(foods);
         }
 
-        public Food GetFood(int id)
+        public FoodDetails GetFood(int id)
         {
-            return _foodRepository.GetById(id);
+            var food = _foodRepository.GetById(id);
+            return _mapper.Map<FoodDetails>(food);
         }
 
-        public async Task<OperationResult> UpdateFood(int id, Food food)
+        public async Task<OperationResult> UpdateFood(int id, FoodDetails food)
         {
             try
             {
-                if (id != food.Id)
+                var model = _mapper.Map<Food>(food);
+
+                if (id != model.Id)
                 {
                     return OperationResult.Failed;
                 }
 
                 var existingFood = _foodRepository.GetById(id);
 
-                if (existingFood.ImageUrl.Equals(food.ImageUrl, StringComparison.OrdinalIgnoreCase))
+                if (existingFood.ImageUrl.Equals(model.ImageUrl, StringComparison.OrdinalIgnoreCase))
                 {
                     string imageFullPath = string.Concat(_hostingEnvironment.WebRootPath, "\\FoodPhotos\\", existingFood.ImageUrl);
                     if (File.Exists(imageFullPath))
@@ -59,7 +70,7 @@ namespace RestaurantApp.BusinessService.Implementation
                     }
                 }
 
-                _foodRepository.Update(food);
+                _foodRepository.Update(model);
                 await _unitOfWork.CommitChangesAsync();
 
                 return OperationResult.Succeeded;
@@ -70,16 +81,17 @@ namespace RestaurantApp.BusinessService.Implementation
             }
         }
 
-        public async Task<OperationResult> CreateFood(Food food)
+        public async Task<OperationResult> CreateFood(FoodDetails food)
         {
             try
             {
-                _foodRepository.Add(food);
+                var model = _mapper.Map<Food>(food);
+                _foodRepository.Add(model);
                 await _unitOfWork.CommitChangesAsync();
 
                 return OperationResult.Succeeded;
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 return OperationResult.Failed;
             }

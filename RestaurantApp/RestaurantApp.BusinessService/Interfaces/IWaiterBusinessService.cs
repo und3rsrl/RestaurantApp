@@ -10,7 +10,7 @@ namespace RestaurantApp.BusinessService.Interfaces
     {
         Task<OperationResult> AddWaiter(RegisterDetails registerDetails);
         Task<OperationResult> DeleteWaiter(string id);
-        Task<IEnumerable<WaiterDTO>> GetWaiters();
+        Task<IEnumerable<WaiterDetails>> GetWaiters();
         Task<OperationResult> SetStatus(string email);
     }
 }

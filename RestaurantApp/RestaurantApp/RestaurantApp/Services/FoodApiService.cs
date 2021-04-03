@@ -1,14 +1,9 @@
 ﻿using Newtonsoft.Json;
 using Plugin.Media.Abstractions;
-using RestaurantApp.DTOs;
 using RestaurantApp.Models;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
@@ -34,7 +29,7 @@ namespace RestaurantApp.Services
             return null;
         }
 
-        public async Task<string> AddFood(string name, string ingredients, double price, string categorie, MediaFile image)
+        public async Task<string> AddFood(string name, string ingredients, double price, int categoryId, MediaFile image)
         {
             MultipartFormDataContent mutipartContent = new MultipartFormDataContent
             {
@@ -50,7 +45,7 @@ namespace RestaurantApp.Services
                 Name = name,
                 Ingredients = ingredients,
                 Price = price,
-                Category = categorie,
+                CategoryId = categoryId,
                 ImageUrl = imageName
             };
 

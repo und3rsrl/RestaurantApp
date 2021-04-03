@@ -23,7 +23,7 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<IEnumerable<WaiterDTO>> GetWaiters()
+        public async Task<IEnumerable<WaiterDetails>> GetWaiters()
         {
             return await _waiterBusinessService.GetWaiters();
         }

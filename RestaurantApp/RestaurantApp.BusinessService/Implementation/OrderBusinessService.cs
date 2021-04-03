@@ -37,48 +37,18 @@ namespace RestaurantApp.BusinessService.Implementation
             return _orderRepository.GetAll();
         }
 
-        public async Task<IEnumerable<PreviousOrderDTO>> GetUserPreviousOrders(string userEmail)
+        public async Task<IEnumerable<PreviousOrderDetails>> GetUserPreviousOrders(string userEmail)
         {
             var previousOrders = await _orderRepository.GetUserPreviousOrders(userEmail);
-            var previousOrdersDTO = new List<PreviousOrderDTO>();
-
-            previousOrders.ForEach((order) =>
-            {
-                var prevOrder = new PreviousOrderDTO
-                {
-                    SubmitDate = order.SubmitDateTime,
-                    OrderItems = _mapper.Map<List<OrderItemDTO>>(order.OrderItems),
-                    Table = order.Table,
-                    Total = order.Total
-                };
-
-                previousOrdersDTO.Add(prevOrder);
-            });
-
-
-            return previousOrdersDTO.OrderByDescending(o => o.SubmitDate);
+            return _mapper
+                .Map<IEnumerable<PreviousOrderDetails>>(previousOrders)
+                .OrderByDescending(o => o.SubmitDate);
         }
 
-        public async Task<IEnumerable<WaiterOrderInfoDTO>> GetWaiterActiveOrders(string waiterEmail)
+        public async Task<IEnumerable<WaiterOrderInfoDetails>> GetWaiterActiveOrders(string waiterEmail)
         {
             var waiterActiveOrders = await _orderRepository.GetWaiterActiveOrders(waiterEmail);
-            var waiterActiveOrdersDTO = new List<WaiterOrderInfoDTO>();
-
-            waiterActiveOrders.ForEach((order) =>
-            {
-                var waiterActiveOrderDTO = new WaiterOrderInfoDTO
-                {
-                    Id = order.Id,
-                    Submitter = order.Submitter,
-                    Table = order.Table,
-                    WaiterPayment = order.WaiterPayment,
-                    OrderItems = _mapper.Map<List<OrderItemDTO>>(order.OrderItems)
-                };
-
-                waiterActiveOrdersDTO.Add(waiterActiveOrderDTO);
-            });
-
-            return waiterActiveOrdersDTO;
+            return _mapper.Map<IEnumerable<WaiterOrderInfoDetails>>(waiterActiveOrders);
         }
 
         public Task<Order> GetActiveOrder(int id)

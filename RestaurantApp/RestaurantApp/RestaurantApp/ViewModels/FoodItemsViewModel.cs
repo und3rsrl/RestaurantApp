@@ -1,5 +1,5 @@
 ﻿using MvvmHelpers;
-using Plugin.LocalNotifications;
+using Plugin.Toasts;
 using RestaurantApp.Helpers;
 using RestaurantApp.Models;
 using RestaurantApp.Services;
@@ -10,16 +10,21 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
-using Plugin.Toasts;
 
 namespace RestaurantApp.ViewModels
 {
     public class FoodItemsViewModel : BaseViewModel
     {
         private string _selectedCategorie;
-        private List<string> _categories;
+        private List<CategorieItem> _categories;
         private CategoriesApiService _categoriesApiService = new CategoriesApiService();
         private FoodApiService _foodsApiService = new FoodApiService();
+
+        public EventHandler EndRefreshHandler;
+        public ObservableRangeCollection<FoodItem> AllItems { get; set; }
+        public ObservableRangeCollection<FoodItem> FilteredItems { get; set; }
+
+        public List<CategorieItem> CategoriesAsRaw => _categories;
 
         public FoodItemsViewModel()
         {
@@ -28,19 +33,13 @@ namespace RestaurantApp.ViewModels
             AllItems = new ObservableRangeCollection<FoodItem>();
         }
 
-        public EventHandler EndRefreshHandler;
-
-        public ObservableRangeCollection<FoodItem> AllItems { get; set; }
-
-        public ObservableRangeCollection<FoodItem> FilteredItems { get; set; }
-
         public ObservableRangeCollection<string> Categories
         {
             get
             {
                 var categories = new ObservableRangeCollection<string>();
 
-                categories.AddRange(LoadCategories().Result);
+                categories.AddRange(LoadCategories().Result.Select(x => x.Name));
 
                 return categories;
             }
@@ -93,7 +92,7 @@ namespace RestaurantApp.ViewModels
 
                     Settings.Bascket.AddOrderItem(orderItem);
 
-                    var result = await notificator.Notify(options);                    
+                    var result = await notificator.Notify(options);
                 });
             }
         }
@@ -118,11 +117,11 @@ namespace RestaurantApp.ViewModels
             FilteredItems.ReplaceRange(AllItems.Where(x => x.Category == SelectedCategory || SelectedCategory == "All"));
         }
 
-        private async Task<List<string>> LoadCategories()
+        private async Task<List<CategorieItem>> LoadCategories()
         {
             var categoriesItems = await _categoriesApiService.GetCategories().ConfigureAwait(false);
-
-            return categoriesItems.Select(x => x.Name).ToList();
+            _categories = categoriesItems.ToList();
+            return categoriesItems.ToList();
         }
 
         private async Task ExecuteLoadFoodsCommand()

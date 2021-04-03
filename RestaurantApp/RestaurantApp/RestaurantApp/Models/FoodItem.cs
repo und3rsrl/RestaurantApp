@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace RestaurantApp.Models
+﻿namespace RestaurantApp.Models
 {
     public class FoodItem
     {
@@ -15,6 +11,8 @@ namespace RestaurantApp.Models
         public string ImageUrl { get; set; }
 
         public string Category { get; set; }
+
+        public int CategoryId { get; set; }
 
         public string Ingredients { get; set; }
     }

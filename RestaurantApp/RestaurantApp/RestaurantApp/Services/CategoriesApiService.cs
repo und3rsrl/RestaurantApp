@@ -1,11 +1,8 @@
 ﻿using Newtonsoft.Json;
 using RestaurantApp.Models;
-using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.Services
@@ -44,7 +41,7 @@ namespace RestaurantApp.Services
             var response = await HttpClient.PostAsync("Categories", content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                return await response.Content.ReadAsStringAsync();
+                return "Cannot add the category!";
 
             return string.Empty;
         }
@@ -63,7 +60,7 @@ namespace RestaurantApp.Services
             var response = await HttpClient.PutAsync("Categories/" + id, content);
 
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                return await response.Content.ReadAsStringAsync();
+                return "Cannot update the category!";
 
             return string.Empty;
         }
@@ -73,7 +70,7 @@ namespace RestaurantApp.Services
             var response = await HttpClient.DeleteAsync("Categories/" + id);
 
             if (response.StatusCode == System.Net.HttpStatusCode.BadRequest)
-                return await response.Content.ReadAsStringAsync();
+                return "Cannot delete the category!";
 
             return string.Empty;
         }

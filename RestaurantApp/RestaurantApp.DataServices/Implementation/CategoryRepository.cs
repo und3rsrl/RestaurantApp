@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using RestaurantApp.DataContracts.Interfaces;
 using RestaurantApp.DataModel.Models;
-using System;
 using System.Threading.Tasks;
 
 namespace RestaurantApp.DataServices.Implementation
@@ -14,7 +13,7 @@ namespace RestaurantApp.DataServices.Implementation
 
         public Task<Category> GetCategoryByName(string categoryName)
         {
-            return DbContext.Categories.FirstOrDefaultAsync(c => c.Name.Equals(categoryName, StringComparison.OrdinalIgnoreCase));
+            return DbContext.Categories.FirstOrDefaultAsync(c => c.Name.ToLower() == categoryName.ToLower());
         }
 
         public Task<bool> IsCategoryExisting(int id)

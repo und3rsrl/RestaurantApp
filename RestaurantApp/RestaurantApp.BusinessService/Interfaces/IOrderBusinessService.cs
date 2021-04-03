@@ -14,8 +14,8 @@ namespace RestaurantApp.BusinessService.Interfaces
         Task<Order> GetActiveOrder(int id);
         IEnumerable<Order> GetAllOrders();
         Task<Order> GetUserActiveOrder(string userEmail);
-        Task<IEnumerable<PreviousOrderDTO>> GetUserPreviousOrders(string userEmail);
-        Task<IEnumerable<WaiterOrderInfoDTO>> GetWaiterActiveOrders(string waiterEmail);
+        Task<IEnumerable<PreviousOrderDetails>> GetUserPreviousOrders(string userEmail);
+        Task<IEnumerable<WaiterOrderInfoDetails>> GetWaiterActiveOrders(string waiterEmail);
         Task<OperationResult> MarkAsPaid(int orderId);
         Task<OperationResult> MarkAsWaiterPayment(int orderId);
         Task<OperationResult> UpdateOrder(int id, Order order);

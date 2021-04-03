@@ -1,6 +1,6 @@
 ﻿namespace RestaurantApp.BusinessEntities.DTOs.Order
 {
-    public class OrderItemDTO
+    public class OrderItemDetails
     {
         public int FoodId { get; set; }
 

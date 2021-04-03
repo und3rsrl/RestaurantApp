@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using RestaurantApp.BusinessEntities.DTOs.Category;
 using RestaurantApp.BusinessService.Interfaces;
-using RestaurantApp.DataModel.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -18,19 +18,19 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Category> GetCategories()
+        public IEnumerable<CategoryDetails> GetCategories()
         {
             return _categoryBusinessService.GetAllCategories();
         }
 
         [HttpGet("{id}")]
-        public Category GetCategory([FromRoute] int id)
+        public CategoryDetails GetCategory([FromRoute] int id)
         {
             return _categoryBusinessService.GetCategory(id);
         }
 
         [HttpPut("{id}")]
-        public IActionResult PutCategorie([FromRoute] int id, [FromBody] Category category)
+        public IActionResult PutCategorie([FromRoute] int id, [FromBody] CategoryDetails category)
         {
             var result = _categoryBusinessService.UpdateCategory(id, category);
             if (result == Common.Enums.OperationResult.Succeeded)
@@ -42,7 +42,7 @@ namespace RestaurantApp.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> PostCategorie([FromBody] Category category)
+        public async Task<IActionResult> PostCategorie([FromBody] CategoryDetails category)
         {
             var result = await _categoryBusinessService.CreateCategory(category);
             if (result == Common.Enums.OperationResult.Succeeded)
